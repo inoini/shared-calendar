@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>共有カレンダー</title>
+<link rel="manifest" href="/manifest.json">
+
+<meta name="theme-color" content="#4CAF50">
+
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+
+<style>
+body{
+    font-family:
+    "Segoe UI",
+    "Noto Sans JP",
+    sans-serif;
+
+    margin:0;
+    padding:20px;
+
+    background:#f4f6f8;
+    color:#333;
+}
+
+
+/* タイトル */
+
+h1{
+    text-align:center;
+    margin-bottom:25px;
+    font-size:28px;
+}
+
+
+/* 月移動 */
+
+.nav{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:30px;
+
+    margin-bottom:20px;
+
+    font-size:22px;
+    font-weight:bold;
+
+}
+
+
+.nav a{
+
+    background:white;
+
+    padding:10px 20px;
+
+    border-radius:30px;
+
+    text-decoration:none;
+
+    color:#4CAF50;
+
+    box-shadow:
+    0 3px 10px rgba(0,0,0,.1);
+
+    transition:.2s;
+
+}
+
+
+.nav a:hover{
+
+    background:#4CAF50;
+    color:white;
+
+}
+
+
+
+
+/* カレンダー */
+
+table{
+
+    width:100%;
+
+    border-collapse:separate;
+
+    border-spacing:5px;
+
+    table-layout:fixed;
+
+}
+
+
+
+th{
+
+    background:#4CAF50;
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:8px;
+
+}
+
+
+td{
+
+    background:white;
+
+    height:130px;
+
+    vertical-align:top;
+
+    border-radius:12px;
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,.08);
+
+    overflow:hidden;
+
+}
+
+
+
+/* 日付エリア */
+
+.day-box{
+
+    height:120px;
+    padding:5px;
+    cursor:pointer;
+
+    overflow-y:auto;
+
+}
+
+
+
+.day-box:hover{
+
+    background:#eef7ff;
+
+}
+
+
+
+
+.day-number{
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-bottom:5px;
+
+}
+
+
+
+
+/* 予定 */
+
+.schedule{
+
+
+    background:#4CAF50;
+
+    color:white;
+
+    border-radius:6px;
+
+    padding:3px 6px;
+
+    margin-top:4px;
+
+    font-size:12px;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+}
+
+
+
+/* 他月 */
+
+.other-month{
+
+    opacity:.5;
+
+}
+
+
+
+/* 土日 */
+
+th:first-child{
+
+    background:#e53935;
+
+}
+
+
+th:last-child{
+
+    background:#1976d2;
+
+}
+
+
+
+/* モーダル */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    z-index:100;
+
+}
+
+
+
+.modal-content{
+
+    background:white;
+    width:90%;
+    max-width:500px;
+
+    max-height:85vh;
+    overflow-y:auto;
+
+    margin:5vh auto;
+
+    border-radius:15px;
+    padding:20px;
+
+}
+
+
+#selectedDate{
+
+    text-align:center;
+
+}
+
+
+
+/* 予定一覧 */
+
+#scheduleList{
+
+
+    height:200px;
+
+
+    overflow-y:auto;
+
+
+    border-radius:10px;
+
+
+    border:1px solid #ddd;
+
+
+    padding:10px;
+
+
+}
+
+
+
+
+.scheduleItem{
+
+
+    padding:12px;
+
+
+    margin-bottom:8px;
+
+
+    background:#f5f5f5;
+
+
+    border-radius:10px;
+
+
+}
+
+
+
+.scheduleItem:hover{
+
+
+    background:#e3f2fd;
+
+
+}
+
+
+
+/* 入力 */
+
+select,
+textarea{
+
+
+    width:100%;
+
+
+    border:1px solid #ddd;
+
+
+    border-radius:10px;
+
+
+    padding:10px;
+
+
+    box-sizing:border-box;
+
+
+    margin-bottom:10px;
+
+
+    font-size:15px;
+
+
+}
+
+
+textarea{
+
+
+    height:90px;
+
+}
+
+
+
+/* ボタン */
+
+button{
+
+
+    border:none;
+
+
+    border-radius:20px;
+
+
+    padding:10px 25px;
+
+
+    background:#4CAF50;
+
+
+    color:white;
+
+
+    cursor:pointer;
+
+
+}
+
+
+
+button:hover{
+
+
+    opacity:.8;
+
+
+}
+
+
+/* 削除ボタン */
+
+#deleteBtn{
+
+    background:#e53935;
+
+}
+
+
+/* スマホ対応 */
+
+@media (max-width:600px){
+
+    html,
+    body{
+        margin:0;
+        padding:0;
+        height:100vh;
+        overflow:hidden;
+    }
+
+    h1{
+        font-size:16px;
+        margin:5px 0;
+    }
+
+    .nav{
+        margin:0 0 5px 0;
+        font-size:14px;
+    }
+
+    table{
+        margin-top:0;
+    }
+
+   th{
+        background:#4CAF50;
+    color:white;
+    padding:8px;
+    height:35px;
+    font-size:14px;
+    }
+
+    td{
+        height:70px;
+         vertical-align:top;
+    }
+
+    .day-box{
+        height:65px;
+        padding:2px;
+    }
+
+    .day-number{
+        font-size:12px;
+    }
+
+    .schedule{
+        font-size:9px;
+
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <h1>共有カレンダー</h1>
+
+    <div class="nav">
+
+        <a th:href="@{/(year=${prevYear},month=${prevMonth})}">
+            ←
+        </a>
+
+        <span>
+            <span th:text="${year}"></span>年
+            <span th:text="${month}"></span>月
+        </span>
+
+        <a th:href="@{/(year=${nextYear},month=${nextMonth})}">
+            →
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<table>
+
+
+<tr>
+
+<th>日</th>
+<th>月</th>
+<th>火</th>
+<th>水</th>
+<th>木</th>
+<th>金</th>
+<th>土</th>
+
+</tr>
+
+
+
+
+<tr th:each="week : ${#numbers.sequence(0,5)}">
+
+
+
+<td
+
+th:each="day : ${#numbers.sequence(0,6)}"
+
+th:with="idx=${week*7+day}">
+
+
+
+
+
+<div th:if="${idx < calendarDays.size()}">
+
+
+
+<div class="day-box"
+
+th:data-date="${calendarDays[idx].date}"
+
+onclick="openModal(this.dataset.date)">
+
+
+
+<div class="day-number"
+
+th:text="${calendarDays[idx].day}">
+
+</div>
+
+
+
+
+
+<div
+
+th:each="schedule : ${calendarDays[idx].scheduleList}"
+
+class="schedule">
+
+
+
+<b th:text="${schedule.time}"></b>
+
+
+
+<span th:text="${schedule.userName}"></span>
+
+
+：
+
+<span th:text="${schedule.schedule}"></span>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+</table>
+<!-- モーダル -->
+
+<div id="modal" class="modal">
+
+
+    <div class="modal-content">
+
+
+        <h2 id="selectedDate"></h2>
+
+
+
+        <!-- 保存済み予定一覧 -->
+
+        <div id="scheduleList">
+
+            読み込み中...
+
+        </div>
+
+
+
+
+        <form id="scheduleForm" action="/save" method="post">
+
+
+            <!-- 編集用ID -->
+
+            <input type="hidden" 
+                   id="scheduleId" 
+                   name="id">
+
+
+
+            <!-- 日付 -->
+
+            <input type="hidden" 
+                   id="date" 
+                   name="date">
+
+
+
+
+
+            <!-- 時間 -->
+
+            <select id="time" name="time">
+
+            </select>
+
+
+
+
+
+            <!-- ユーザー -->
+
+            <select name="userName">
+
+
+                <option value="優生">
+                   優生 
+                </option>
+
+
+                <option value="このか">
+                   このか
+                </option>
+
+
+                <option value="正幸">
+                   正幸
+                   
+               
+                </option>
+
+
+                <option value="瑞恵">
+                   
+                    瑞恵
+                    
+                </option>
+
+
+            </select>
+
+
+
+
+
+            <!-- 内容 -->
+
+            <textarea
+
+                name="schedule"
+
+                placeholder="予定を入力"
+
+                required>
+
+            </textarea>
+
+
+
+
+            <br>
+
+
+
+
+            <!-- 保存・更新ボタン -->
+
+            <button 
+                id="saveBtn"
+                type="submit">
+
+                保存
+
+            </button>
+
+
+
+
+
+            <!-- 削除ボタン -->
+
+            <button
+
+                id="deleteBtn"
+
+                type="button"
+
+                style="display:none;"
+
+                onclick="deleteSchedule()">
+
+
+                削除
+
+
+            </button>
+
+
+
+
+
+            <!-- 閉じる -->
+
+            <button
+
+                type="button"
+
+                onclick="closeModal()">
+
+
+                閉じる
+
+
+            </button>
+
+
+
+        </form>
+
+
+
+    </div>
+
+
+</div>
+<script>
+
+
+// モーダルを開く
+function openModal(date){
+
+
+    document.getElementById("modal").style.display="block";
+
+
+    document.getElementById("selectedDate").innerText=date;
+
+
+    document.getElementById("date").value=date;
+
+
+
+    // 新規登録モードへ戻す
+
+    document.getElementById("scheduleId").value="";
+
+
+    document.getElementById("scheduleForm").action="/save";
+
+
+    document.getElementById("saveBtn").innerText="保存";
+
+
+    document.getElementById("deleteBtn").style.display="none";
+
+
+    document.getElementsByName("schedule")[0].value="";
+
+
+
+    createTime();
+
+
+
+    loadSchedule(date);
+
+
+}
+
+
+
+
+
+// モーダルを閉じる
+
+function closeModal(){
+
+
+    document.getElementById("modal").style.display="none";
+
+
+}
+
+
+
+
+
+// モーダル外クリックで閉じる
+
+window.onclick=function(e){
+
+
+    if(e.target ==
+        document.getElementById("modal")){
+
+
+        closeModal();
+
+    }
+
+}
+
+
+
+
+
+
+// 時間選択生成
+
+function createTime(){
+
+
+    const select =
+        document.getElementById("time");
+
+
+    select.innerHTML="";
+
+
+
+    for(let h=0; h<24; h++){
+
+
+        for(let m=0; m<60; m+=30){
+
+
+
+            let hh =
+                String(h).padStart(2,'0');
+
+
+            let mm =
+                String(m).padStart(2,'0');
+
+
+
+            let option =
+                document.createElement("option");
+
+
+
+            option.value =
+                hh + ":" + mm;
+
+
+
+            option.text =
+                hh + ":" + mm;
+
+
+
+            select.appendChild(option);
+
+
+        }
+
+
+    }
+
+
+}
+
+
+
+
+
+
+// 日付ごとの予定取得
+
+function loadSchedule(date){
+
+
+    fetch("/schedule?date="+date)
+
+
+
+    .then(response=>response.json())
+
+
+
+    .then(data=>{
+
+
+        const list =
+            document.getElementById("scheduleList");
+
+
+
+        list.innerHTML="";
+
+
+
+        if(data.length==0){
+
+
+            list.innerHTML =
+                "<p>予定はありません</p>";
+
+
+            return;
+
+
+        }
+
+
+
+
+
+        data.forEach(schedule=>{
+
+
+            list.innerHTML +=
+
+
+            "<div class='scheduleItem' onclick='editSchedule("
+            + schedule.id +
+            ")'>"
+
+
+            +"<b>"
+            + schedule.time
+            +"</b> "
+
+
+            +"【"
+            + schedule.userName
+            +"】 "
+
+
+            + schedule.schedule
+
+
+
+            +"</div>";
+
+
+
+        });
+
+
+
+    });
+
+
+
+}
+
+
+
+
+
+
+
+// 編集
+
+function editSchedule(id){
+
+
+
+    fetch("/schedule/edit?id="+id)
+
+
+
+    .then(response=>response.json())
+
+
+
+    .then(schedule=>{
+
+
+
+        document.getElementById("scheduleId").value =
+            schedule.id;
+
+
+
+        document.getElementById("date").value =
+            schedule.date;
+
+
+
+        document.getElementById("time").value =
+            schedule.time;
+
+
+
+        document.getElementsByName("userName")[0].value =
+            schedule.userName;
+
+
+
+        document.getElementsByName("schedule")[0].value =
+            schedule.schedule;
+
+
+
+
+        document.getElementById("scheduleForm").action =
+            "/update";
+
+
+
+        document.getElementById("saveBtn").innerText =
+            "更新";
+
+
+
+        document.getElementById("deleteBtn").style.display =
+            "inline";
+
+
+
+    });
+
+
+
+}
+
+
+
+
+
+
+
+
+// 削除
+
+function deleteSchedule(){
+
+
+
+    if(!confirm("この予定を削除しますか？")){
+
+
+        return;
+
+
+    }
+
+
+
+    document.getElementById("scheduleForm").action =
+        "/delete";
+
+
+
+    document.getElementById("scheduleForm").submit();
+
+
+
+}
+
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js")
+        .then(() => console.log("Service Worker登録成功"))
+        .catch(err => console.log("登録失敗", err));
+}
+
+</script>
+</body>
+</html>
