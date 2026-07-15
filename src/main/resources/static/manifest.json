@@ -1,7 +1,9 @@
 {
+  "id": "/",
   "name": "共有カレンダー",
   "short_name": "カレンダー",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4CAF50",
