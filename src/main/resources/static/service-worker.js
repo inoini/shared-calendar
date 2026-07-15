@@ -1,13 +1,27 @@
-self.addEventListener("install", function(event) {
-    console.log("Service Worker installed");
+const CACHE_NAME = "shared-calendar-v1";
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll([
+        "/",
+        "/manifest.json",
+        "/icons/icon-192.png",
+        "/icons/icon-512.png"
+      ]);
+    })
+  );
+  self.skipWaiting();
 });
 
-
-self.addEventListener("activate", function(event) {
-    console.log("Service Worker activated");
+self.addEventListener("activate", (event) => {
+  event.waitUntil(self.clients.claim());
 });
 
-
-self.addEventListener("fetch", function(event) {
-
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
 });
