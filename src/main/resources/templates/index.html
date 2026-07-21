@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>スマート農業システム</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#f5f5f5;
+    font-family:"Segoe UI","Noto Sans JP",sans-serif;
+}
+
+header{
+    background:#2E7D32;
+    color:white;
+    text-align:center;
+    padding:20px;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:700px;
+    margin:30px auto;
+    padding:20px;
+}
+
+.menu{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.card{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:120px;
+    text-decoration:none;
+    color:white;
+    font-size:22px;
+    border-radius:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+
+.calendar{background:#4CAF50;}
+.work{background:#2196F3;}
+.field{background:#FF9800;}
+.stock{background:#9C27B0;}
+.sales{background:#F44336;}
+.setting{background:#607D8B;}
+
+.card:hover{
+    opacity:.85;
+}
+
+@media(max-width:600px){
+
+.menu{
+grid-template-columns:1fr;
+}
+
+.card{
+height:80px;
+font-size:18px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+🌱 スマート農業システム
+
+</header>
+
+<div class="container">
+
+<div class="menu">
+
+<a class="card calendar" href="/calendar">
+📅 カレンダー
+</a>
+
+<a class="card work" href="#">
+📝 作業日報
+</a>
+
+<a class="card field" href="#">
+🌾 畑管理
+</a>
+
+<a class="card stock" href="#">
+📦 在庫管理
+</a>
+
+<a class="card sales" href="#">
+💰 売上管理
+</a>
+
+<a class="card setting" href="#">
+⚙ 設定
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>

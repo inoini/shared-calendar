@@ -458,7 +458,7 @@ button:hover{
 
 
 }
-
+}
 </style>
 
 
@@ -474,7 +474,7 @@ button:hover{
 
     <div class="nav">
 
-        <a th:href="@{/(year=${prevYear},month=${prevMonth})}">
+        <a th:href="@{/calendar(year=${prevYear},month=${prevMonth})}">
             ←
         </a>
 
@@ -483,7 +483,7 @@ button:hover{
             <span th:text="${month}"></span>月
         </span>
 
-        <a th:href="@{/(year=${nextYear},month=${nextMonth})}">
+        <a th:href="@{/calendar(year=${nextYear},month=${nextMonth})}">
             →
         </a>
 

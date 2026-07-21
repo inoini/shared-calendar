@@ -23,7 +23,13 @@ public class CalendarController {
     @Autowired
     private ScheduleService scheduleService;
 
+    // ===== ホーム画面 =====
     @GetMapping("/")
+    public String home() {
+        return "index";
+    }
+    // ===== カレンダー =====
+    @GetMapping("/calendar")
     public String calendar(
             @RequestParam(required = false) Integer year,
             @RequestParam(required = false) Integer month,
@@ -77,7 +83,6 @@ public class CalendarController {
         }
 
         // ===== 今月 =====
-
         for (int day = 1; day <= lastDay; day++) {
 
             LocalDate date = ym.atDay(day);
@@ -96,7 +101,6 @@ public class CalendarController {
         }
 
         // ===== 翌月 =====
-
         int remain = 42 - calendarDays.size();
 
         YearMonth followingMonth = ym.plusMonths(1);
@@ -119,7 +123,6 @@ public class CalendarController {
         }
 
         model.addAttribute("calendarDays", calendarDays);
-
         model.addAttribute("today", LocalDate.now().toString());
 
         return "calendar";
@@ -130,7 +133,11 @@ public class CalendarController {
             @RequestParam String date,
             @RequestParam String time,
             @RequestParam String userName,
-            @RequestParam String schedule) {
+            @RequestParam String schedule,
+            @RequestParam(required = false) String fieldName,
+            @RequestParam(required = false) String cropName,
+            @RequestParam(required = false) String workType,
+            @RequestParam(required = false) String memo) {
 
         Schedule s = new Schedule();
 
@@ -139,45 +146,71 @@ public class CalendarController {
         s.setUserName(userName);
         s.setSchedule(schedule);
 
+        // スマート農業用項目
+        s.setFieldName(fieldName);
+        s.setCropName(cropName);
+        s.setWorkType(workType);
+        s.setMemo(memo);
+
         scheduleService.save(s);
 
-        return "redirect:/?year="
+        return "redirect:/calendar?year="
                 + LocalDate.parse(date).getYear()
                 + "&month="
                 + LocalDate.parse(date).getMonthValue();
     }
+
+    // ===== 予定取得 =====
     @GetMapping("/schedule")
     @ResponseBody
     public List<Schedule> getSchedule(@RequestParam String date) {
         return scheduleService.findByDate(date);
     }
+
+    // ===== 編集データ取得 =====
     @GetMapping("/schedule/edit")
     @ResponseBody
     public Schedule edit(@RequestParam Long id) {
         return scheduleService.findById(id);
     }
+
+    // ===== 更新 =====
     @PostMapping("/update")
     public String update(
             @RequestParam Long id,
             @RequestParam String date,
             @RequestParam String time,
             @RequestParam String userName,
-            @RequestParam String schedule) {
+            @RequestParam String schedule,
+            @RequestParam(required = false) String fieldName,
+            @RequestParam(required = false) String cropName,
+            @RequestParam(required = false) String workType,
+            @RequestParam(required = false) String memo) {
 
         Schedule s = scheduleService.findById(id);
 
-        s.setDate(date);
-        s.setTime(time);
-        s.setUserName(userName);
-        s.setSchedule(schedule);
+        if (s != null) {
+            s.setDate(date);
+            s.setTime(time);
+            s.setUserName(userName);
+            s.setSchedule(schedule);
 
-        scheduleService.save(s);
+            // スマート農業用項目
+            s.setFieldName(fieldName);
+            s.setCropName(cropName);
+            s.setWorkType(workType);
+            s.setMemo(memo);
 
-        return "redirect:/?year="
+            scheduleService.save(s);
+        }
+
+        return "redirect:/calendar?year="
                 + LocalDate.parse(date).getYear()
                 + "&month="
                 + LocalDate.parse(date).getMonthValue();
     }
+
+    // ===== 削除 =====
     @PostMapping("/delete")
     public String delete(
             @RequestParam Long id,
@@ -185,10 +218,9 @@ public class CalendarController {
 
         scheduleService.delete(id);
 
-        return "redirect:/?year="
+        return "redirect:/calendar?year="
                 + LocalDate.parse(date).getYear()
                 + "&month="
                 + LocalDate.parse(date).getMonthValue();
     }
 }
-    

@@ -12,17 +12,31 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 日付（例：2026-07-08）
+    // 日付
     private String date;
 
-    // 時間（例：09:30）
+    // 時間
     private String time;
 
-    // ユーザー名（A・B・C・D）
+    // ユーザー名
     private String userName;
 
-    // 予定内容
+    // 予定
     private String schedule;
+
+    // ===== スマート農業用 =====
+
+    // 畑名
+    private String fieldName;
+
+    // 作物名
+    private String cropName;
+
+    // 作業内容
+    private String workType;
+
+    // メモ
+    private String memo;
 
     public Schedule() {
     }
@@ -67,6 +81,38 @@ public class Schedule {
 
     public void setSchedule(String schedule) {
         this.schedule = schedule;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public String getCropName() {
+        return cropName;
+    }
+
+    public void setCropName(String cropName) {
+        this.cropName = cropName;
+    }
+
+    public String getWorkType() {
+        return workType;
+    }
+
+    public void setWorkType(String workType) {
+        this.workType = workType;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
 }
