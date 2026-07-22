@@ -190,79 +190,116 @@ body{
 
 @media(max-width:600px){
 
-    .header{
-        padding:40px 15px;
-    }
+html,
+body{
+
+    margin:0;
+
+    padding:0;
+
+    width:100%;
+
+    min-height:100vh;
+
+}
 
 
-    .header h1{
-        font-size:28px;
-    }
+
+body{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
 
 
-    .header p{
-        font-size:16px;
-    }
+
+/* ヘッダー */
+
+.header{
+
+    padding:30px 15px;
+
+    text-align:center;
+
+}
 
 
-    .container{
+.header h1{
 
-        width:100%;
+    font-size:32px;
 
-        box-sizing:border-box;
+    margin:10px 0;
 
-        padding:15px;
-
-        margin:0 auto;
-
-    }
+}
 
 
-    .card-area{
 
-        display:block;
+/* メイン部分 */
 
-    }
+.container{
 
+    flex:1;
 
-    .card{
+    width:100%;
 
-        width:100%;
+    padding:15px;
 
-        box-sizing:border-box;
+    box-sizing:border-box;
 
-        margin-bottom:15px;
-
-        padding:25px;
-
-        border-radius:18px;
-
-    }
+}
 
 
-    .card h2{
 
-        font-size:22px;
+/* カード */
 
-    }
+.card{
+
+    width:100%;
+
+    padding:25px;
+
+    margin-bottom:15px;
+
+    box-sizing:border-box;
+
+    border-radius:20px;
+
+}
 
 
-    .card p{
 
-        font-size:16px;
+.card h2{
 
-    }
+    font-size:24px;
+
+}
 
 
-    .button{
 
-        font-size:20px;
+.card p{
 
-        padding:18px;
+    font-size:17px;
 
-        margin-top:25px;
+}
 
-    }
+
+
+/* ボタン */
+
+button,
+.btn{
+
+    width:100%;
+
+    padding:18px;
+
+    font-size:20px;
+
+    border-radius:30px;
+
+}
 
 }
 </style>
