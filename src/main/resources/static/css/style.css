@@ -1,0 +1,858 @@
+/* ==========================================
+   農業管理システム Version2
+   style.css Part1
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+
+    height:100%;
+
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+        "Yu Gothic UI",
+        "Meiryo",
+        sans-serif;
+
+    background:
+        linear-gradient(180deg,#eef8ef 0%,#f7faf7 100%);
+
+    color:#2d3436;
+
+}
+
+/* ===========================
+        Header
+=========================== */
+
+.top-header{
+
+    background:
+        linear-gradient(135deg,#2e7d32,#43a047);
+
+    color:white;
+
+    padding:18px 30px;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.15);
+
+}
+
+.logo-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.logo-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.18);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:30px;
+
+}
+
+.logo-area h1{
+
+    font-size:30px;
+
+    font-weight:700;
+
+}
+
+.logo-area p{
+
+    margin-top:4px;
+
+    opacity:.9;
+
+}
+
+/* ===========================
+      Calendar Page
+=========================== */
+
+.calendar-page{
+
+    width:96%;
+
+    max-width:1700px;
+
+    margin:25px auto;
+
+}
+
+.calendar-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.calendar-header h2{
+
+    font-size:34px;
+
+    color:#1b5e20;
+
+}
+
+.calendar-header p{
+
+    margin-top:6px;
+
+    color:#666;
+
+}
+
+/* ===========================
+        Month Navigation
+=========================== */
+
+.month-nav{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:18px 25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    box-shadow:
+
+        0 8px 25px rgba(0,0,0,.08);
+
+}
+
+.month-title{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    color:#2e7d32;
+
+}
+
+.month-button{
+
+    text-decoration:none;
+
+    color:white;
+
+    background:#43a047;
+
+    padding:10px 20px;
+
+    border-radius:10px;
+
+    transition:.25s;
+
+}
+
+.month-button:hover{
+
+    background:#2e7d32;
+
+}
+
+/* ===========================
+      Calendar Wrapper
+=========================== */
+
+.calendar-wrapper{
+
+    background:white;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:
+
+        0 10px 35px rgba(0,0,0,.08);
+
+}
+/* ===========================
+      Calendar Table
+=========================== */
+
+.calendar-table{
+
+    width:100%;
+
+    table-layout:fixed;
+
+    border-collapse:separate;
+
+    border-spacing:8px;
+
+    padding:12px;
+
+    background:#f6faf6;
+
+}
+
+.calendar-table th{
+
+    background:#2e7d32;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    padding:14px 0;
+
+    border-radius:12px;
+
+}
+
+.calendar-table th.sun{
+
+    background:#d84343;
+
+}
+
+.calendar-table th.sat{
+
+    background:#1565c0;
+
+}
+
+.calendar-table td{
+
+    vertical-align:top;
+
+    height:150px;
+
+}
+
+/* ===========================
+         Day Box
+=========================== */
+
+.day-box{
+
+    height:100%;
+
+    min-height:150px;
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:10px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:
+
+        0 4px 12px rgba(0,0,0,.08);
+
+}
+
+.day-box:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+
+        0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.day-number{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#2e7d32;
+
+    margin-bottom:8px;
+
+}
+
+/* ===========================
+      Schedule Card
+=========================== */
+
+.schedule-card{
+
+    background:
+
+        linear-gradient(135deg,#43a047,#66bb6a);
+
+    color:white;
+
+    border-radius:12px;
+
+    padding:8px;
+
+    margin-top:8px;
+
+    font-size:12px;
+
+    line-height:1.5;
+
+    box-shadow:
+
+        0 3px 10px rgba(0,0,0,.12);
+
+}
+
+.schedule-time{
+
+    font-weight:bold;
+
+    font-size:13px;
+
+    margin-bottom:4px;
+
+}
+
+.schedule-work{
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    margin-bottom:6px;
+
+}
+
+.schedule-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:3px;
+
+    font-size:11px;
+
+}
+
+.schedule-user{
+
+    margin-top:5px;
+
+    border-top:
+
+        1px solid rgba(255,255,255,.3);
+
+    padding-top:5px;
+
+    font-size:11px;
+
+}
+
+/* ===========================
+      Today Highlight
+=========================== */
+
+.today .day-box{
+
+    border:3px solid #ff9800;
+
+    background:#fffde7;
+
+}
+
+.today .day-number{
+
+    color:#ff6f00;
+
+}
+
+/* ===========================
+       Empty Cell
+=========================== */
+
+.empty{
+
+    background:transparent;
+
+}
+/* ===========================
+        Modal
+=========================== */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    backdrop-filter:blur(5px);
+
+    z-index:999;
+
+}
+
+.modal-content{
+
+    width:min(95%,650px);
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    margin:4vh auto;
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:28px;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
+
+}
+
+.modal-content h2{
+
+    color:#2e7d32;
+
+    font-size:28px;
+
+    margin-bottom:20px;
+
+    text-align:center;
+
+}
+
+/* ===========================
+      Schedule List
+=========================== */
+
+#scheduleList{
+
+    margin-bottom:20px;
+
+}
+
+.scheduleItem{
+
+    background:#f5f7f8;
+
+    border-left:5px solid #43a047;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:10px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.scheduleItem:hover{
+
+    background:#e8f5e9;
+
+    transform:translateX(5px);
+
+}
+
+/* ===========================
+        Form
+=========================== */
+
+form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+input[type=text],
+select,
+textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #cfd8dc;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    background:white;
+
+}
+
+textarea{
+
+    min-height:90px;
+
+    resize:vertical;
+
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    outline:none;
+
+    border-color:#43a047;
+
+    box-shadow:0 0 0 3px rgba(67,160,71,.15);
+
+}
+
+/* ===========================
+       Buttons
+=========================== */
+
+button{
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:12px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+#saveBtn{
+
+    background:#43a047;
+
+    color:white;
+
+}
+
+#saveBtn:hover{
+
+    background:#2e7d32;
+
+}
+
+#deleteBtn{
+
+    background:#d32f2f;
+
+    color:white;
+
+}
+
+#deleteBtn:hover{
+
+    background:#b71c1c;
+
+}
+
+button[type=button]:not(#deleteBtn){
+
+    background:#607d8b;
+
+    color:white;
+
+}
+
+button[type=button]:not(#deleteBtn):hover{
+
+    background:#455a64;
+
+}
+
+/* ===========================
+      Responsive
+=========================== */
+
+@media (max-width:768px){
+
+    .top-header{
+
+        padding:16px;
+
+    }
+
+
+    .logo-area{
+
+        gap:12px;
+
+    }
+
+
+    .logo-icon{
+
+        width:48px;
+
+        height:48px;
+
+        font-size:24px;
+
+    }
+
+
+    .logo-area h1{
+
+        font-size:22px;
+
+    }
+
+
+    .logo-area p{
+
+        font-size:13px;
+
+    }
+
+
+    .calendar-page{
+
+        width:100%;
+
+        margin:0;
+
+        padding:10px;
+
+    }
+
+
+    .calendar-header{
+
+        display:block;
+
+        margin-bottom:15px;
+
+    }
+
+
+    .calendar-header h2{
+
+        font-size:24px;
+
+    }
+
+
+    .month-nav{
+
+        padding:12px;
+
+    }
+
+
+    .month-title{
+
+        font-size:20px;
+
+    }
+
+
+    .month-button{
+
+        padding:8px 14px;
+
+        font-size:13px;
+
+    }
+
+
+    .calendar-table{
+
+        border-spacing:3px;
+
+        padding:3px;
+
+    }
+
+
+    /* 曜日部分 */
+
+    .calendar-table th{
+
+        font-size:13px;
+
+        height:30px;
+
+        line-height:30px;
+
+        padding:0;
+
+    }
+
+
+    /* 日付マス */
+
+    .calendar-table td{
+
+        height:125px;
+
+    }
+
+
+    .day-box{
+
+        min-height:120px;
+
+        padding:6px;
+
+    }
+
+
+    .day-number{
+
+        font-size:15px;
+
+        margin-bottom:4px;
+
+    }
+
+
+    /* 予定カード */
+
+    .schedule-card{
+
+        padding:5px;
+
+        border-radius:8px;
+
+        font-size:10px;
+
+    }
+
+
+    .schedule-work{
+
+        font-size:11px;
+
+    }
+
+
+    .schedule-info{
+
+        font-size:9px;
+
+    }
+
+
+    .schedule-user{
+
+        font-size:9px;
+
+    }
+
+
+    /* モーダル */
+
+    .modal-content{
+
+        width:98%;
+
+        max-height:94vh;
+
+        margin:2vh auto;
+
+        padding:15px;
+
+    }
+
+
+    /* スマホではホバー演出を無効 */
+
+    .schedule-card:hover{
+
+        transform:none;
+
+    }
+
+
+}
+/* ===========================
+        Animation
+=========================== */
+
+.card,
+.day-box,
+.schedule-card,
+button{
+
+    transition:all .25s ease;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.day-box:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.schedule-card:hover{
+
+    transform:scale(1.03);
+
+}

@@ -1,410 +1,120 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>農業かんりカレンダー</title>
+<title>農業管理システム | 作業カレンダー</title>
+
+<meta name="theme-color" content="#2E7D32">
+
 <link rel="manifest" href="/manifest.json">
-
-<meta name="theme-color" content="#4CAF50">
-
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
 
-<style>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 
-body{
-
-    font-family:
-    "Segoe UI",
-    "Noto Sans JP",
-    sans-serif;
-
-    margin:0;
-
-    padding:20px;
-
-    background:#f3f6f3;
-
-    color:#263238;
-
-}
-
-
-/* タイトル */
-
-h1{
-
-    text-align:center;
-
-    color:#1B5E20;
-
-    font-size:30px;
-
-    margin-bottom:20px;
-
-}
-
-
-/* 月移動 */
-
-.nav{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    gap:25px;
-
-    margin-bottom:20px;
-
-    font-size:22px;
-
-    font-weight:bold;
-
-}
-
-
-
-.nav a{
-
-    background:#1B5E20;
-
-    color:white;
-
-    padding:10px 22px;
-
-    border-radius:30px;
-
-    text-decoration:none;
-
-    box-shadow:
-    0 4px 10px rgba(0,0,0,.15);
-
-}
-
-
-
-/* カレンダー */
-
-table{
-
-    width:100%;
-
-    border-collapse:separate;
-
-    border-spacing:6px;
-
-    table-layout:fixed;
-
-}
-
-
-
-th{
-
-    background:#2E7D32;
-
-    color:white;
-
-    padding:12px;
-
-    border-radius:10px;
-
-}
-
-
-
-td{
-
-    background:white;
-
-    height:130px;
-
-    vertical-align:top;
-
-    border-radius:15px;
-
-    box-shadow:
-
-    0 3px 12px rgba(0,0,0,.08);
-
-}
-
-
-
-.day-box{
-
-    height:120px;
-
-    padding:8px;
-
-    cursor:pointer;
-
-    overflow-y:auto;
-
-}
-
-
-
-.day-box:hover{
-
-    background:#E8F5E9;
-
-}
-
-
-
-.day-number{
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    color:#1B5E20;
-
-}
-
-
-
-/* 予定カード */
-
-.schedule{
-
-    background:#388E3C;
-
-    color:white;
-
-    border-radius:8px;
-
-    padding:5px;
-
-    margin-top:5px;
-
-    font-size:12px;
-
-}
-
-
-/* モーダル */
-
-.modal{
-
-    display:none;
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.45);
-
-    z-index:100;
-
-}
-
-
-
-.modal-content{
-
-    background:white;
-
-    width:90%;
-
-    max-width:500px;
-
-    max-height:85vh;
-
-    overflow:auto;
-
-    margin:5vh auto;
-
-    border-radius:20px;
-
-    padding:25px;
-
-}
-
-
-
-#selectedDate{
-
-    color:#1B5E20;
-
-    text-align:center;
-
-}
-
-
-
-/* 入力 */
-
-select,
-input,
-textarea{
-
-
-    width:100%;
-
-    box-sizing:border-box;
-
-    padding:12px;
-
-    margin-bottom:12px;
-
-    border:
-
-    1px solid #ddd;
-
-    border-radius:12px;
-
-    font-size:15px;
-
-}
-
-
-
-/* ボタン */
-
-button{
-
-
-    border:none;
-
-    border-radius:25px;
-
-    padding:12px 25px;
-
-    background:#2E7D32;
-
-    color:white;
-
-    cursor:pointer;
-
-}
-
-
-
-button:hover{
-
-    opacity:.85;
-
-}
-
-
-
-#deleteBtn{
-
-    background:#C62828;
-
-}
-
-
-
-/* スマホ */
-@media(max-width:600px){
-
-html,body{
-    margin:0;
-    padding:0;
-    width:100%;
-    min-height:100%;
-}
-
-
-.header{
-    height:auto;
-}
-
-
-table{
-    width:100%;
-    height:calc(100vh - 110px);
-    border-spacing:2px;
-}
-
-
-table tr{
-    height:16.66%;
-}
-
-
-td{
-    height:auto;
-}
-
-
-.day-box{
-    height:100%;
-    min-height:0;
-    overflow:hidden;
-}
-
-
-.day-number{
-    font-size:15px;
-}
-
-
-.schedule-card{
-    max-height:45px;
-    overflow:hidden;
-}
-
-
-}
-</style>
-
-
+<script defer th:src="@{/js/script.js}"></script>
 
 </head>
 
-
 <body>
 
+<header class="top-header">
 
-<div class="header">
+    <div class="logo-area">
 
-    <h1>農業管理カレンダー</h1>
+        <div class="logo-icon">
+            🌱
+        </div>
 
-    <div class="nav">
+        <div>
 
-        <a th:href="@{/calendar(year=${prevYear},month=${prevMonth})}">
-            ←
-        </a>
+            <h1>
+                農業管理システム
+            </h1>
 
-        <span>
-            <span th:text="${year}"></span>年
-            <span th:text="${month}"></span>月
-        </span>
+            <p>
+                Smart Farm Management
+            </p>
 
-        <a th:href="@{/calendar(year=${nextYear},month=${nextMonth})}">
-            →
-        </a>
+        </div>
 
     </div>
 
-</div>
+</header>
+
+<main class="calendar-page">
+
+<section class="calendar-header">
+
+    <div>
+
+        <h2>
+            📅 作業カレンダー
+        </h2>
+
+        <p>
+            作業予定・担当者・圃場・作物を一元管理
+        </p>
+
+    </div>
+
+</section>
+
+<section class="month-nav">
+
+    <a class="month-button"
+       th:href="@{/calendar(year=${prevYear},month=${prevMonth})}">
+
+        ← 前月
+
+    </a>
+
+    <div class="month-title">
+
+        <span th:text="${year}"></span>年
+
+        <span th:text="${month}"></span>月
+
+    </div>
+
+    <a class="month-button"
+       th:href="@{/calendar(year=${nextYear},month=${nextMonth})}">
+
+        次月 →
+
+    </a>
+
+</section>
 
 
 
-<table>
 
+
+<section class="calendar-wrapper">
+
+<table class="calendar-table">
+
+<thead>
 
 <tr>
 
-<th>日</th>
-<th>月</th>
-<th>火</th>
-<th>水</th>
-<th>木</th>
-<th>金</th>
-<th>土</th>
+    <th class="sun">日</th>
+    <th>月</th>
+    <th>火</th>
+    <th>水</th>
+    <th>木</th>
+    <th>金</th>
+    <th class="sat">土</th>
 
 </tr>
+
+</thead>
+
+<tbody>
+
 
 
 
@@ -445,48 +155,43 @@ th:text="${calendarDays[idx].day}">
 
 
 
-<div
-th:each="schedule : ${calendarDays[idx].scheduleList}"
-class="schedule-card">
+<div th:each="schedule : ${calendarDays[idx].scheduleList}"
+     class="schedule-card">
 
+    <div class="schedule-time">
 
-<div class="crop">
+        <span th:text="${schedule.time}"></span>
 
-🌱
+    </div>
 
-<span th:text="${schedule.cropName}">
-</span>
+    <div class="schedule-work">
 
-</div>
+       <span th:text="${schedule.workType}"></span>
+        
 
+    </div>
 
-<div class="work">
+    <div class="schedule-info">
 
-<span th:text="${schedule.schedule}">
-</span>
+        <span class="crop">
 
-</div>
+            🌱 <span th:text="${schedule.cropName}"></span>
 
+        </span>
 
-<div class="info">
+        <span class="field">
 
-⏰
-<span th:text="${schedule.time}"></span>
+            🚜 <span th:text="${schedule.fieldName}"></span>
 
-<br>
+        </span>
 
-👤
-<span th:text="${schedule.userName}"></span>
+    </div>
 
-<br>
+    <div class="schedule-user">
 
-📍
-<span th:text="${schedule.fieldName}">
-</span>
+        👤 <span th:text="${schedule.userName}"></span>
 
-
-</div>
-
+    </div>
 
 </div>
 
@@ -508,6 +213,7 @@ class="schedule-card">
 
 
 </table>
+</section>
 <!-- モーダル -->
 
 <div id="modal" class="modal">
@@ -706,356 +412,6 @@ placeholder="メモ">
 
 
 </div>
-<script>
 
-
-// モーダルを開く
-function openModal(date){
-
-
-    document.getElementById("modal").style.display="block";
-
-
-    document.getElementById("selectedDate").innerText=date;
-
-
-    document.getElementById("date").value=date;
-
-
-
-    // 新規登録モードへ戻す
-
-    document.getElementById("scheduleId").value="";
-    document.getElementsByName("fieldName")[0].value="";
-    document.getElementsByName("cropName")[0].value="";
-    document.getElementsByName("workType")[0].value="";
-    document.getElementsByName("memo")[0].value="";
-	
-    document.getElementById("scheduleForm").action="/save";
-
-
-    document.getElementById("saveBtn").innerText="保存";
-
-
-    document.getElementById("deleteBtn").style.display="none";
-
-
-    document.getElementsByName("schedule")[0].value="";
-
-
-
-    createTime();
-
-
-
-    loadSchedule(date);
-
-
-}
-
-
-
-
-
-// モーダルを閉じる
-
-function closeModal(){
-
-
-    document.getElementById("modal").style.display="none";
-
-
-}
-
-
-
-
-
-// モーダル外クリックで閉じる
-
-window.onclick=function(e){
-
-
-    if(e.target ==
-        document.getElementById("modal")){
-
-
-        closeModal();
-
-    }
-
-}
-
-
-
-
-
-
-// 時間選択生成
-
-function createTime(){
-
-
-    const select =
-        document.getElementById("time");
-
-
-    select.innerHTML="";
-
-
-
-    for(let h=0; h<24; h++){
-
-
-        for(let m=0; m<60; m+=30){
-
-
-
-            let hh =
-                String(h).padStart(2,'0');
-
-
-            let mm =
-                String(m).padStart(2,'0');
-
-
-
-            let option =
-                document.createElement("option");
-
-
-
-            option.value =
-                hh + ":" + mm;
-
-
-
-            option.text =
-                hh + ":" + mm;
-
-
-
-            select.appendChild(option);
-
-
-        }
-
-
-    }
-
-
-}
-
-
-
-
-
-
-// 日付ごとの予定取得
-
-function loadSchedule(date){
-
-
-    fetch("/schedule?date="+date)
-
-
-
-    .then(response=>response.json())
-
-
-
-    .then(data=>{
-
-
-        const list =
-            document.getElementById("scheduleList");
-
-
-
-        list.innerHTML="";
-
-
-
-        if(data.length==0){
-
-
-            list.innerHTML =
-                "<p>予定はありません</p>";
-
-
-            return;
-
-
-        }
-
-
-
-
-
-        data.forEach(schedule=>{
-
-
-            list.innerHTML +=
-
-
-            "<div class='scheduleItem' onclick='editSchedule("
-            + schedule.id +
-            ")'>"
-
-
-            +"<b>"
-            + schedule.time
-            +"</b> "
-
-
-            +"【"
-            + schedule.userName
-            +"】 "
-
-
-            + schedule.schedule
-
-
-
-            +"</div>";
-
-
-
-        });
-
-
-
-    });
-
-
-
-}
-
-
-
-
-
-
-
-// 編集
-
-function editSchedule(id){
-
-
-
-    fetch("/schedule/edit?id="+id)
-
-
-
-    .then(response=>response.json())
-
-
-
-    .then(schedule=>{
-
-
-
-        document.getElementById("scheduleId").value =
-            schedule.id;
-
-
-
-        document.getElementById("date").value =
-            schedule.date;
-
-
-
-        document.getElementById("time").value =
-            schedule.time;
-
-
-
-        document.getElementsByName("userName")[0].value =
-            schedule.userName;
-
-
-
-        document.getElementsByName("schedule")[0].value =
-            schedule.schedule;
-
-        document.getElementsByName("fieldName")[0].value =
-            schedule.fieldName || "";
-
-
-        document.getElementsByName("cropName")[0].value =
-            schedule.cropName || "";
-
-
-        document.getElementsByName("workType")[0].value =
-            schedule.workType || "";
-
-
-        document.getElementsByName("memo")[0].value =
-            schedule.memo || "";
-
-
-        document.getElementById("scheduleForm").action =
-            "/update";
-
-
-
-        document.getElementById("saveBtn").innerText =
-            "更新";
-
-
-
-        document.getElementById("deleteBtn").style.display =
-            "inline";
-
-
-
-    });
-
-
-
-}
-
-
-
-
-
-
-
-
-// 削除
-
-function deleteSchedule(){
-
-
-
-    if(!confirm("この予定を削除しますか？")){
-
-
-        return;
-
-
-    }
-
-
-
-    document.getElementById("scheduleForm").action =
-        "/delete";
-
-
-
-    document.getElementById("scheduleForm").submit();
-
-
-
-}
-
-
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js")
-        .then(() => console.log("Service Worker登録成功"))
-        .catch(err => console.log("登録失敗", err));
-}
-
-</script>
 </body>
 </html>

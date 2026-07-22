@@ -8,372 +8,122 @@
 
 <title>農業管理システム</title>
 
-<style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2E7D32">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
 
-body{
+<link rel="stylesheet" th:href="@{/css/style.css}">
 
-    margin:0;
-
-    font-family:
-    "Segoe UI",
-    "Noto Sans JP",
-    sans-serif;
-
-    background:#f4f7f4;
-
-    color:#333;
-
-}
-
-
-.header{
-
-    background:#1B5E20;
-
-    color:white;
-
-    padding:30px 20px;
-
-    text-align:center;
-
-}
-
-
-.header h1{
-
-    margin:0;
-
-    font-size:28px;
-
-}
-
-
-.header p{
-
-    margin-top:10px;
-
-    opacity:.9;
-
-}
-
-
-
-
-.container{
-
-    max-width:900px;
-
-    margin:30px auto;
-
-    padding:20px;
-
-}
-
-
-
-
-.card-area{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-    gap:20px;
-
-}
-
-
-
-
-.card{
-
-    background:white;
-
-    border-radius:16px;
-
-    padding:25px;
-
-    box-shadow:
-    0 4px 15px rgba(0,0,0,.08);
-
-}
-
-
-
-
-.card h2{
-
-    margin-top:0;
-
-    color:#1B5E20;
-
-    font-size:20px;
-
-}
-
-
-
-.number{
-
-    font-size:36px;
-
-    font-weight:bold;
-
-    color:#388E3C;
-
-}
-
-
-
-
-
-.button{
-
-    display:block;
-
-    margin-top:30px;
-
-    text-align:center;
-
-    background:#2E7D32;
-
-    color:white;
-
-    padding:15px;
-
-    border-radius:30px;
-
-    text-decoration:none;
-
-    font-size:18px;
-
-}
-
-
-
-
-.button:hover{
-
-    background:#1B5E20;
-
-}
-
-@media(max-width:600px){
-
-html,
-body{
-
-    margin:0;
-    padding:0;
-
-    width:100%;
-    min-height:100vh;
-
-}
-
-
-body{
-
-    display:flex;
-    flex-direction:column;
-
-}
-
-
-/* タイトル部分 */
-
-.header{
-
-    text-align:center;
-
-    padding:25px 10px 15px;
-
-}
-
-
-.header h1{
-
-    font-size:28px;
-
-    margin:0 0 8px;
-
-}
-
-
-.header p{
-
-    margin:0;
-
-    font-size:15px;
-
-}
-
-
-
-/* メニュー部分 */
-
-.container{
-
-    flex:1;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    padding:15px;
-
-    box-sizing:border-box;
-
-}
-
-
-
-/* カード一覧 */
-
-.card-area{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-}
-
-
-
-.card{
-
-    padding:18px;
-
-    border-radius:18px;
-
-}
-
-
-
-/* ボタン */
-
-.button{
-
-    margin-top:20px;
-
-    padding:16px;
-
-    text-align:center;
-
-    font-size:20px;
-
-    border-radius:30px;
-
-}
-
-
-
-}
-
-
-
-</style>
-
+<script defer th:src="@{/js/script.js}"></script>
 
 </head>
 
-
 <body>
 
+<header class="header">
 
-<div class="header">
+    <h1>🌱 農業管理システム</h1>
 
-<h1>
-🌱 農業管理システム
-</h1>
+    <p>Smart Farm Management</p>
 
-<p>
-Smart Farm Management
-</p>
+</header>
 
-</div>
+<main class="container">
 
+    <section class="welcome">
 
+        <h2>ようこそ</h2>
 
-<div class="container">
+        <p>
+            作業予定・圃場・作物・経営情報を
+            一元管理できる農業管理システムです。
+        </p>
 
+    </section>
 
-<div class="card-area">
+    <section class="card-area">
 
+        <a th:href="@{/calendar}" class="card">
 
+            <div class="card-title">
 
-<div class="card">
+                <span>📅 作業カレンダー</span>
 
-<h2>📅 作業カレンダー</h2>
+                <span class="arrow">›</span>
 
-<p>
-作業予定・担当者・作物管理
-</p>
+            </div>
 
-</div>
+            <div class="card-text">
 
+                作業予定・担当者・圃場・作業記録を管理します。
 
+            </div>
 
+        </a>
 
-<div class="card">
+        <a th:href="@{/crop}" class="card">
 
-<h2>🌱 作物管理</h2>
+            <div class="card-title">
 
-<p>
-さつまいも<br>
-野菜・作物情報
-</p>
+                <span>🌱 作物管理</span>
 
-</div>
+                <span class="arrow">›</span>
 
+            </div>
 
+            <div class="card-text">
 
+                品種・植付・収穫予定・生育状況を管理します。
 
-<div class="card">
+            </div>
 
-<h2>🚜 圃場管理</h2>
+        </a>
 
-<p>
-圃場ごとの作業記録
-</p>
+        <a th:href="@{/field}" class="card">
 
-</div>
+            <div class="card-title">
 
+                <span>🚜 圃場管理</span>
 
+                <span class="arrow">›</span>
 
+            </div>
 
-<div class="card">
+            <div class="card-text">
 
-<h2>📊 経営管理</h2>
+                圃場情報・面積・利用状況を管理します。
 
-<p>
-売上・経費・収支管理
-</p>
+            </div>
 
-</div>
+        </a>
 
+        <a th:href="@{/management}" class="card">
 
+            <div class="card-title">
 
-</div>
+                <span>📊 経営管理</span>
 
+                <span class="arrow">›</span>
 
+            </div>
 
+            <div class="card-text">
 
-<a class="button"
-href="/calendar">
+                売上・経費・利益など経営状況を管理します。
 
-カレンダーを開く
+            </div>
 
-</a>
+        </a>
 
+    </section>
 
+</main>
 
-</div>
+<footer class="footer">
 
+    Version 1.0
+
+</footer>
 
 </body>
 
