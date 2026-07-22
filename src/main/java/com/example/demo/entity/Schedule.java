@@ -12,36 +12,39 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     // 日付
     private String date;
+
 
     // 時間
     private String time;
 
-    // ユーザー名
+
+    // 担当者
     private String userName;
 
-    // 予定
+
+    // 予定内容
     private String schedule;
 
-    // ===== スマート農業用 =====
 
-    // 畑名
+    // 圃場名
     private String fieldName;
+
 
     // 作物名
     private String cropName;
 
-    // 作業内容
+
+    // 作業種類
     private String workType;
+
 
     // メモ
     private String memo;
 
-    public Schedule() {
-    }
 
-    // ===== Getter / Setter =====
 
     public Long getId() {
         return id;
@@ -51,6 +54,7 @@ public class Schedule {
         this.id = id;
     }
 
+
     public String getDate() {
         return date;
     }
@@ -58,6 +62,7 @@ public class Schedule {
     public void setDate(String date) {
         this.date = date;
     }
+
 
     public String getTime() {
         return time;
@@ -67,6 +72,7 @@ public class Schedule {
         this.time = time;
     }
 
+
     public String getUserName() {
         return userName;
     }
@@ -74,6 +80,7 @@ public class Schedule {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
 
     public String getSchedule() {
         return schedule;
@@ -83,6 +90,7 @@ public class Schedule {
         this.schedule = schedule;
     }
 
+
     public String getFieldName() {
         return fieldName;
     }
@@ -90,6 +98,7 @@ public class Schedule {
     public void setFieldName(String fieldName) {
         this.fieldName = fieldName;
     }
+
 
     public String getCropName() {
         return cropName;
@@ -99,6 +108,7 @@ public class Schedule {
         this.cropName = cropName;
     }
 
+
     public String getWorkType() {
         return workType;
     }
@@ -107,6 +117,7 @@ public class Schedule {
         this.workType = workType;
     }
 
+
     public String getMemo() {
         return memo;
     }
@@ -114,5 +125,4 @@ public class Schedule {
     public void setMemo(String memo) {
         this.memo = memo;
     }
-
 }

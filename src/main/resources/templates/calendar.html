@@ -6,35 +6,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>共有カレンダー</title>
+<title>農業かんりカレンダー</title>
 <link rel="manifest" href="/manifest.json">
 
 <meta name="theme-color" content="#4CAF50">
 
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
 
-
 <style>
+
 body{
+
     font-family:
     "Segoe UI",
     "Noto Sans JP",
     sans-serif;
 
     margin:0;
+
     padding:20px;
 
-    background:#f4f6f8;
-    color:#333;
+    background:#f3f6f3;
+
+    color:#263238;
+
 }
 
 
 /* タイトル */
 
 h1{
+
     text-align:center;
-    margin-bottom:25px;
-    font-size:28px;
+
+    color:#1B5E20;
+
+    font-size:30px;
+
+    margin-bottom:20px;
+
 }
 
 
@@ -43,46 +53,39 @@ h1{
 .nav{
 
     display:flex;
+
     justify-content:center;
+
     align-items:center;
 
-    gap:30px;
+    gap:25px;
 
     margin-bottom:20px;
 
     font-size:22px;
+
     font-weight:bold;
 
 }
 
 
+
 .nav a{
 
-    background:white;
+    background:#1B5E20;
 
-    padding:10px 20px;
+    color:white;
+
+    padding:10px 22px;
 
     border-radius:30px;
 
     text-decoration:none;
 
-    color:#4CAF50;
-
     box-shadow:
-    0 3px 10px rgba(0,0,0,.1);
-
-    transition:.2s;
+    0 4px 10px rgba(0,0,0,.15);
 
 }
-
-
-.nav a:hover{
-
-    background:#4CAF50;
-    color:white;
-
-}
-
 
 
 
@@ -94,7 +97,7 @@ table{
 
     border-collapse:separate;
 
-    border-spacing:5px;
+    border-spacing:6px;
 
     table-layout:fixed;
 
@@ -104,15 +107,16 @@ table{
 
 th{
 
-    background:#4CAF50;
+    background:#2E7D32;
 
     color:white;
 
     padding:12px;
 
-    border-radius:8px;
+    border-radius:10px;
 
 }
+
 
 
 td{
@@ -123,23 +127,22 @@ td{
 
     vertical-align:top;
 
-    border-radius:12px;
+    border-radius:15px;
 
     box-shadow:
-    0 2px 8px rgba(0,0,0,.08);
 
-    overflow:hidden;
+    0 3px 12px rgba(0,0,0,.08);
 
 }
 
 
 
-/* 日付エリア */
-
 .day-box{
 
     height:120px;
-    padding:5px;
+
+    padding:8px;
+
     cursor:pointer;
 
     overflow-y:auto;
@@ -150,10 +153,9 @@ td{
 
 .day-box:hover{
 
-    background:#eef7ff;
+    background:#E8F5E9;
 
 }
-
 
 
 
@@ -163,65 +165,29 @@ td{
 
     font-weight:bold;
 
-    margin-bottom:5px;
+    color:#1B5E20;
 
 }
 
 
 
-
-/* 予定 */
+/* 予定カード */
 
 .schedule{
 
-
-    background:#4CAF50;
+    background:#388E3C;
 
     color:white;
 
-    border-radius:6px;
+    border-radius:8px;
 
-    padding:3px 6px;
+    padding:5px;
 
-    margin-top:4px;
+    margin-top:5px;
 
     font-size:12px;
 
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-
-    white-space:nowrap;
-
 }
-
-
-
-/* 他月 */
-
-.other-month{
-
-    opacity:.5;
-
-}
-
-
-
-/* 土日 */
-
-th:first-child{
-
-    background:#e53935;
-
-}
-
-
-th:last-child{
-
-    background:#1976d2;
-
-}
-
 
 
 /* モーダル */
@@ -245,77 +211,30 @@ th:last-child{
 .modal-content{
 
     background:white;
+
     width:90%;
+
     max-width:500px;
 
     max-height:85vh;
-    overflow-y:auto;
+
+    overflow:auto;
 
     margin:5vh auto;
 
-    border-radius:15px;
-    padding:20px;
+    border-radius:20px;
+
+    padding:25px;
 
 }
+
 
 
 #selectedDate{
 
+    color:#1B5E20;
+
     text-align:center;
-
-}
-
-
-
-/* 予定一覧 */
-
-#scheduleList{
-
-
-    height:200px;
-
-
-    overflow-y:auto;
-
-
-    border-radius:10px;
-
-
-    border:1px solid #ddd;
-
-
-    padding:10px;
-
-
-}
-
-
-
-
-.scheduleItem{
-
-
-    padding:12px;
-
-
-    margin-bottom:8px;
-
-
-    background:#f5f5f5;
-
-
-    border-radius:10px;
-
-
-}
-
-
-
-.scheduleItem:hover{
-
-
-    background:#e3f2fd;
-
 
 }
 
@@ -324,37 +243,25 @@ th:last-child{
 /* 入力 */
 
 select,
+input,
 textarea{
 
 
     width:100%;
 
-
-    border:1px solid #ddd;
-
-
-    border-radius:10px;
-
-
-    padding:10px;
-
-
     box-sizing:border-box;
 
+    padding:12px;
 
-    margin-bottom:10px;
+    margin-bottom:12px;
 
+    border:
+
+    1px solid #ddd;
+
+    border-radius:12px;
 
     font-size:15px;
-
-
-}
-
-
-textarea{
-
-
-    height:90px;
 
 }
 
@@ -367,21 +274,15 @@ button{
 
     border:none;
 
+    border-radius:25px;
 
-    border-radius:20px;
+    padding:12px 25px;
 
-
-    padding:10px 25px;
-
-
-    background:#4CAF50;
-
+    background:#2E7D32;
 
     color:white;
 
-
     cursor:pointer;
-
 
 }
 
@@ -389,77 +290,100 @@ button{
 
 button:hover{
 
-
-    opacity:.8;
-
+    opacity:.85;
 
 }
 
 
-/* 削除ボタン */
 
 #deleteBtn{
 
-    background:#e53935;
+    background:#C62828;
 
 }
 
 
-/* スマホ対応 */
 
-@media (max-width:600px){
+/* スマホ */
 
-    html,
-    body{
-        margin:0;
-        padding:0;
-        height:100vh;
-        overflow:hidden;
-    }
+@media(max-width:600px){
 
-    h1{
-        font-size:16px;
-        margin:5px 0;
-    }
 
-    .nav{
-        margin:0 0 5px 0;
-        font-size:14px;
-    }
+html,
+body{
 
-    table{
-        margin-top:0;
-    }
+    padding:0;
 
-   th{
-        background:#4CAF50;
-    color:white;
-    padding:8px;
-    height:35px;
+    overflow:hidden;
+
+}
+
+
+h1{
+
+    font-size:18px;
+
+    margin:5px;
+
+}
+
+
+.nav{
+
     font-size:14px;
-    }
 
-    td{
-        height:70px;
-         vertical-align:top;
-    }
+    margin-bottom:5px;
 
-    .day-box{
-        height:65px;
-        padding:2px;
-    }
+}
 
-    .day-number{
-        font-size:12px;
-    }
 
-    .schedule{
-        font-size:9px;
+
+th{
+
+    padding:7px;
+
+    font-size:12px;
+
+}
+
+
+td{
+
+    height:70px;
+
+}
+
+
+
+.day-box{
+
+    height:65px;
+
+    padding:3px;
+
+}
+
+
+
+.day-number{
+
+    font-size:12px;
+
+}
+
+
+.schedule{
+
+    font-size:9px;
+
+}
+
 
 
 }
-}
+
 </style>
+
 
 
 </head>
@@ -470,7 +394,7 @@ button:hover{
 
 <div class="header">
 
-    <h1>共有カレンダー</h1>
+    <h1>農業管理カレンダー</h1>
 
     <div class="nav">
 
@@ -689,7 +613,36 @@ class="schedule">
                 required>
 
             </textarea>
+			<!-- 圃場名 -->
 
+<input
+type="text"
+name="fieldName"
+placeholder="圃場名">
+
+
+<!-- 作物名 -->
+
+<input
+type="text"
+name="cropName"
+placeholder="作物名（例：さつまいも）">
+
+
+<!-- 作業種類 -->
+
+<input
+type="text"
+name="workType"
+placeholder="作業内容（例：植付・収穫・除草）">
+
+
+<!-- メモ -->
+
+<textarea
+name="memo"
+placeholder="メモ">
+</textarea>
 
 
 
@@ -778,8 +731,11 @@ function openModal(date){
     // 新規登録モードへ戻す
 
     document.getElementById("scheduleId").value="";
-
-
+    document.getElementsByName("fieldName")[0].value="";
+    document.getElementsByName("cropName")[0].value="";
+    document.getElementsByName("workType")[0].value="";
+    document.getElementsByName("memo")[0].value="";
+	
     document.getElementById("scheduleForm").action="/save";
 
 
@@ -1027,7 +983,20 @@ function editSchedule(id){
         document.getElementsByName("schedule")[0].value =
             schedule.schedule;
 
+        document.getElementsByName("fieldName")[0].value =
+            schedule.fieldName || "";
 
+
+        document.getElementsByName("cropName")[0].value =
+            schedule.cropName || "";
+
+
+        document.getElementsByName("workType")[0].value =
+            schedule.workType || "";
+
+
+        document.getElementsByName("memo")[0].value =
+            schedule.memo || "";
 
 
         document.getElementById("scheduleForm").action =

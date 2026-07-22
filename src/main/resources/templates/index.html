@@ -1,118 +1,291 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>スマート農業システム</title>
+
+<title>農業管理システム</title>
 
 <style>
 
 body{
+
     margin:0;
-    background:#f5f5f5;
-    font-family:"Segoe UI","Noto Sans JP",sans-serif;
+
+    font-family:
+    "Segoe UI",
+    "Noto Sans JP",
+    sans-serif;
+
+    background:#f4f7f4;
+
+    color:#333;
+
 }
 
-header{
-    background:#2E7D32;
+
+.header{
+
+    background:#1B5E20;
+
     color:white;
+
+    padding:30px 20px;
+
     text-align:center;
-    padding:20px;
-    font-size:30px;
-    font-weight:bold;
+
 }
+
+
+.header h1{
+
+    margin:0;
+
+    font-size:28px;
+
+}
+
+
+.header p{
+
+    margin-top:10px;
+
+    opacity:.9;
+
+}
+
+
+
 
 .container{
-    max-width:700px;
+
+    max-width:900px;
+
     margin:30px auto;
+
     padding:20px;
+
 }
 
-.menu{
+
+
+
+.card-area{
+
     display:grid;
-    grid-template-columns:1fr 1fr;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
     gap:20px;
+
 }
+
+
+
 
 .card{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:120px;
-    text-decoration:none;
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:25px;
+
+    box-shadow:
+    0 4px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+
+.card h2{
+
+    margin-top:0;
+
+    color:#1B5E20;
+
+    font-size:20px;
+
+}
+
+
+
+.number{
+
+    font-size:36px;
+
+    font-weight:bold;
+
+    color:#388E3C;
+
+}
+
+
+
+
+
+.button{
+
+    display:block;
+
+    margin-top:30px;
+
+    text-align:center;
+
+    background:#2E7D32;
+
     color:white;
-    font-size:22px;
-    border-radius:15px;
-    box-shadow:0 3px 10px rgba(0,0,0,.2);
+
+    padding:15px;
+
+    border-radius:30px;
+
+    text-decoration:none;
+
+    font-size:18px;
+
 }
 
-.calendar{background:#4CAF50;}
-.work{background:#2196F3;}
-.field{background:#FF9800;}
-.stock{background:#9C27B0;}
-.sales{background:#F44336;}
-.setting{background:#607D8B;}
 
-.card:hover{
-    opacity:.85;
+
+
+.button:hover{
+
+    background:#1B5E20;
+
 }
+
+
+
 
 @media(max-width:600px){
 
-.menu{
-grid-template-columns:1fr;
+
+.header h1{
+
+    font-size:22px;
+
 }
 
-.card{
-height:80px;
-font-size:18px;
+
+.container{
+
+    padding:15px;
+
 }
+
+
+.card{
+
+    padding:20px;
+
+}
+
 
 }
 
 </style>
 
+
 </head>
+
 
 <body>
 
-<header>
 
-🌱 スマート農業システム
+<div class="header">
 
-</header>
+<h1>
+🌱 農業管理システム
+</h1>
+
+<p>
+Smart Farm Management
+</p>
+
+</div>
+
+
 
 <div class="container">
 
-<div class="menu">
 
-<a class="card calendar" href="/calendar">
-📅 カレンダー
-</a>
+<div class="card-area">
 
-<a class="card work" href="#">
-📝 作業日報
-</a>
 
-<a class="card field" href="#">
-🌾 畑管理
-</a>
 
-<a class="card stock" href="#">
-📦 在庫管理
-</a>
+<div class="card">
 
-<a class="card sales" href="#">
-💰 売上管理
-</a>
+<h2>📅 作業カレンダー</h2>
 
-<a class="card setting" href="#">
-⚙ 設定
-</a>
+<p>
+作業予定・担当者・作物管理
+</p>
 
 </div>
 
+
+
+
+<div class="card">
+
+<h2>🌱 作物管理</h2>
+
+<p>
+さつまいも<br>
+野菜・作物情報
+</p>
+
 </div>
+
+
+
+
+<div class="card">
+
+<h2>🚜 圃場管理</h2>
+
+<p>
+圃場ごとの作業記録
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>📊 経営管理</h2>
+
+<p>
+売上・経費・収支管理
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+<a class="button"
+href="/calendar">
+
+カレンダーを開く
+
+</a>
+
+
+
+</div>
+
 
 </body>
+
 </html>
