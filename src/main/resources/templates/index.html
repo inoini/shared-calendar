@@ -158,86 +158,69 @@ body{
 
 }
 
-
-
-
 @media(max-width:600px){
-
-
-.header h1{
-
-    font-size:22px;
-
-}
-
-
-.container{
-
-    padding:15px;
-
-}
-
-
-.card{
-
-    padding:20px;
-
-}
-
-
-}
-/* スマホ用トップページ調整 */
-@media(max-width:600px){
-
 
 html,
 body{
 
     margin:0;
-
     padding:0;
 
     width:100%;
-
     min-height:100vh;
 
 }
 
 
+body{
 
-/* 上部タイトル */
+    display:flex;
+    flex-direction:column;
+
+}
+
+
+/* タイトル部分 */
 
 .header{
 
-    padding:35px 15px 20px;
-
     text-align:center;
+
+    padding:25px 10px 15px;
 
 }
 
 
 .header h1{
 
-    font-size:32px;
+    font-size:28px;
 
-    margin:0 0 10px;
+    margin:0 0 8px;
 
 }
 
 
 .header p{
 
-    font-size:16px;
+    margin:0;
+
+    font-size:15px;
 
 }
 
 
 
-/* メインエリア */
+/* メニュー部分 */
 
 .container{
 
-    width:100%;
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
 
     padding:15px;
 
@@ -247,7 +230,7 @@ body{
 
 
 
-/* カード */
+/* カード一覧 */
 
 .card-area{
 
@@ -255,7 +238,7 @@ body{
 
     flex-direction:column;
 
-    gap:15px;
+    gap:12px;
 
 }
 
@@ -263,51 +246,21 @@ body{
 
 .card{
 
-    width:100%;
+    padding:18px;
 
-    padding:25px 20px;
-
-    box-sizing:border-box;
-
-    border-radius:20px;
+    border-radius:18px;
 
 }
 
 
 
-.card h2{
-
-    font-size:24px;
-
-    margin:0 0 10px;
-
-}
-
-
-
-.card p{
-
-    font-size:17px;
-
-    margin:0;
-
-}
-
-
-
-/* カレンダーボタン */
+/* ボタン */
 
 .button{
 
-    display:block;
+    margin-top:20px;
 
-    width:100%;
-
-    box-sizing:border-box;
-
-    margin-top:25px;
-
-    padding:18px;
+    padding:16px;
 
     text-align:center;
 
@@ -318,7 +271,10 @@ body{
 }
 
 
+
 }
+
+
 
 </style>
 
