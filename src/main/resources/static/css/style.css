@@ -1070,3 +1070,53 @@ button:hover{
 
 
 }
+/* カレンダーの日付サイズ固定 */
+
+.calendar-table td {
+
+    height: 120px;
+
+    vertical-align: top;
+
+    overflow: hidden;
+
+}
+
+
+/* 日付枠 */
+
+.day-box {
+
+    height: 120px;
+
+    overflow: hidden;
+
+}
+
+
+
+/* 予定カード */
+
+.schedule-card {
+
+    max-height: 55px;
+
+    overflow: hidden;
+
+    font-size: 12px;
+
+}
+
+
+
+/* 予定が多い場合 */
+
+.schedule-card span {
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
