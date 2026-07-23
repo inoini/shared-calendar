@@ -4,260 +4,148 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>農業管理システム | 作物登録</title>
-
 
 <link rel="stylesheet" th:href="@{/css/style.css}">
 
 </head>
 
-
 <body>
-
-
 
 <header class="top-header">
 
+    <a href="/" class="logo-area">
 
-<a href="/" class="logo-area">
+        <div class="logo-icon">
+            🌱
+        </div>
 
+        <div>
 
-<div class="logo-icon">
+            <h1>農業管理システム</h1>
 
-🌱
+            <p>Smart Farm Management</p>
 
-</div>
+        </div>
 
-
-<div>
-
-<h1>
-農業管理システム
-</h1>
-
-
-<p>
-Smart Farm Management
-</p>
-
-
-</div>
-
-
-</a>
-
+    </a>
 
 </header>
 
-
-
-
-
 <main class="calendar-page">
 
+<div class="back-home">
 
+    <a href="/">🏠 トップページへ戻る</a>
+
+</div>
 
 <section class="calendar-header">
 
+<h2>🌱 作物登録</h2>
 
-<h2>
-🌱 作物登録
-</h2>
-
-
-<p>
-新しい作物を登録します
-</p>
-
+<p>作物情報を登録します</p>
 
 </section>
 
+<div class="modal-content">
 
+<form
 
+th:action="@{/crop/save}"
+th:object="${crop}"
+method="post">
+<input type="hidden" th:field="*{id}">
+<label>作物名</label>
 
+<input
+type="text"
+th:field="*{cropName}"
+required>
 
+<label>品種</label>
 
-<section class="modal-content">
+<input
+type="text"
+th:field="*{variety}">
 
+<label>圃場</label>
 
-<form action="/crop/save"
-      method="post"
-      th:object="${crop}">
+<input
+type="text"
+th:field="*{fieldName}">
 
+<label>植付日</label>
 
+<input
+type="date"
+th:field="*{plantingDate}">
 
+<label>収穫予定日</label>
 
+<input
+type="date"
+th:field="*{harvestDate}">
 
-<label>
-作物名
-</label>
+<label>面積(a)</label>
 
-<input type="text"
-       th:field="*{cropName}"
-       placeholder="例：さつまいも">
+<input
+type="number"
+step="0.1"
+th:field="*{area}">
 
-
-
-
-
-
-<label>
-品種
-</label>
-
-<input type="text"
-       th:field="*{variety}"
-       placeholder="例：紅はるか">
-
-
-
-
-
-
-<label>
-植付日
-</label>
-
-<input type="date"
-       th:field="*{plantingDate}">
-
-
-
-
-
-
-<label>
-収穫予定日
-</label>
-
-<input type="date"
-       th:field="*{harvestDate}">
-
-
-
-
-
-
-<label>
-圃場（ほじょう）
-</label>
-
-<input type="text"
-       th:field="*{fieldName}"
-       placeholder="例：第1圃場">
-
-
-
-
-
-
-<label>
-状態
-</label>
-
+<label>状態</label>
 
 <select th:field="*{status}">
 
-
-<option value="予定">
-予定
+<option value="栽培準備">
+栽培準備
 </option>
 
-
-<option value="植付済">
-植付済
+<option value="植付">
+植付
 </option>
-
 
 <option value="生育中">
 生育中
 </option>
 
+<option value="収穫待ち">
+収穫待ち
+</option>
 
 <option value="収穫済">
 収穫済
 </option>
 
-
 </select>
 
+<br>
 
-
-
-
-
-
-<label>
-メモ
-</label>
-
-
-<textarea
-th:field="*{memo}"
-placeholder="肥料・天候・作業メモ">
-
-</textarea>
-
-
-
-
-
-
-
-<button id="saveBtn"
-type="submit">
+<button
+type="submit"
+id="saveBtn">
 
 保存
 
 </button>
 
+<button
+type="button"
+onclick="location.href='/crop'">
 
+一覧へ戻る
 
-
-
-<div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap;">
-
-
-<a href="/crop"
-class="month-button">
-
-🌱 作物一覧
-
-</a>
-
-
-
-<a href="/"
-class="month-button">
-
-🏠 ホームへ戻る
-
-</a>
-
-
-</div>
-
-
-
+</button>
 
 </form>
 
-
-</section>
-
-
-
-
-
+</div>
 
 </main>
 
-
-
 </body>
-
 
 </html>

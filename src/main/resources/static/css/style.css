@@ -708,13 +708,11 @@ button[type=button]:not(#deleteBtn):hover{
 
 
     .month-button{
-
-        padding:8px 14px;
-
-        font-size:13px;
-
-    }
-
+    display:inline-block;
+    padding:8px 14px;
+    margin:4px 0;
+    line-height:1.5;
+}
 
     .calendar-table{
 
@@ -1072,16 +1070,12 @@ button:hover{
 }
 /* カレンダーの日付サイズ固定 */
 
+.calendar-table th,
 .calendar-table td {
-
-    height: 120px;
-
-    vertical-align: top;
-
-    overflow: hidden;
-
+    padding: 12px 8px;
+    vertical-align: middle;
+    text-align: center;
 }
-
 
 /* 日付枠 */
 
@@ -1164,4 +1158,26 @@ button:hover{
 
     margin-top:25px;
 
+}
+.back-home a{
+
+    display:inline-block;
+
+    background:#2e7d32;
+
+    color:white;
+
+    padding:10px 20px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+}
+
+.back-home a:hover{
+
+    background:#1b5e20;
 }
