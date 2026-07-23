@@ -1120,3 +1120,48 @@ button:hover{
     text-overflow: ellipsis;
 
 }
+.logo-area{
+
+    text-decoration:none;
+    color:white;
+    cursor:pointer;
+
+}
+/* トップページへ戻るボタン位置調整 */
+
+.home-button{
+
+    display:inline-block;
+
+    margin-top:20px;
+
+    margin-bottom:20px;
+
+    background:#43a047;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:12px 20px;
+
+    border-radius:12px;
+
+    font-weight:bold;
+
+    box-shadow:
+    0 5px 15px rgba(0,0,0,.15);
+
+}
+
+
+.home-button:hover{
+
+    background:#2e7d32;
+
+}
+.page-home{
+
+    margin-top:25px;
+
+}
