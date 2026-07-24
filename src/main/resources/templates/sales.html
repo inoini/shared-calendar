@@ -70,6 +70,8 @@ td,th{
 
 
 
+/* 戻るボタン */
+
 .back{
 
     display:inline-block;
@@ -87,6 +89,42 @@ td,th{
     border-radius:5px;
 
 }
+
+
+
+/* 編集・削除ボタン */
+
+.edit,
+.delete{
+
+    display:inline-block;
+
+    padding:8px 12px;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:5px;
+
+    margin:3px;
+
+}
+
+
+.edit{
+
+    background:#1976D2;
+
+}
+
+
+.delete{
+
+    background:#D32F2F;
+
+}
+
 
 
 /* スマホ対応 */
@@ -161,6 +199,17 @@ td{
 
 
 
+.edit,
+.delete{
+
+    font-size:18px;
+
+    padding:12px 15px;
+
+}
+
+
+
 .back{
 
     width:100%;
@@ -174,7 +223,6 @@ td{
     padding:12px;
 
 }
-
 
 
 }
@@ -253,6 +301,8 @@ td{
 
 <th>メモ</th>
 
+<th>操作</th>
+
 </tr>
 
 
@@ -264,9 +314,28 @@ td{
 
 <td th:text="${s.crop}"></td>
 
-<td th:text="${s.amount}"></td>
+<td th:text="${s.amount} + '円'"></td>
 
 <td th:text="${s.memo}"></td>
+
+
+<td>
+
+
+<a class="edit"
+th:href="@{/sales/edit/{id}(id=${s.id})}">
+編集
+</a>
+
+
+<a class="delete"
+th:href="@{/sales/delete/{id}(id=${s.id})}"
+onclick="return confirm('削除しますか？');">
+削除
+</a>
+
+
+</td>
 
 
 </tr>
@@ -276,8 +345,11 @@ td{
 
 
 
+
 <a class="back" href="/management">
+
 経営管理へ戻る
+
 </a>
 
 

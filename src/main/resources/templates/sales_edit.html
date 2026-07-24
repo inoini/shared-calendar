@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>売上編集</title>
+
+
+<style>
+
+body{
+font-family:sans-serif;
+margin:20px;
+}
+
+
+h1{
+color:#2E7D32;
+}
+
+
+input,textarea{
+
+width:100%;
+padding:12px;
+margin-bottom:10px;
+box-sizing:border-box;
+
+}
+
+
+button{
+
+width:100%;
+padding:15px;
+
+background:#4CAF50;
+
+color:white;
+
+border:none;
+
+border-radius:5px;
+
+font-size:18px;
+
+}
+
+
+.back{
+
+display:block;
+
+margin-top:20px;
+
+background:#555;
+
+color:white;
+
+padding:12px;
+
+text-align:center;
+
+text-decoration:none;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>📈 売上編集</h1>
+
+
+
+<form th:action="@{/sales/update}"
+      th:object="${sale}"
+      method="post">
+
+
+<input type="hidden"
+       th:field="*{id}">
+
+
+日付
+
+<input type="date"
+       th:field="*{date}">
+
+
+
+作物
+
+<input type="text"
+       th:field="*{crop}">
+
+
+
+売上金額
+
+<input type="number"
+       th:field="*{amount}">
+
+
+
+メモ
+
+<textarea th:field="*{memo}">
+</textarea>
+
+
+
+<button type="submit">
+更新
+</button>
+
+
+</form>
+
+
+
+<a class="back"
+href="/sales">
+
+売上管理へ戻る
+
+</a>
+
+
+</body>
+
+</html>

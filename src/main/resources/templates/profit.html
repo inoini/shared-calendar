@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>収支確認</title>
@@ -12,22 +13,52 @@
 <style>
 
 body{
+
     font-family:sans-serif;
     margin:20px;
+
 }
 
 
 h1{
+
     color:#2E7D32;
+
 }
+
+
+.summary{
+
+    background:#f1f8e9;
+
+    padding:15px;
+
+    border-radius:8px;
+
+    margin-bottom:20px;
+
+}
+
+
+.profit{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    color:#2E7D32;
+
+}
+
 
 
 table{
 
     width:100%;
+
     border-collapse:collapse;
 
-    margin-bottom:30px;
+    margin-top:20px;
 
 }
 
@@ -36,34 +67,14 @@ th,td{
 
     border:1px solid #ccc;
 
-    padding:10px;
-
-    text-align:center;
+    padding:8px;
 
 }
 
 
 th{
 
-    background:#f0f0f0;
-
-}
-
-
-.total{
-
-    font-size:20px;
-
-    font-weight:bold;
-
-}
-
-
-.profit{
-
-    font-size:24px;
-
-    color:#2E7D32;
+    background:#eeeeee;
 
 }
 
@@ -75,11 +86,11 @@ th{
 
     margin-top:20px;
 
-    padding:10px 15px;
-
     background:#555;
 
     color:white;
+
+    padding:10px;
 
     text-decoration:none;
 
@@ -88,7 +99,67 @@ th{
 }
 
 
+
+
+@media screen and (max-width:600px){
+
+
+body{
+
+    font-size:18px;
+
+    margin:15px;
+
+}
+
+
+h1{
+
+    font-size:28px;
+
+}
+
+
+.summary{
+
+    font-size:20px;
+
+}
+
+
+table{
+
+    font-size:14px;
+
+}
+
+
+
+th,td{
+
+    padding:8px;
+
+}
+
+
+
+.back{
+
+    width:100%;
+
+    text-align:center;
+
+    box-sizing:border-box;
+
+}
+
+
+
+}
+
+
 </style>
+
 
 </head>
 
@@ -96,7 +167,44 @@ th{
 <body>
 
 
-<h1>💰 収支確認</h1>
+<h1>📊 収支確認</h1>
+
+
+
+<div class="summary">
+
+
+<p>
+売上合計：
+<span th:text="${salesTotal}">
+</span>
+円
+</p>
+
+
+
+<p>
+経費合計：
+<span th:text="${expenseTotal}">
+</span>
+円
+</p>
+
+
+
+<p class="profit">
+
+利益：
+<span th:text="${profit}">
+</span>
+円
+
+</p>
+
+
+</div>
+
+
 
 
 
@@ -104,6 +212,7 @@ th{
 
 
 <table>
+
 
 <tr>
 
@@ -118,13 +227,15 @@ th{
 
 <tr th:each="s:${sales}">
 
+
 <td th:text="${s.date}"></td>
 
 <td th:text="${s.crop}"></td>
 
-<td th:text="${s.amount} + '円'"></td>
+<td th:text="${s.amount}"></td>
 
 <td th:text="${s.memo}"></td>
+
 
 </tr>
 
@@ -133,20 +244,13 @@ th{
 
 
 
-<p class="total">
-
-売上合計：
-<span th:text="${salesTotal}"></span> 円
-
-</p>
 
 
-
-
-<h2>💸 経費一覧</h2>
+<h2>💰 経費一覧</h2>
 
 
 <table>
+
 
 <tr>
 
@@ -158,6 +262,7 @@ th{
 </tr>
 
 
+
 <tr th:each="e:${expenses}">
 
 
@@ -165,7 +270,7 @@ th{
 
 <td th:text="${e.category}"></td>
 
-<td th:text="${e.amount} + '円'"></td>
+<td th:text="${e.amount}"></td>
 
 <td th:text="${e.memo}"></td>
 
@@ -177,30 +282,13 @@ th{
 
 
 
-<p class="total">
-
-経費合計：
-<span th:text="${expenseTotal}"></span> 円
-
-</p>
-
-
-
-<hr>
-
-
-<p class="profit">
-
-利益：
-<span th:text="${profit}"></span> 円
-
-</p>
-
-
 
 <a class="back" href="/management">
+
 経営管理へ戻る
+
 </a>
+
 
 
 </body>

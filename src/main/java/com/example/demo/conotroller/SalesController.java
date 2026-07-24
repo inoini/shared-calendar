@@ -86,6 +86,36 @@ public class SalesController {
         return salesRepository.findAll();
 
     }
+    @GetMapping("/sales/edit/{id}")
+    public String edit(
+            @PathVariable Long id,
+            Model model){
 
+        Sales sale =
+            salesRepository.findById(id)
+            .orElseThrow();
 
+        model.addAttribute("sale", sale);
+
+        return "sales_edit";
+
+    }
+    @PostMapping("/sales/update")
+    public String update(
+            @ModelAttribute Sales sale){
+
+        salesRepository.save(sale);
+
+        return "redirect:/sales";
+
+    }
+    @GetMapping("/sales/delete/{id}")
+    public String delete(
+            @PathVariable Long id){
+
+        salesRepository.deleteById(id);
+
+        return "redirect:/sales";
+
+    }
 }

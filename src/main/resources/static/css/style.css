@@ -1181,3 +1181,95 @@ button:hover{
 
     background:#1b5e20;
 }
+.edit,
+.delete{
+
+    padding:8px 12px;
+    text-decoration:none;
+    border-radius:5px;
+    color:white;
+    margin:3px;
+
+}
+
+
+.edit{
+
+    background:#1976D2;
+
+}
+
+
+.delete{
+
+    background:#D32F2F;
+
+}
+/* 操作ボタン共通 */
+
+.edit,
+.delete,
+.back,
+.management-btn{
+
+    display:inline-block;
+    padding:10px 16px;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    margin:3px;
+    font-size:16px;
+
+}
+
+
+/* 編集 */
+
+.edit{
+
+    background:#1976D2;
+
+}
+
+
+/* 削除 */
+
+.delete{
+
+    background:#D32F2F;
+
+}
+
+
+/* 経営管理へ戻る */
+
+.back,
+.management-btn{
+
+    background:#555;
+
+}
+
+
+/* マウスを乗せた時 */
+
+.edit:hover{
+
+    background:#0D47A1;
+
+}
+
+
+.delete:hover{
+
+    background:#B71C1C;
+
+}
+
+
+.back:hover,
+.management-btn:hover{
+
+    background:#333;
+
+}

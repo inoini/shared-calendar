@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>経費編集</title>
+
+
+<style>
+
+body{
+
+    font-family:sans-serif;
+    margin:20px;
+
+}
+
+
+h1{
+
+    color:#2E7D32;
+
+}
+
+
+input,
+textarea,
+select{
+
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    box-sizing:border-box;
+
+}
+
+
+
+button{
+
+    width:100%;
+    padding:15px;
+    background:#4CAF50;
+    color:white;
+    border:none;
+    border-radius:5px;
+
+}
+
+
+
+/* 戻るボタン */
+
+.back{
+
+    display:inline-block;
+    margin-top:20px;
+    background:#555;
+    color:white;
+    padding:10px 15px;
+    text-decoration:none;
+    border-radius:5px;
+
+}
+
+
+
+/* スマホ対応 */
+
+@media screen and (max-width:600px){
+
+
+body{
+
+    font-size:18px;
+    margin:15px;
+
+}
+
+
+
+h1{
+
+    font-size:28px;
+
+}
+
+
+
+input,
+textarea,
+select{
+
+    font-size:18px;
+    padding:12px;
+
+}
+
+
+
+button{
+
+    font-size:20px;
+    padding:14px;
+
+}
+
+
+
+.back{
+
+    width:100%;
+    text-align:center;
+    box-sizing:border-box;
+    font-size:18px;
+    padding:12px;
+
+}
+
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<h1>💰 経費編集</h1>
+
+
+
+<form th:action="@{/expenses/update}"
+      th:object="${expense}"
+      method="post">
+
+
+<input type="hidden"
+       th:field="*{id}">
+
+
+
+日付
+
+<input type="date"
+       th:field="*{date}">
+
+
+
+項目
+
+
+<select th:field="*{category}">
+
+
+<option value="">
+選択してください
+</option>
+
+
+<option value="肥料">
+肥料
+</option>
+
+
+<option value="農薬">
+農薬
+</option>
+
+
+<option value="燃料">
+燃料
+</option>
+
+
+<option value="資材">
+資材
+</option>
+
+
+<option value="機械">
+機械
+</option>
+
+
+<option value="その他">
+その他
+</option>
+
+
+</select>
+
+
+
+金額
+
+<input type="number"
+       th:field="*{amount}">
+
+
+
+メモ
+
+<textarea th:field="*{memo}">
+</textarea>
+
+
+
+<button type="submit">
+
+更新
+
+</button>
+
+
+
+</form>
+
+
+
+<a class="back" href="/expenses">
+
+経費管理へ戻る
+
+</a>
+
+
+
+</body>
+
+</html>

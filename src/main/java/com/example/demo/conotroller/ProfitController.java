@@ -47,6 +47,13 @@ public class ProfitController {
 
 
         model.addAttribute(
+                "expenses",
+                expensesController.getExpenses()
+        );
+
+
+
+        model.addAttribute(
                 "salesTotal",
                 salesTotal
         );
@@ -62,6 +69,7 @@ public class ProfitController {
                 "profit",
                 salesTotal - expenseTotal
         );
+
 
 
         return "profit";
