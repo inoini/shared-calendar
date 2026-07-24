@@ -1,35 +1,44 @@
 package com.example.demo.conotroller;
 
+
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 
 import com.example.demo.entity.Schedule;
 import com.example.demo.model.CalendarDay;
 import com.example.demo.service.ScheduleService;
 
 
+
 @Controller
 public class CalendarController {
 
 
-    @Autowired
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
+
+
+
+    public CalendarController(
+            ScheduleService scheduleService){
+
+        this.scheduleService = scheduleService;
+
+    }
+
 
 
 
     // ホーム
     @GetMapping("/")
-    public String home() {
+    public String home(){
 
         return "index";
 
@@ -38,12 +47,13 @@ public class CalendarController {
 
 
 
+
     // カレンダー表示
     @GetMapping("/calendar")
     public String calendar(
-            @RequestParam(required = false) Integer year,
-            @RequestParam(required = false) Integer month,
-            Model model) {
+            @RequestParam(required=false) Integer year,
+            @RequestParam(required=false) Integer month,
+            Model model){
 
 
         YearMonth ym =
@@ -53,39 +63,50 @@ public class CalendarController {
 
 
 
-        model.addAttribute("year", ym.getYear());
-
-        model.addAttribute("month", ym.getMonthValue());
-
-
-
-        YearMonth prev = ym.minusMonths(1);
-
-        YearMonth next = ym.plusMonths(1);
+        model.addAttribute(
+                "year",
+                ym.getYear()
+        );
 
 
-
-        model.addAttribute("prevYear", prev.getYear());
-
-        model.addAttribute("prevMonth", prev.getMonthValue());
-
-        model.addAttribute("nextYear", next.getYear());
-
-        model.addAttribute("nextMonth", next.getMonthValue());
+        model.addAttribute(
+                "month",
+                ym.getMonthValue()
+        );
 
 
 
-
-        LocalDate firstDay = ym.atDay(1);
-
-
-        int startWeek =
-                firstDay.getDayOfWeek().getValue() % 7;
+        YearMonth prev =
+                ym.minusMonths(1);
 
 
+        YearMonth next =
+                ym.plusMonths(1);
 
-        int lastDay =
-                ym.lengthOfMonth();
+
+
+        model.addAttribute(
+                "prevYear",
+                prev.getYear()
+        );
+
+
+        model.addAttribute(
+                "prevMonth",
+                prev.getMonthValue()
+        );
+
+
+        model.addAttribute(
+                "nextYear",
+                next.getYear()
+        );
+
+
+        model.addAttribute(
+                "nextMonth",
+                next.getMonthValue()
+        );
 
 
 
@@ -95,13 +116,17 @@ public class CalendarController {
 
 
 
+        int lastDay =
+                ym.lengthOfMonth();
 
 
-        for(int day = 1; day <= lastDay; day++){
+
+        for(int day=1; day<=lastDay; day++){
 
 
             LocalDate date =
                     ym.atDay(day);
+
 
 
             String dateKey =
@@ -109,23 +134,21 @@ public class CalendarController {
 
 
 
-            List<Schedule> scheduleList =
+            List<Schedule> schedules =
                     scheduleService.findByDate(dateKey);
 
 
 
             calendarDays.add(
-                new CalendarDay(
-                    day,
-                    dateKey,
-                    true,
-                    scheduleList
-                )
+                    new CalendarDay(
+                            day,
+                            dateKey,
+                            true,
+                            schedules
+                    )
             );
 
-
         }
-
 
 
 
@@ -138,54 +161,24 @@ public class CalendarController {
 
         return "calendar";
 
-
     }
 
 
 
 
 
-
-    // ==========================
     // 保存
-    // ==========================
-
-
     @PostMapping("/save")
     public String save(
-
-
             @RequestParam String date,
-
-
             @RequestParam String startTime,
-
-
             @RequestParam String endTime,
-
-
             @RequestParam String userName,
-
-
             @RequestParam String schedule,
-
-
-            @RequestParam(required=false)
-            String fieldName,
-
-
-            @RequestParam(required=false)
-            String cropName,
-
-
-            @RequestParam(required=false)
-            String workType,
-
-
-            @RequestParam(required=false)
-            String memo
-
-    ){
+            @RequestParam(required=false) String fieldName,
+            @RequestParam(required=false) String cropName,
+            @RequestParam(required=false) String workType,
+            @RequestParam(required=false) String memo){
 
 
 
@@ -195,36 +188,18 @@ public class CalendarController {
 
 
         s.setDate(date);
-
-
         s.setStartTime(startTime);
-
-
         s.setEndTime(endTime);
-
-
         s.setUserName(userName);
-
-
         s.setSchedule(schedule);
-
-
         s.setFieldName(fieldName);
-
-
         s.setCropName(cropName);
-
-
         s.setWorkType(workType);
-
-
         s.setMemo(memo);
 
 
 
-
         scheduleService.save(s);
-
 
 
 
@@ -238,7 +213,6 @@ public class CalendarController {
                 + "&month="
                 + d.getMonthValue();
 
-
     }
 
 
@@ -247,12 +221,10 @@ public class CalendarController {
 
 
     // 予定取得
-
     @GetMapping("/schedule")
     @ResponseBody
     public List<Schedule> getSchedule(
-            @RequestParam String date
-    ){
+            @RequestParam String date){
 
         return scheduleService.findByDate(date);
 
@@ -262,14 +234,11 @@ public class CalendarController {
 
 
 
-
     // 編集取得
-
     @GetMapping("/schedule/edit")
     @ResponseBody
     public Schedule edit(
-            @RequestParam Long id
-    ){
+            @RequestParam Long id){
 
         return scheduleService.findById(id);
 
@@ -280,47 +249,19 @@ public class CalendarController {
 
 
 
-
     // 更新
-
     @PostMapping("/update")
     public String update(
-
-
             @RequestParam Long id,
-
-
             @RequestParam String date,
-
-
             @RequestParam String startTime,
-
-
             @RequestParam String endTime,
-
-
             @RequestParam String userName,
-
-
             @RequestParam String schedule,
-
-
-            @RequestParam(required=false)
-            String fieldName,
-
-
-            @RequestParam(required=false)
-            String cropName,
-
-
-            @RequestParam(required=false)
-            String workType,
-
-
-            @RequestParam(required=false)
-            String memo
-
-    ){
+            @RequestParam(required=false) String fieldName,
+            @RequestParam(required=false) String cropName,
+            @RequestParam(required=false) String workType,
+            @RequestParam(required=false) String memo){
 
 
 
@@ -331,33 +272,15 @@ public class CalendarController {
 
         if(s != null){
 
-
             s.setDate(date);
-
-
             s.setStartTime(startTime);
-
-
             s.setEndTime(endTime);
-
-
             s.setUserName(userName);
-
-
             s.setSchedule(schedule);
-
-
             s.setFieldName(fieldName);
-
-
             s.setCropName(cropName);
-
-
             s.setWorkType(workType);
-
-
             s.setMemo(memo);
-
 
 
             scheduleService.save(s);
@@ -377,7 +300,6 @@ public class CalendarController {
                 + "&month="
                 + d.getMonthValue();
 
-
     }
 
 
@@ -386,12 +308,10 @@ public class CalendarController {
 
 
     // 削除
-
     @PostMapping("/delete")
     public String delete(
             @RequestParam Long id,
-            @RequestParam String date
-    ){
+            @RequestParam String date){
 
 
         scheduleService.delete(id);
@@ -407,7 +327,6 @@ public class CalendarController {
                 + d.getYear()
                 + "&month="
                 + d.getMonthValue();
-
 
     }
 

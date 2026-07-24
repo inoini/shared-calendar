@@ -1273,3 +1273,57 @@ button:hover{
     background:#333;
 
 }
+/* AI農業アシスタント */
+
+.ai-link{
+
+    text-align:center;
+
+    margin:40px 0;
+
+}
+
+
+.ai-link a{
+
+    display:inline-block;
+
+    background:#673AB7;
+
+    color:white;
+
+    padding:15px 30px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+
+.ai-link a:hover{
+
+    opacity:0.8;
+
+}
+
+
+/* スマホ */
+
+@media screen and (max-width:600px){
+
+    .ai-link a{
+
+        width:85%;
+
+        font-size:20px;
+
+        padding:16px;
+
+    }
+
+}
