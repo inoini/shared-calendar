@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>圃場管理</title>
+
+<style>
+
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #2E7D32;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #e8f5e9;
+}
+
+a {
+    text-decoration: none;
+}
+
+.button {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.delete {
+    color: red;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.button {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.home-button {
+    display:inline-block;
+    margin-top:20px;
+    padding:8px 15px;
+    background:#555;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>圃場管理</h1>
+<a class="home-button" href="/field/map">
+🗺 圃場マップ
+</a>
+<a class="button" href="/field/new">
+圃場追加
+</a>
+
+
+<table>
+
+<thead>
+<tr>
+<th>圃場名</th>
+<th>場所</th>
+<th>緯度</th>
+<th>経度</th>
+<th>面積(a)</th>
+<th>作物</th>
+<th>メモ</th>
+<th>操作</th>
+</tr>
+</thead>
+
+
+<tbody>
+
+<tr th:each="field : ${fields}">
+
+<td th:text="${field.name}"></td>
+
+<td th:text="${field.location}"></td>
+<td th:text="${field.latitude}"></td>
+
+<td th:text="${field.longitude}"></td>
+<td th:text="${field.area}"></td>
+
+<td th:text="${field.cropName}"></td>
+
+<td th:text="${field.memo}"></td>
+
+
+<td>
+
+<a th:href="@{/field/edit/{id}(id=${field.id})}">
+編集
+</a>
+
+<br>
+
+<a class="delete"
+th:href="@{/field/delete/{id}(id=${field.id})}">
+削除
+</a>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+
+<br>
+
+<a class="home-button" href="/">
+トップへ戻る
+</a>
+
+
+</body>
+
+</html>

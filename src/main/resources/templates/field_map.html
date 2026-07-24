@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>圃場マップ</title>
+
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+
+<style>
+
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #2E7D32;
+}
+
+
+#map {
+    width: 100%;
+    height: 600px;
+}
+
+
+.home-button {
+
+    display:inline-block;
+    margin-top:20px;
+    padding:8px 15px;
+    background:#555;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>圃場マップ</h1>
+
+
+<div id="map"></div>
+
+
+<a class="home-button" href="/field">
+圃場一覧へ戻る
+</a>
+
+
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+<script th:inline="javascript">
+
+
+// 圃場データ取得
+let fields = /*[[${fields}]]*/ [];
+
+
+
+// 地図作成
+let map = L.map('map')
+.setView([35.7767,140.3185],13);
+
+
+
+// OpenStreetMap表示
+L.tileLayer(
+'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+    attribution:'© OpenStreetMap'
+}
+).addTo(map);
+
+
+
+// 圃場をマーカー表示
+
+fields.forEach(function(field){
+
+
+    if(field.latitude != null && field.longitude != null){
+
+
+        let marker = L.marker(
+            [
+                field.latitude,
+                field.longitude
+            ]
+        ).addTo(map);
+
+
+
+        marker.bindPopup(
+
+            "<b>" + field.name + "</b><br>" +
+            "作物：" + (field.cropName ?? "") + "<br>" +
+            "面積：" + (field.area ?? "") + "a<br>" +
+            "場所：" + (field.location ?? "")
+
+        );
+
+
+    }
+
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>

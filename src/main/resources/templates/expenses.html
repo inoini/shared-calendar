@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>経費管理</title>
+
+
+<style>
+
+body{
+font-family:sans-serif;
+margin:20px;
+}
+
+h1{
+color:#2E7D32;
+}
+
+
+input,select,textarea{
+
+width:100%;
+padding:8px;
+margin-bottom:10px;
+
+}
+
+
+button{
+
+padding:10px 20px;
+background:#4CAF50;
+color:white;
+border:none;
+border-radius:5px;
+
+}
+
+
+table{
+
+margin-top:30px;
+border-collapse:collapse;
+width:100%;
+
+}
+
+
+td,th{
+
+border:1px solid #ccc;
+padding:8px;
+
+}
+
+
+.back{
+
+display:inline-block;
+margin-top:20px;
+background:#555;
+color:white;
+padding:10px;
+text-decoration:none;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>💰 経費管理</h1>
+
+
+
+<form th:action="@{/expenses/add}"
+      th:object="${expense}"
+      method="post">
+
+
+日付
+
+<input type="date"
+       th:field="*{date}">
+
+
+項目
+
+
+<select th:field="*{category}">
+<option>肥料</option>
+<option>農薬</option>
+<option>燃料</option>
+<option>資材</option>
+<option>機械</option>
+<option>その他</option>
+
+</select>
+
+
+
+金額
+
+<input type="number"
+       th:field="*{amount}">
+
+
+
+メモ
+
+<textarea th:field="*{memo}">
+</textarea>
+
+
+
+<button type="submit">
+登録
+</button>
+
+
+</form>
+
+
+
+<h2>経費一覧</h2>
+
+
+<table>
+
+
+<tr>
+
+<th>日付</th>
+<th>項目</th>
+<th>金額</th>
+<th>メモ</th>
+
+</tr>
+
+
+
+<tr th:each="expense:${expenses}">
+
+
+<td th:text="${expense.date}"></td>
+
+<td th:text="${expense.category}"></td>
+
+<td th:text="${expense.amount}"></td>
+
+<td th:text="${expense.memo}"></td>
+
+
+</tr>
+
+
+</table>
+
+
+
+<a class="back" href="/management">
+経営管理へ戻る
+</a>
+
+
+</body>
+
+</html>

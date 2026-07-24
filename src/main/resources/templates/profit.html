@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>収支確認</title>
+
+
+<style>
+
+body{
+    font-family:sans-serif;
+    margin:20px;
+}
+
+
+h1{
+    color:#2E7D32;
+}
+
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+    margin-bottom:30px;
+
+}
+
+
+th,td{
+
+    border:1px solid #ccc;
+
+    padding:10px;
+
+    text-align:center;
+
+}
+
+
+th{
+
+    background:#f0f0f0;
+
+}
+
+
+.total{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+}
+
+
+.profit{
+
+    font-size:24px;
+
+    color:#2E7D32;
+
+}
+
+
+
+.back{
+
+    display:inline-block;
+
+    margin-top:20px;
+
+    padding:10px 15px;
+
+    background:#555;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:5px;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>💰 収支確認</h1>
+
+
+
+<h2>📈 売上一覧</h2>
+
+
+<table>
+
+<tr>
+
+<th>日付</th>
+<th>作物</th>
+<th>金額</th>
+<th>メモ</th>
+
+</tr>
+
+
+
+<tr th:each="s:${sales}">
+
+<td th:text="${s.date}"></td>
+
+<td th:text="${s.crop}"></td>
+
+<td th:text="${s.amount} + '円'"></td>
+
+<td th:text="${s.memo}"></td>
+
+</tr>
+
+
+</table>
+
+
+
+<p class="total">
+
+売上合計：
+<span th:text="${salesTotal}"></span> 円
+
+</p>
+
+
+
+
+<h2>💸 経費一覧</h2>
+
+
+<table>
+
+<tr>
+
+<th>日付</th>
+<th>項目</th>
+<th>金額</th>
+<th>メモ</th>
+
+</tr>
+
+
+<tr th:each="e:${expenses}">
+
+
+<td th:text="${e.date}"></td>
+
+<td th:text="${e.category}"></td>
+
+<td th:text="${e.amount} + '円'"></td>
+
+<td th:text="${e.memo}"></td>
+
+
+</tr>
+
+
+</table>
+
+
+
+<p class="total">
+
+経費合計：
+<span th:text="${expenseTotal}"></span> 円
+
+</p>
+
+
+
+<hr>
+
+
+<p class="profit">
+
+利益：
+<span th:text="${profit}"></span> 円
+
+</p>
+
+
+
+<a class="back" href="/management">
+経営管理へ戻る
+</a>
+
+
+</body>
+
+</html>

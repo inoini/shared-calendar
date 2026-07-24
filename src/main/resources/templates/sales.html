@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>売上管理</title>
+
+
+<style>
+
+body{
+font-family:sans-serif;
+margin:20px;
+}
+
+
+h1{
+color:#2E7D32;
+}
+
+
+input,textarea{
+
+width:100%;
+padding:8px;
+margin-bottom:10px;
+
+}
+
+
+button{
+
+padding:10px 20px;
+
+background:#4CAF50;
+
+color:white;
+
+border:none;
+
+}
+
+
+table{
+
+margin-top:30px;
+
+border-collapse:collapse;
+
+width:100%;
+
+}
+
+
+td,th{
+
+border:1px solid #ccc;
+
+padding:8px;
+
+}
+
+
+.back{
+
+display:inline-block;
+
+margin-top:20px;
+
+background:#555;
+
+color:white;
+
+padding:10px;
+
+text-decoration:none;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>📈 売上管理</h1>
+
+
+<form th:action="@{/sales/add}"
+      th:object="${sale}"
+      method="post">
+
+
+
+<button type="submit">
+登録
+</button>
+
+
+
+
+
+日付
+
+<input type="date"
+       th:field="*{date}">
+
+
+
+作物
+
+<input type="text"
+       th:field="*{crop}"
+       placeholder="さつまいも">
+
+
+
+売上金額
+
+<input type="number"
+       th:field="*{amount}">
+
+
+
+メモ
+
+<textarea th:field="*{memo}">
+</textarea>
+
+
+
+<button type="submit">
+登録
+</button>
+
+
+</form>
+
+<table>
+
+
+<tr>
+
+<th>日付</th>
+<th>作物</th>
+<th>金額</th>
+<th>メモ</th>
+
+</tr>
+
+
+
+<tr th:each="s:${sales}">
+
+<td th:text="${s.date}"></td>
+
+<td th:text="${s.crop}"></td>
+
+<td th:text="${s.amount}"></td>
+
+<td th:text="${s.memo}"></td>
+
+</tr>
+
+
+</table>
+
+
+
+<a class="back" href="/management">
+経営管理へ戻る
+</a>
+
+
+</body>
+
+</html>
