@@ -78,10 +78,13 @@ padding:10px;
 text-decoration:none;
 
 }
+
+/* スマホ表示対応 */
 @media screen and (max-width:600px){
 
 body{
     font-size:18px;
+    margin:15px;
 }
 
 
@@ -90,6 +93,12 @@ h1{
 }
 
 
+h2{
+    font-size:22px;
+}
+
+
+/* 入力欄 */
 input,
 textarea,
 button{
@@ -99,6 +108,29 @@ button{
 }
 
 
+/* 入力欄を押しやすく */
+input,
+textarea,
+select{
+
+    padding:12px;
+
+}
+
+
+
+/* 登録ボタン */
+button{
+
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+
+}
+
+
+
+/* 表 */
 table{
 
     font-size:16px;
@@ -106,13 +138,26 @@ table{
 }
 
 
-button{
+th,td{
 
-    padding:12px 25px;
+    padding:10px;
+
+}
+
+
+
+/* 戻るボタン */
+.back{
+
+    width:100%;
+    text-align:center;
+    box-sizing:border-box;
+    font-size:18px;
 
 }
 
 }
+
 </style>
 
 </head>
