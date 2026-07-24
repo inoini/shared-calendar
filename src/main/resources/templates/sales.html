@@ -5,113 +5,124 @@
 
 <meta charset="UTF-8">
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>売上管理</title>
 
 
 <style>
 
 body{
-font-family:sans-serif;
-margin:20px;
+    font-family:sans-serif;
+    margin:20px;
 }
 
 
 h1{
-color:#2E7D32;
+    color:#2E7D32;
 }
 
 
 input,textarea{
 
-width:100%;
-padding:8px;
-margin-bottom:10px;
+    width:100%;
+    padding:8px;
+    margin-bottom:10px;
+    box-sizing:border-box;
 
 }
 
 
 button{
 
-padding:10px 20px;
+    padding:10px 20px;
 
-background:#4CAF50;
+    background:#4CAF50;
 
-color:white;
+    color:white;
 
-border:none;
+    border:none;
+
+    border-radius:5px;
 
 }
 
 
+
 table{
 
-margin-top:30px;
+    margin-top:30px;
 
-border-collapse:collapse;
+    border-collapse:collapse;
 
-width:100%;
+    width:100%;
 
 }
 
 
 td,th{
 
-border:1px solid #ccc;
+    border:1px solid #ccc;
 
-padding:8px;
+    padding:8px;
 
 }
+
 
 
 .back{
 
-display:inline-block;
+    display:inline-block;
 
-margin-top:20px;
+    margin-top:20px;
 
-background:#555;
+    background:#555;
 
-color:white;
+    color:white;
 
-padding:10px;
+    padding:10px;
 
-text-decoration:none;
+    text-decoration:none;
+
+    border-radius:5px;
 
 }
 
-/* スマホ表示対応 */
+
+/* スマホ対応 */
+
 @media screen and (max-width:600px){
 
+
 body{
+
     font-size:18px;
+
     margin:15px;
+
 }
+
 
 
 h1{
+
     font-size:28px;
+
 }
 
 
 h2{
+
     font-size:22px;
+
 }
 
 
-/* 入力欄 */
+
 input,
-textarea,
-button{
+textarea{
 
     font-size:18px;
-
-}
-
-
-/* 入力欄を押しやすく */
-input,
-textarea,
-select{
 
     padding:12px;
 
@@ -119,18 +130,20 @@ select{
 
 
 
-/* 登録ボタン */
 button{
 
     width:100%;
-    padding:15px;
+
+    font-size:20px;
+
+    padding:14px;
+
     margin-top:10px;
 
 }
 
 
 
-/* 表 */
 table{
 
     font-size:16px;
@@ -138,7 +151,9 @@ table{
 }
 
 
-th,td{
+
+th,
+td{
 
     padding:10px;
 
@@ -146,19 +161,27 @@ th,td{
 
 
 
-/* 戻るボタン */
 .back{
 
     width:100%;
+
     text-align:center;
+
     box-sizing:border-box;
+
     font-size:18px;
 
-}
+    padding:12px;
 
 }
+
+
+
+}
+
 
 </style>
+
 
 </head>
 
@@ -169,18 +192,10 @@ th,td{
 <h1>📈 売上管理</h1>
 
 
+
 <form th:action="@{/sales/add}"
       th:object="${sale}"
       method="post">
-
-
-
-<button type="submit">
-登録
-</button>
-
-
-
 
 
 日付
@@ -219,14 +234,23 @@ th,td{
 
 </form>
 
+
+
+<h2>売上一覧</h2>
+
+
+
 <table>
 
 
 <tr>
 
 <th>日付</th>
+
 <th>作物</th>
+
 <th>金額</th>
+
 <th>メモ</th>
 
 </tr>
@@ -235,6 +259,7 @@ th,td{
 
 <tr th:each="s:${sales}">
 
+
 <td th:text="${s.date}"></td>
 
 <td th:text="${s.crop}"></td>
@@ -242,6 +267,7 @@ th,td{
 <td th:text="${s.amount}"></td>
 
 <td th:text="${s.memo}"></td>
+
 
 </tr>
 
@@ -253,6 +279,7 @@ th,td{
 <a class="back" href="/management">
 経営管理へ戻る
 </a>
+
 
 
 </body>
