@@ -9,8 +9,8 @@
 <title>農業管理システム</title>
 
 <link rel="manifest" href="/manifest.json">
+
 <meta name="theme-color" content="#2E7D32">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 
 <link rel="stylesheet" th:href="@{/css/style.css}">
 
@@ -18,120 +18,324 @@
 
 </head>
 
+
 <body>
+
 
 <header class="header">
 
-    <h1>🌱 農業管理システム</h1>
+<h1>
+🌱 農業管理システム
+</h1>
 
-    <p>Smart Farm Management</p>
+<p>
+Smart Farm Management
+</p>
 
 </header>
 
+
+
 <main class="container">
 
-    <section class="welcome">
 
-        <h2>ようこそ</h2>
+<section class="welcome">
 
-        <p>
-            作業予定・圃場・作物・経営情報を
-            一元管理できる農業管理システムです。
-        </p>
 
-    </section>
+<h2>
+北総農園 ダッシュボード
+</h2>
 
-    <section class="card-area">
 
-        <a th:href="@{/calendar}" class="card">
+<p>
+本日の農場状況を確認できます。
+</p>
 
-            <div class="card-title">
 
-                <span>📅 作業カレンダー</span>
+</section>
 
-                <span class="arrow">›</span>
 
-            </div>
 
-            <div class="card-text">
+<!-- 状況カード -->
 
-                作業予定・担当者・圃場・作業記録を管理します。
+<section class="status-area">
 
-            </div>
 
-        </a>
+<div class="status-card">
 
-        <a th:href="@{/crop}" class="card">
+<h3>
+🌱 作物
+</h3>
 
-            <div class="card-title">
+<p th:text="${cropCount} + '種類'">
+</p>
 
-                <span>🌱 作物管理</span>
+<span>
+管理中
+</span>
 
-                <span class="arrow">›</span>
+</div>
 
-            </div>
 
-            <div class="card-text">
 
-                品種・植付・収穫予定・生育状況を管理します。
+<div class="status-card">
 
-            </div>
+<h3>
+📅 作業予定
+</h3>
 
-        </a>
 
-        <a th:href="@{/field}" class="card">
+<p th:text="${todayCount} + '件'">
+<span>
+本日
+</span>
 
-            <div class="card-title">
+</div>
 
-                <span>🚜 圃場管理</span>
 
-                <span class="arrow">›</span>
 
-            </div>
+<div class="status-card">
 
-            <div class="card-text">
+<h3>
+🍠 収穫予定
+</h3>
 
-                圃場情報・面積・利用状況を管理します。
 
-            </div>
+<p th:if="${nextHarvest != null}"
+   th:text="${nextHarvest.harvestDate}">
+</p>
 
-        </a>
 
-        <a th:href="@{/management}" class="card">
+<p th:if="${nextHarvest == null}">
+予定なし
+</p>
 
-            <div class="card-title">
 
-                <span>📊 経営管理</span>
+<span th:if="${nextHarvest != null}"
+      th:text="${nextHarvest.cropName}">
+</span>
 
-                <span class="arrow">›</span>
 
-            </div>
+<span th:if="${nextHarvest == null}">
+次回
+</span>
 
-            <div class="card-text">
 
-                売上・経費・利益など経営状況を管理します。
+</div>
 
-            </div>
 
-        </a>
+</section>
 
-    </section>
 
-</main>
-<!-- AI農業アシスタント -->
+
+
+<!-- 今日の作業 -->
+
+
+<section class="panel">
+
+
+<h2>
+今日の作業
+</h2>
+
+<div class="work-item"
+     th:each="work : ${todaySchedules}">
+
+
+<h3 th:text="${work.schedule}">
+</h3>
+
+
+<p>
+場所：
+<span th:text="${work.fieldName}">
+</span>
+</p>
+
+
+<p>
+作物：
+<span th:text="${work.cropName}">
+</span>
+</p>
+
+
+<p>
+担当：
+<span th:text="${work.userName}">
+</span>
+</p>
+
+
+</div>
+
+
+
+<div class="work-item">
+
+<h3>
+🥕 人参除草
+</h3>
+
+
+<p>
+場所：B圃場
+</p>
+
+
+<p>
+状態：🟢完了
+</p>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+<!-- 管理メニュー -->
+
+
+<section class="card-area">
+
+
+<a th:href="@{/calendar}" class="card">
+
+<div class="card-title">
+
+<span>
+📅 作業カレンダー
+</span>
+
+<span>
+›
+</span>
+
+</div>
+
+
+<p>
+作業予定・担当者を管理
+</p>
+
+
+</a>
+
+
+
+<a th:href="@{/crop}" class="card">
+
+
+<div class="card-title">
+
+<span>
+🌱 作物管理
+</span>
+
+<span>
+›
+</span>
+
+
+</div>
+
+
+<p>
+品種・植付・収穫管理
+</p>
+
+
+</a>
+
+
+
+<a th:href="@{/field}" class="card">
+
+
+<div class="card-title">
+
+<span>
+🚜 圃場管理
+</span>
+
+<span>
+›
+</span>
+
+</div>
+
+
+<p>
+畑情報を管理
+</p>
+
+
+</a>
+
+
+
+<a th:href="@{/management}" class="card">
+
+
+<div class="card-title">
+
+<span>
+📊 経営管理
+</span>
+
+<span>
+›
+</span>
+
+
+</div>
+
+
+<p>
+売上・経費管理
+</p>
+
+
+</a>
+
+
+</section>
+
+
+
+
 
 <div class="ai-link">
 
-    <a href="/ai">
-        🤖 AI農業アシスタント
-    </a>
+
+<a href="/ai">
+
+🤖 AI農業アシスタント
+
+</a>
+
 
 </div>
+
+
+
+</main>
+
+
+
 <footer class="footer">
 
-    Version 1.0
+Version 1.0
 
 </footer>
+
+
 
 </body>
 

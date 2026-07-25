@@ -11,98 +11,7 @@
 <title>AI農業アシスタント</title>
 
 
-<style>
-
-
-body{
-
-font-family:sans-serif;
-
-margin:20px;
-
-}
-
-
-h1{
-
-color:#2E7D32;
-
-}
-
-
-
-textarea{
-
-width:100%;
-
-height:120px;
-
-padding:10px;
-
-font-size:16px;
-
-box-sizing:border-box;
-
-}
-
-
-
-button{
-
-margin-top:10px;
-
-padding:12px 20px;
-
-background:#2E7D32;
-
-color:white;
-
-border:none;
-
-border-radius:5px;
-
-font-size:18px;
-
-}
-
-
-
-.answer{
-
-margin-top:20px;
-
-padding:15px;
-
-background:#f2f2f2;
-
-border-radius:10px;
-
-white-space:pre-wrap;
-
-}
-
-
-
-.back{
-
-display:inline-block;
-
-margin-top:20px;
-
-background:#555;
-
-color:white;
-
-padding:10px 15px;
-
-text-decoration:none;
-
-border-radius:5px;
-
-}
-
-
-</style>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 
 
 </head>
@@ -111,27 +20,70 @@ border-radius:5px;
 <body>
 
 
+<header class="header">
+
+
 <h1>
 🤖 AI農業アシスタント
 </h1>
+
+
+<p>
+Smart Farm Support
+</p>
+
+
+</header>
+
+
+
+
+<main class="container">
+
+
+
+<section class="welcome">
+
+
+<h2>
+農業相談AI
+</h2>
+
+
+<p>
+作物の管理方法、病害虫、肥料、栽培について相談できます。
+</p>
+
+
+</section>
+
+
+
+
+
+<section class="panel">
+
+
+
+<h2>
+質問入力
+</h2>
 
 
 
 <form action="/ai" method="post">
 
 
-<textarea name="question"
-placeholder="質問を入力してください"
+<textarea 
+name="question"
+placeholder="例：さつまいもの葉が黄色くなりました。原因を教えてください。"
 th:text="${question}">
 </textarea>
 
 
 
-<br>
-
-
 <button type="submit">
-AIに質問する
+🌱 AIに相談する
 </button>
 
 
@@ -140,18 +92,48 @@ AIに質問する
 
 
 
+</section>
 
 
-<div class="answer"
-th:if="${answer}">
+
+
+
+
+<section class="panel"
+         th:if="${answer}">
+
 
 
 <h2>
-AI回答
+🤖 AI回答
 </h2>
 
 
-<p th:text="${answer}"></p>
+
+<div class="answer">
+
+
+<p th:text="${answer}">
+</p>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+<div class="back-home">
+
+
+<a href="/">
+← ダッシュボードへ戻る
+</a>
 
 
 </div>
@@ -159,10 +141,17 @@ AI回答
 
 
 
+</main>
 
-<a class="back" href="/">
-トップへ戻る
-</a>
+
+
+
+<footer class="footer">
+
+Version 1.0
+
+</footer>
+
 
 
 </body>

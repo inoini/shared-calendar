@@ -6,15 +6,15 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.entity.Crop;
 
 import com.example.demo.entity.Schedule;
 import com.example.demo.model.CalendarDay;
 import com.example.demo.service.ScheduleService;
+import com.example.demo.repository.CropRepository;
 
 
 
@@ -24,25 +24,97 @@ public class CalendarController {
 
     private final ScheduleService scheduleService;
 
+    private final CropRepository cropRepository;
+
 
 
     public CalendarController(
-            ScheduleService scheduleService){
+            ScheduleService scheduleService,
+            CropRepository cropRepository){
 
         this.scheduleService = scheduleService;
+        this.cropRepository = cropRepository;
 
     }
 
 
 
 
-    // ホーム
+
+    // ホーム（ダッシュボード）
     @GetMapping("/")
-    public String home(){
+    public String home(Model model){
+
+
+        long cropCount =
+                cropRepository.count();
+
+
+
+        model.addAttribute(
+                "cropCount",
+                cropCount
+        );
+
+
+
+
+        String today =
+                LocalDate.now().toString();
+
+
+
+        List<Schedule> todaySchedules =
+                scheduleService.findByDate(today);
+
+
+
+        model.addAttribute(
+                "todaySchedules",
+                todaySchedules
+        );
+
+
+
+        model.addAttribute(
+                "todayCount",
+                todaySchedules.size()
+        );
+
+
+
+
+        List<Crop> harvestCrops =
+                cropRepository
+                .findByHarvestDateGreaterThanEqualOrderByHarvestDateAsc(
+                        LocalDate.now()
+                );
+
+
+
+        if(!harvestCrops.isEmpty()){
+
+
+            Crop nextHarvest =
+                    harvestCrops.get(0);
+
+
+
+            model.addAttribute(
+                    "nextHarvest",
+                    nextHarvest
+            );
+
+
+        }
+
+
 
         return "index";
 
     }
+
+
 
 
 
@@ -111,6 +183,7 @@ public class CalendarController {
 
 
 
+
         List<CalendarDay> calendarDays =
                 new ArrayList<>();
 
@@ -118,6 +191,7 @@ public class CalendarController {
 
         int lastDay =
                 ym.lengthOfMonth();
+
 
 
 
@@ -162,6 +236,8 @@ public class CalendarController {
         return "calendar";
 
     }
+
+
 
 
 
@@ -220,6 +296,7 @@ public class CalendarController {
 
 
 
+
     // 予定取得
     @GetMapping("/schedule")
     @ResponseBody
@@ -234,6 +311,8 @@ public class CalendarController {
 
 
 
+
+
     // 編集取得
     @GetMapping("/schedule/edit")
     @ResponseBody
@@ -243,6 +322,7 @@ public class CalendarController {
         return scheduleService.findById(id);
 
     }
+
 
 
 
@@ -307,6 +387,7 @@ public class CalendarController {
 
 
 
+
     // 削除
     @PostMapping("/delete")
     public String delete(
@@ -329,5 +410,6 @@ public class CalendarController {
                 + d.getMonthValue();
 
     }
+
 
 }
