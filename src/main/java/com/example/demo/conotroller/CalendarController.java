@@ -123,118 +123,89 @@ public class CalendarController {
     // カレンダー表示
     @GetMapping("/calendar")
     public String calendar(
-            @RequestParam(required=false) Integer year,
-            @RequestParam(required=false) Integer month,
-            Model model){
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) Integer month,
+            Model model) {
 
-
-        YearMonth ym =
-                (year == null || month == null)
+        YearMonth ym = (year == null || month == null)
                 ? YearMonth.now()
                 : YearMonth.of(year, month);
 
+        model.addAttribute("year", ym.getYear());
+        model.addAttribute("month", ym.getMonthValue());
 
+        YearMonth prev = ym.minusMonths(1);
+        YearMonth next = ym.plusMonths(1);
 
-        model.addAttribute(
-                "year",
-                ym.getYear()
-        );
+        model.addAttribute("prevYear", prev.getYear());
+        model.addAttribute("prevMonth", prev.getMonthValue());
+        model.addAttribute("nextYear", next.getYear());
+        model.addAttribute("nextMonth", next.getMonthValue());
 
+        List<CalendarDay> calendarDays = new ArrayList<>();
 
-        model.addAttribute(
-                "month",
-                ym.getMonthValue()
-        );
+        // その月の1日
+        LocalDate firstDay = ym.atDay(1);
 
+        // 日曜=0～土曜=6
+        int firstWeek = firstDay.getDayOfWeek().getValue() % 7;
 
+        // 前月
+        YearMonth prevMonth = ym.minusMonths(1);
+        int prevLastDay = prevMonth.lengthOfMonth();
 
-        YearMonth prev =
-                ym.minusMonths(1);
+        // ===== 前月の日付 =====
+        for (int i = firstWeek - 1; i >= 0; i--) {
 
+            LocalDate date = prevMonth.atDay(prevLastDay - i);
 
-        YearMonth next =
-                ym.plusMonths(1);
+            calendarDays.add(
+                    new CalendarDay(
+                            date.getDayOfMonth(),
+                            date.toString(),
+                            false,
+                            scheduleService.findByDate(date.toString())
+                    )
+            );
+        }
 
+        // ===== 当月 =====
+        for (int day = 1; day <= ym.lengthOfMonth(); day++) {
 
-
-        model.addAttribute(
-                "prevYear",
-                prev.getYear()
-        );
-
-
-        model.addAttribute(
-                "prevMonth",
-                prev.getMonthValue()
-        );
-
-
-        model.addAttribute(
-                "nextYear",
-                next.getYear()
-        );
-
-
-        model.addAttribute(
-                "nextMonth",
-                next.getMonthValue()
-        );
-
-
-
-
-
-        List<CalendarDay> calendarDays =
-                new ArrayList<>();
-
-
-
-        int lastDay =
-                ym.lengthOfMonth();
-
-
-
-
-        for(int day=1; day<=lastDay; day++){
-
-
-            LocalDate date =
-                    ym.atDay(day);
-
-
-
-            String dateKey =
-                    date.toString();
-
-
-
-            List<Schedule> schedules =
-                    scheduleService.findByDate(dateKey);
-
-
+            LocalDate date = ym.atDay(day);
 
             calendarDays.add(
                     new CalendarDay(
                             day,
-                            dateKey,
+                            date.toString(),
                             true,
-                            schedules
+                            scheduleService.findByDate(date.toString())
+                    )
+            );
+        }
+
+        // ===== 翌月 =====
+        int nextDay = 1;
+
+        while (calendarDays.size() < 42) {
+
+            LocalDate date = next.atDay(nextDay);
+
+            calendarDays.add(
+                    new CalendarDay(
+                            nextDay,
+                            date.toString(),
+                            false,
+                            scheduleService.findByDate(date.toString())
                     )
             );
 
+            nextDay++;
         }
 
-
-
-        model.addAttribute(
-                "calendarDays",
-                calendarDays
-        );
-
-
+        model.addAttribute("calendarDays", calendarDays);
 
         return "calendar";
-
     }
 
 
@@ -244,8 +215,11 @@ public class CalendarController {
 
 
     // 保存
+    
     @PostMapping("/save")
     public String save(
+
+            @RequestParam(required = false) Long id,
             @RequestParam String date,
             @RequestParam String startTime,
             @RequestParam String endTime,
@@ -256,12 +230,24 @@ public class CalendarController {
             @RequestParam(required=false) String workType,
             @RequestParam(required=false) String memo){
 
+        Schedule s;
 
+        // 編集
+        if(id != null){
 
-        Schedule s =
-                new Schedule();
+            s = scheduleService.findById(id);
 
+            if(s == null){
+                s = new Schedule();
+            }
 
+        }
+        // 新規
+        else{
+
+            s = new Schedule();
+
+        }
 
         s.setDate(date);
         s.setStartTime(startTime);
@@ -273,26 +259,15 @@ public class CalendarController {
         s.setWorkType(workType);
         s.setMemo(memo);
 
-
-
         scheduleService.save(s);
 
-
-
-        LocalDate d =
-                LocalDate.parse(date);
-
-
+        LocalDate d = LocalDate.parse(date);
 
         return "redirect:/calendar?year="
                 + d.getYear()
                 + "&month="
                 + d.getMonthValue();
-
     }
-
-
-
 
 
 
@@ -322,94 +297,108 @@ public class CalendarController {
         return scheduleService.findById(id);
 
     }
+ // ==========================
+ // 更新
+ // ==========================
+
+ @PostMapping("/update")
+ public String update(
+
+         @RequestParam Long id,
+         @RequestParam String date,
+         @RequestParam String startTime,
+         @RequestParam String endTime,
+         @RequestParam String userName,
+         @RequestParam String schedule,
+         @RequestParam(required=false) String fieldName,
+         @RequestParam(required=false) String cropName,
+         @RequestParam(required=false) String workType,
+         @RequestParam(required=false) String memo
+
+ ){
+
+     Schedule s =
+             scheduleService.findById(id);
+
+
+     if(s == null){
+
+         return "redirect:/calendar";
+
+     }
+
+
+     s.setDate(date);
+
+     s.setStartTime(startTime);
+
+     s.setEndTime(endTime);
+
+     s.setUserName(userName);
+
+     s.setSchedule(schedule);
+
+     s.setFieldName(fieldName);
+
+     s.setCropName(cropName);
+
+     s.setWorkType(workType);
+
+     s.setMemo(memo);
+
+
+     scheduleService.save(s);
+
+
+
+     LocalDate d =
+             LocalDate.parse(date);
+
+
+     return "redirect:/calendar?year="
+             + d.getYear()
+             + "&month="
+             + d.getMonthValue();
+
+ }
 
 
 
 
 
 
-
-    // 更新
-    @PostMapping("/update")
-    public String update(
-            @RequestParam Long id,
-            @RequestParam String date,
-            @RequestParam String startTime,
-            @RequestParam String endTime,
-            @RequestParam String userName,
-            @RequestParam String schedule,
-            @RequestParam(required=false) String fieldName,
-            @RequestParam(required=false) String cropName,
-            @RequestParam(required=false) String workType,
-            @RequestParam(required=false) String memo){
-
-
-
-        Schedule s =
-                scheduleService.findById(id);
-
-
-
-        if(s != null){
-
-            s.setDate(date);
-            s.setStartTime(startTime);
-            s.setEndTime(endTime);
-            s.setUserName(userName);
-            s.setSchedule(schedule);
-            s.setFieldName(fieldName);
-            s.setCropName(cropName);
-            s.setWorkType(workType);
-            s.setMemo(memo);
-
-
-            scheduleService.save(s);
-
-        }
-
-
-
-
-        LocalDate d =
-                LocalDate.parse(date);
-
-
-
-        return "redirect:/calendar?year="
-                + d.getYear()
-                + "&month="
-                + d.getMonthValue();
-
-    }
-
-
-
-
-
+   
 
 
     // 削除
-    @PostMapping("/delete")
-    public String delete(
-            @RequestParam Long id,
-            @RequestParam String date){
+ // ==========================
+ // 削除
+ // ==========================
+
+ @PostMapping("/delete/{id}")
+ @ResponseBody
+ public String delete(
+         @PathVariable Long id){
 
 
-        scheduleService.delete(id);
+     scheduleService.delete(id);
 
 
+     return "ok";
 
-        LocalDate d =
-                LocalDate.parse(date);
+ }
+ // ==========================
+ // 日付クリック用 作業取得
+ // ==========================
+
+ @GetMapping("/calendar/day")
+ @ResponseBody
+ public List<Schedule> getDaySchedule(
+         @RequestParam String date){
 
 
-
-        return "redirect:/calendar?year="
-                + d.getYear()
-                + "&month="
-                + d.getMonthValue();
-
-    }
+     return scheduleService.findByDate(date);
 
 
+ }
 }

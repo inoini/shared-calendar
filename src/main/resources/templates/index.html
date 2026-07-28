@@ -1,341 +1,286 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
 
-<title>農業管理システム</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="manifest" href="/manifest.json">
+    <title>農業管理システム Ver.2</title>
 
-<meta name="theme-color" content="#2E7D32">
+    <link rel="manifest" href="/manifest.json">
 
-<link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="theme-color" content="#2E7D32">
 
-<script defer th:src="@{/js/script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <script defer th:src="@{/js/script.js}"></script>
 
 </head>
 
-
 <body>
 
+<div class="app-layout">
 
-<header class="header">
+    <!-- ===== サイドバー ===== -->
+    <aside class="sidebar">
 
-<h1>
-🌱 農業管理システム
-</h1>
+        <div class="sidebar-header">
 
-<p>
-Smart Farm Management
-</p>
+            <div class="logo-circle">
+                🌾
+            </div>
+
+            <h2>Farm<br>System</h2>
+
+        </div>
+
+        <nav class="menu">
+
+            <a th:href="@{/}" class="active">
+                <span>🏠</span>
+                <span>ダッシュボード</span>
+            </a>
+
+            <a th:href="@{/calendar}">
+                <span>📅</span>
+                <span>作業カレンダー</span>
+            </a>
+
+            <a th:href="@{/crop}">
+                <span>🌱</span>
+                <span>作物管理</span>
+            </a>
+
+            <a th:href="@{/field}">
+                <span>🚜</span>
+                <span>圃場管理</span>
+            </a>
+
+            <a th:href="@{/management}">
+                <span>💰</span>
+                <span>経営管理</span>
+            </a>
+
+            <a href="#">
+                <span>📦</span>
+                <span>在庫管理</span>
+            </a>
+
+            <a href="#">
+                <span>📒</span>
+                <span>作業日報</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- ===== メイン ===== -->
+    <main class="main-content">
+
+        <!-- ===== ヘッダー ===== -->
+        <header class="header">
+
+    <div>
+
+        <h1>🌾 農業管理システム Ver.2</h1>
+
+        <p>Smart Farm Management System</p>
+
+    </div>
+
+    <div class="header-right">
+
+        <div id="clock"></div>
+
+        <div class="weather-box">
+
+            🌤 天気
+            <br>
+            <small>（今後追加予定）</small>
+
+        </div>
+
+    </div>
 
 </header>
 
+        <div class="container">
+
+            <!-- ===== ダッシュボード ===== -->
+
+            <section class="dashboard-summary">
+
+                <div class="summary-card">
+
+                    <h3>📅 今日の予定</h3>
+
+                    <p th:text="${todayCount} + '件'">0件</p>
+
+                </div>
+
+                <div class="summary-card">
+
+                    <h3>🌱 管理作物</h3>
+
+                    <p th:text="${cropCount} + '種類'">0種類</p>
+
+                </div>
+
+                <div class="summary-card">
+
+                    <h3>🚜 作業状況</h3>
+
+                    <p>順調</p>
+
+                </div>
+
+                <div class="summary-card">
+
+                    <h3>🍠 次回収穫</h3>
+
+                    <p th:if="${nextHarvest != null}"
+                       th:text="${nextHarvest.cropName}">
+                    </p>
+
+                    <p th:if="${nextHarvest == null}">
+                        予定なし
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- ===== Welcome ===== -->
+
+            <section class="welcome">
+
+                <h2>北総農園 ダッシュボード</h2>
+
+                <p>
+                    本日の農場状況を確認できます。
+                </p>
+
+            </section>
+                        <!-- ===== 状況カード ===== -->
+
+            <section class="status-area">
+
+                <div class="status-card">
+
+                    <h3>🌱 作物</h3>
+
+                    <p th:text="${cropCount} + '種類'">0種類</p>
+
+                    <span>管理中</span>
+
+                </div>
+
+                <div class="status-card">
+
+                    <h3>📅 今日の予定</h3>
+
+                    <p th:text="${todayCount} + '件'">0件</p>
+
+                    <span>本日の作業</span>
+
+                </div>
+
+                <div class="status-card">
+
+                    <h3>🍠 収穫予定</h3>
+
+                    <p th:if="${nextHarvest != null}"
+                       th:text="${#temporals.format(nextHarvest.harvestDate,'yyyy/MM/dd')}">
+                    </p>
+
+                    <p th:if="${nextHarvest == null}">
+                        予定なし
+                    </p>
+
+                    <span th:if="${nextHarvest != null}"
+                          th:text="${nextHarvest.cropName}">
+                    </span>
+
+                    <span th:if="${nextHarvest == null}">
+                        次回収穫
+                    </span>
+
+                </div>
+
+            </section>
 
 
-<main class="container">
+            <!-- ===== 今日の作業 ===== -->
 
+            <section class="panel">
 
-<section class="welcome">
+                <h2>📅 今日の作業</h2>
 
+                <div class="work-item"
+                     th:each="work : ${todaySchedules}">
 
-<h2>
-北総農園 ダッシュボード
-</h2>
+                    <h3 th:text="${work.schedule}">
+                        作業名
+                    </h3>
 
+                    <p>
 
-<p>
-本日の農場状況を確認できます。
-</p>
+                        <strong>場所：</strong>
 
+                        <span th:text="${work.fieldName}">
+                        </span>
 
-</section>
+                    </p>
 
+                    <p>
 
+                        <strong>作物：</strong>
 
-<!-- 状況カード -->
+                        <span th:text="${work.cropName}">
+                        </span>
 
-<section class="status-area">
+                    </p>
 
+                    <p>
 
-<div class="status-card">
+                        <strong>担当：</strong>
 
-<h3>
-🌱 作物
-</h3>
+                        <span th:text="${work.userName}">
+                        </span>
 
-<p th:text="${cropCount} + '種類'">
-</p>
+                    </p>
 
-<span>
-管理中
-</span>
+                </div>
+
+                <div class="work-item"
+                     th:if="${#lists.isEmpty(todaySchedules)}">
+
+                    <h3>本日の予定はありません</h3>
+
+                    <p>
+                        新しい予定を登録してください。
+                    </p>
+
+                </div>
+
+            </section>
+                        <!-- ===== 管理メニュー ===== -->
+
+            
+        </div>
+
+    </main>
 
 </div>
-
-
-
-<div class="status-card">
-
-<h3>
-📅 作業予定
-</h3>
-
-
-<p th:text="${todayCount} + '件'">
-<span>
-本日
-</span>
-
-</div>
-
-
-
-<div class="status-card">
-
-<h3>
-🍠 収穫予定
-</h3>
-
-
-<p th:if="${nextHarvest != null}"
-   th:text="${nextHarvest.harvestDate}">
-</p>
-
-
-<p th:if="${nextHarvest == null}">
-予定なし
-</p>
-
-
-<span th:if="${nextHarvest != null}"
-      th:text="${nextHarvest.cropName}">
-</span>
-
-
-<span th:if="${nextHarvest == null}">
-次回
-</span>
-
-
-</div>
-
-
-</section>
-
-
-
-
-<!-- 今日の作業 -->
-
-
-<section class="panel">
-
-
-<h2>
-今日の作業
-</h2>
-
-<div class="work-item"
-     th:each="work : ${todaySchedules}">
-
-
-<h3 th:text="${work.schedule}">
-</h3>
-
-
-<p>
-場所：
-<span th:text="${work.fieldName}">
-</span>
-</p>
-
-
-<p>
-作物：
-<span th:text="${work.cropName}">
-</span>
-</p>
-
-
-<p>
-担当：
-<span th:text="${work.userName}">
-</span>
-</p>
-
-
-</div>
-
-
-
-<div class="work-item">
-
-<h3>
-🥕 人参除草
-</h3>
-
-
-<p>
-場所：B圃場
-</p>
-
-
-<p>
-状態：🟢完了
-</p>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-<!-- 管理メニュー -->
-
-
-<section class="card-area">
-
-
-<a th:href="@{/calendar}" class="card">
-
-<div class="card-title">
-
-<span>
-📅 作業カレンダー
-</span>
-
-<span>
-›
-</span>
-
-</div>
-
-
-<p>
-作業予定・担当者を管理
-</p>
-
-
-</a>
-
-
-
-<a th:href="@{/crop}" class="card">
-
-
-<div class="card-title">
-
-<span>
-🌱 作物管理
-</span>
-
-<span>
-›
-</span>
-
-
-</div>
-
-
-<p>
-品種・植付・収穫管理
-</p>
-
-
-</a>
-
-
-
-<a th:href="@{/field}" class="card">
-
-
-<div class="card-title">
-
-<span>
-🚜 圃場管理
-</span>
-
-<span>
-›
-</span>
-
-</div>
-
-
-<p>
-畑情報を管理
-</p>
-
-
-</a>
-
-
-
-<a th:href="@{/management}" class="card">
-
-
-<div class="card-title">
-
-<span>
-📊 経営管理
-</span>
-
-<span>
-›
-</span>
-
-
-</div>
-
-
-<p>
-売上・経費管理
-</p>
-
-
-</a>
-
-
-</section>
-
-
-
-
-
-<div class="ai-link">
-
-
-<a href="/ai">
-
-🤖 AI農業アシスタント
-
-</a>
-
-
-</div>
-
-
-
-</main>
-
-
 
 <footer class="footer">
 
-Version 1.0
+    <p>© 2026 北総農園 Smart Farm Management System Ver.2</p>
 
 </footer>
-
-
 
 </body>
 
