@@ -1,14 +1,14 @@
 {
   "id": "/",
-  "name": "共有カレンダー",
-  "short_name": "カレンダー",
+  "name": "農業管理システム",
+  "short_name": "Smart Farm",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#4CAF50",
+  "theme_color": "#2E7D32",
   "orientation": "portrait",
-  "description": "家族で予定を共有できるカレンダー",
+  "description": "農作業予定・圃場・作物を管理する農業管理システム",
   "icons": [
     {
       "src": "/icons/icon-192.png",

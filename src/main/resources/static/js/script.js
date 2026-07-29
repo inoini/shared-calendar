@@ -840,3 +840,26 @@ document.addEventListener("click", function(e){
 
 
 });
+// ==========================
+// PWA Service Worker
+// ==========================
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", function(){
+
+        navigator.serviceWorker.register("/sw.js")
+        .then(function(){
+
+            console.log("PWA Ready");
+
+        })
+        .catch(function(error){
+
+            console.log("PWA Error:", error);
+
+        });
+
+    });
+
+}

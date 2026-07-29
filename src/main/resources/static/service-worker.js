@@ -1,27 +1,70 @@
-const CACHE_NAME = "shared-calendar-v1";
+const CACHE_NAME = "farm-system-v1";
+
+const urlsToCache = [
+    "/",
+    "/manifest.json",
+    "/css/style.css",
+    "/js/script.js",
+    "/icons/icon-192.png",
+    "/icons/icon-512.png"
+];
+
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll([
-        "/",
-        "/manifest.json",
-        "/icons/icon-192.png",
-        "/icons/icon-512.png"
-      ]);
-    })
-  );
-  self.skipWaiting();
+
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+        .then((cache) => {
+
+            return cache.addAll(urlsToCache);
+
+        })
+    );
+
+    self.skipWaiting();
+
 });
+
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(self.clients.claim());
+
+    event.waitUntil(
+        caches.keys()
+        .then((keys) => {
+
+            return Promise.all(
+
+                keys.map((key)=>{
+
+                    if(key !== CACHE_NAME){
+
+                        return caches.delete(key);
+
+                    }
+
+                })
+
+            );
+
+        })
+    );
+
+    self.clients.claim();
+
 });
 
+
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
+
+    event.respondWith(
+
+        caches.match(event.request)
+        .then((response)=>{
+
+            return response || fetch(event.request);
+
+        })
+
+    );
+
 });

@@ -416,14 +416,20 @@ label{
 .day-box{
 
     width:100%;
-    height:100%;
+
+    height:180px;
 
     display:flex;
+
     flex-direction:column;
 
     cursor:pointer;
 
     transition:.2s;
+
+    overflow:hidden;
+
+    padding:8px;
 
 }
 
@@ -970,17 +976,7 @@ label{
    カレンダー日付枠
 ============================== */
 
-.day-box{
 
-    height:180px;
-
-    overflow:hidden;
-
-    position:relative;
-
-    padding:8px;
-
-}
 
 
 /* ==============================
@@ -1086,17 +1082,7 @@ label{
    日付枠
 ========================== */
 
-.day-box{
 
-    height:180px;
-
-    overflow:hidden;
-
-    padding:8px;
-
-    box-sizing:border-box;
-
-}
 /* ==========================
    曜日行だけ固定
 ========================== */
@@ -1132,5 +1118,429 @@ label{
 .calendar-table tbody tr{
 
     height:190px;
+
+}
+/* ==========================================
+   スマートフォン対応
+   農業管理システム
+========================================== */
+
+@media screen and (max-width:768px){
+
+
+/* ==========================
+   基本設定
+========================== */
+
+body{
+
+    overflow-x:hidden;
+    font-size:14px;
+
+}
+
+
+
+/* ==========================
+   サイドバー非表示
+========================== */
+
+.sidebar{
+
+    display:none;
+
+}
+
+
+.main-content{
+
+    margin-left:0;
+
+}
+
+
+.footer{
+
+    margin-left:0;
+
+}
+
+
+
+/* ==========================
+   ヘッダー
+========================== */
+
+.top-header{
+
+    padding:12px;
+
+}
+
+
+.logo-area{
+
+    display:flex;
+    align-items:center;
+
+}
+
+
+.logo-icon{
+
+    font-size:32px;
+
+}
+
+
+.logo-area h1{
+
+    font-size:18px;
+
+}
+
+
+.logo-area p{
+
+    font-size:11px;
+
+}
+
+
+
+/* ==========================
+   メイン余白
+========================== */
+
+.container,
+.calendar-page{
+
+    padding:12px;
+
+}
+
+
+
+/* ==========================
+   トップへ戻る
+========================== */
+
+.home-button{
+
+    display:block;
+
+    width:100%;
+
+    padding:12px;
+
+    text-align:center;
+
+    font-size:15px;
+
+}
+
+
+
+/* ==========================
+   カレンダーヘッダー
+========================== */
+
+.calendar-header{
+
+    padding:15px;
+
+}
+
+
+.calendar-header h2{
+
+    font-size:20px;
+
+}
+
+
+.calendar-header p{
+
+    font-size:13px;
+
+}
+
+
+
+/* ==========================
+   月移動
+========================== */
+
+.month-nav{
+
+    gap:5px;
+
+}
+
+
+.month-button{
+
+    padding:8px 10px;
+
+    font-size:13px;
+
+}
+
+
+.month-title{
+
+    font-size:18px;
+
+}
+
+
+
+/* ==========================
+   カレンダー
+========================== */
+
+.calendar-wrapper{
+
+    overflow-x:auto;
+
+    padding:5px;
+
+}
+
+
+.calendar-table{
+
+    min-width:700px;
+
+}
+
+
+
+.calendar-table th{
+
+    height:35px;
+
+    font-size:13px;
+
+}
+
+
+
+.calendar-table tbody td{
+
+    height:120px;
+
+}
+
+
+
+/* 日付 */
+
+.day-box{
+
+    height:110px;
+
+    padding:5px;
+
+}
+
+
+
+.day-number{
+
+    font-size:14px;
+
+}
+
+
+
+/* 作業件数 */
+
+.schedule-count{
+
+    font-size:10px;
+
+}
+
+
+
+/* ==========================
+   作業カード
+========================== */
+
+.schedule-card{
+
+    font-size:10px;
+
+    padding:5px;
+
+    margin-bottom:5px;
+
+}
+
+
+.schedule-time{
+
+    font-size:10px;
+
+}
+
+
+.schedule-work{
+
+    font-size:11px;
+
+}
+
+
+.schedule-info{
+
+    display:none;
+
+}
+
+
+.schedule-user{
+
+    font-size:10px;
+
+}
+
+
+
+/* ==========================
+   モーダル
+========================== */
+
+
+.modal-content{
+
+    width:100%;
+
+    height:100%;
+
+    max-height:100vh;
+
+    padding:15px;
+
+    border-radius:0;
+
+    top:0;
+
+    left:0;
+
+    transform:none;
+
+}
+
+
+
+.modal.show .modal-content{
+
+    transform:none;
+
+}
+
+
+
+#selectedDate{
+
+    font-size:20px;
+
+}
+
+
+
+/* ==========================
+   入力フォーム
+========================== */
+
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea{
+
+    font-size:16px;
+
+    padding:12px;
+
+    margin-bottom:10px;
+
+}
+
+
+
+textarea{
+
+    min-height:100px;
+
+}
+
+
+
+/* ==========================
+   ボタン
+========================== */
+
+
+.modal-buttons{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+
+.modal-buttons button{
+
+    width:100%;
+
+    padding:14px;
+
+    font-size:16px;
+
+}
+
+.day-box{
+
+    width:100%;
+
+    height:120px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    overflow:hidden;
+
+    padding:5px;
+
+}
+
+/* ==========================
+   PWAアプリ向け
+========================== */
+
+
+@supports (-webkit-touch-callout:none){
+
+    input,
+    select,
+    textarea{
+
+        font-size:16px;
+
+    }
+
+}
+
 
 }
