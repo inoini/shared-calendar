@@ -281,7 +281,21 @@
     <p>© 2026 北総農園 Smart Farm Management System Ver.2</p>
 
 </footer>
+<script>
 
+if("serviceWorker" in navigator){
+
+    navigator.serviceWorker.register("/sw.js")
+    .then(function(){
+        console.log("Service Worker 登録成功");
+    })
+    .catch(function(error){
+        console.log("登録失敗",error);
+    });
+
+}
+
+</script>
 </body>
 
 </html>

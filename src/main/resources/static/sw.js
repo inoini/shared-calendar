@@ -1,54 +1,25 @@
-// ========================================
-// 農業管理システム
-// Service Worker
-// ========================================
+const CACHE_NAME = "agri-pwa-v1";
 
-const CACHE_NAME = "agriculture-system-v1";
-
-
-const CACHE_FILES = [
+const FILES_TO_CACHE = [
     "/",
-    "/manifest.json",
-    "/css/style.css",
-    "/icons/icon-192.png",
-    "/icons/icon-512.png"
+    "/manifest.json"
 ];
 
 
-// インストール
 self.addEventListener("install", function(event){
 
     event.waitUntil(
-
         caches.open(CACHE_NAME)
         .then(function(cache){
 
-            return cache.addAll(CACHE_FILES);
+            return cache.addAll(FILES_TO_CACHE);
 
         })
-
-    );
-
-    self.skipWaiting();
-
-});
-
-
-
-// 有効化
-self.addEventListener("activate", function(event){
-
-    event.waitUntil(
-
-        self.clients.claim()
-
     );
 
 });
 
 
-
-// キャッシュ取得
 self.addEventListener("fetch", function(event){
 
     event.respondWith(

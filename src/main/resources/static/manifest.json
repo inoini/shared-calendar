@@ -1,26 +1,20 @@
 {
-  "id": "/",
   "name": "農業管理システム",
-  "short_name": "Smart Farm",
+  "short_name": "農業管理",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2E7D32",
-  "orientation": "portrait",
-  "description": "農作業予定・圃場・作物を管理する農業管理システム",
   "icons": [
     {
-      "src": "/icons/icon-192.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
-      "src": "/icons/icon-512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     }
   ]
 }
