@@ -848,7 +848,7 @@ if ("serviceWorker" in navigator) {
 
     window.addEventListener("load", function(){
 
-        navigator.serviceWorker.register("/sw.js")
+		navigator.serviceWorker.register("/service-worker.js")
         .then(function(){
 
             console.log("PWA Ready");
