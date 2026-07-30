@@ -1146,23 +1146,16 @@ body{
 ========================== */
 
 .sidebar{
-
-    display:none;
-
+    display:block;
+    width:220px;
 }
-
 
 .main-content{
-
-    margin-left:0;
-
+    margin-left:220px;
 }
 
-
 .footer{
-
-    margin-left:0;
-
+    margin-left:220px;
 }
 
 
