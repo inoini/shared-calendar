@@ -10,7 +10,6 @@ const CACHE_FILES = [
     "/",
     "/manifest.json",
     "/css/style.css",
-    "/js/calendar.js",
     "/icons/icon-192.png",
     "/icons/icon-512.png"
 ];
