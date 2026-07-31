@@ -800,6 +800,10 @@ document.addEventListener("DOMContentLoaded", function(){
         document.querySelector(".sidebar");
 
 
+    const main =
+        document.querySelector(".main-content");
+
+
     if(menuBtn && sidebar){
 
 
@@ -813,5 +817,23 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
     }
+
+
+    // 右側の余白クリックで閉じる
+
+    if(main && sidebar){
+
+
+        main.addEventListener("click", function(){
+
+
+            sidebar.classList.remove("active");
+
+
+        });
+
+
+    }
+
 
 });
