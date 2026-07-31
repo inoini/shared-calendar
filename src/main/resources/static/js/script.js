@@ -779,13 +779,17 @@ document.addEventListener("click",function(e){
 // ========================================
 // 日付・作業カードクリック統合
 // ========================================
-
 document.addEventListener("click", function(e){
 
 
     // ==========================
-    // 作業カードクリック
+    // サイドバーリンク除外
     // ==========================
+
+    if(e.target.closest(".menu a")){
+        return;
+    }
+
 
     const card =
         e.target.closest(".schedule-card");
@@ -793,14 +797,10 @@ document.addEventListener("click", function(e){
 
     if(card){
 
-
-        // 日付クリックを止める
         e.stopPropagation();
-
 
         const id =
             card.dataset.id;
-
 
         if(id){
 
@@ -808,16 +808,10 @@ document.addEventListener("click", function(e){
 
         }
 
-
         return;
 
     }
 
-
-
-    // ==========================
-    // 日付枠クリック
-    // ==========================
 
     const dayBox =
         e.target.closest(".day-box");
@@ -825,10 +819,8 @@ document.addEventListener("click", function(e){
 
     if(dayBox){
 
-
         const date =
             dayBox.dataset.date;
-
 
         if(date){
 
@@ -840,6 +832,7 @@ document.addEventListener("click", function(e){
 
 
 });
+
 // ==========================
 // PWA Service Worker
 // ==========================
