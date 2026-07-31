@@ -1862,3 +1862,117 @@ textarea{
     }
 
 }
+/* ==========================================
+   スマホ 時計・リンクボタン調整
+========================================== */
+
+@media screen and (max-width:768px){
+
+
+/* ==========================
+   時計 縦表示
+========================== */
+
+#clock{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    width:120px;
+
+    min-width:120px;
+
+    padding:8px;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+}
+
+
+
+/* ==========================
+   リンク一覧ボタン
+========================== */
+
+.link-button,
+.home-button,
+.menu-link-button{
+
+    width:25vw;
+
+    min-width:80px;
+
+    max-width:100px;
+
+    padding:10px 5px;
+
+    font-size:12px;
+
+    text-align:center;
+
+}
+
+
+
+/* ヘッダー配置 */
+
+.header,
+.top-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:5px;
+
+}
+
+
+
+}
+/* ==========================================
+   スマホ サイドメニュー調整
+========================================== */
+
+@media screen and (max-width:768px){
+
+    .menu{
+
+        width:100%;
+
+        margin-top:10px;
+
+    }
+
+
+    .menu a{
+
+        display:block;
+
+        width:100%;
+
+        padding:16px 20px;
+
+        font-size:16px;
+
+    }
+
+
+    .sidebar{
+
+        width:35vw;
+
+        max-width:280px;
+
+    }
+
+}

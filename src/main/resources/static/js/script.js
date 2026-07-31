@@ -97,7 +97,7 @@ function updateClock(){
         String(now.getSeconds()).padStart(2,"0");
 
     clock.textContent =
-        `${yyyy}/${mm}/${dd} ${hh}:${mi}:${ss}`;
+        `${yyyy}/${mm}/${dd}<br> ${hh}:${mi}:${ss}`;
 
 }
 
