@@ -1142,21 +1142,51 @@ body{
 
 
 /* ==========================
-   サイドバー非表示
+   スマホ サイドバー
 ========================== */
 
 .sidebar{
-    display:block;
+
+    position:fixed;
+
+    left:-240px;
+
+    top:0;
+
     width:220px;
+
+    height:100vh;
+
+    z-index:2000;
+
+    transition:.3s;
+
 }
+
+
+.sidebar.active{
+
+    left:0;
+
+}
+
+
 
 .main-content{
-    margin-left:220px;
+
+    margin-left:0;
+
 }
 
+
+
 .footer{
-    margin-left:220px;
+
+    margin-left:0;
+
 }
+
+
 
 
 
@@ -1534,6 +1564,106 @@ textarea{
     }
 
 }
+
+
+}
+/* ==========================================
+   スマホ入力フォーム改善
+========================================== */
+
+@media screen and (max-width:768px){
+
+
+    /* モーダル全体 */
+
+    .modal-content{
+
+        width:100%;
+
+        height:100vh;
+
+        max-height:100vh;
+
+        overflow-y:auto;
+
+        padding:20px;
+
+    }
+
+
+
+    /* 日付タイトル */
+
+    #selectedDate{
+
+        font-size:22px;
+
+        text-align:center;
+
+        margin-bottom:15px;
+
+    }
+
+
+
+    /* ラベル */
+
+    .modal-content label{
+
+        font-size:15px;
+
+        margin-top:15px;
+
+    }
+
+
+
+    /* 入力欄 */
+
+    .modal-content input,
+    .modal-content select,
+    .modal-content textarea{
+
+
+        width:100%;
+
+        height:48px;
+
+        font-size:16px;
+
+        padding:12px;
+
+        border-radius:10px;
+
+
+    }
+
+
+
+    /* メモ欄 */
+
+    .modal-content textarea{
+
+        height:120px;
+
+    }
+
+
+
+    /* ボタン */
+
+    .modal-content button{
+
+        height:52px;
+
+        font-size:17px;
+
+        margin-top:10px;
+
+        border-radius:12px;
+
+    }
+
 
 
 }
