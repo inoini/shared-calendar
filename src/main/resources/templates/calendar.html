@@ -1,1 +1,1012 @@
-c
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1">
+
+<title>
+農業管理システム | 作業カレンダー
+</title>
+
+
+<meta name="theme-color"
+      content="#2E7D32">
+
+
+<link rel="manifest"
+      href="/manifest.json">
+
+
+<link rel="apple-touch-icon"
+      href="/icons/icon-192.png">
+
+
+<link rel="stylesheet"
+      th:href="@{/css/style.css}">
+
+
+<script defer
+        th:src="@{/js/script.js}">
+</script>
+
+
+</head>
+
+
+<body>
+
+
+<header class="top-header">
+
+
+    <a href="/"
+       class="logo-area">
+
+
+        <div class="logo-icon">
+
+            🌱
+
+        </div>
+
+
+        <div>
+
+            <h1>
+                農業管理システム
+            </h1>
+
+
+            <p>
+                Smart Farm Management
+            </p>
+
+
+        </div>
+
+
+    </a>
+
+
+</header>
+
+
+
+
+
+<main class="calendar-page">
+
+
+
+<div class="page-home">
+
+<a href="/"
+   class="home-button">
+
+🏠 トップページへ戻る
+
+</a>
+
+</div>
+
+
+
+
+
+<section class="calendar-header">
+
+
+<h2>
+📅 作業カレンダー
+</h2>
+
+
+<p>
+作業予定・担当者・圃場・作物を一元管理
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="month-nav">
+
+
+<a class="month-button"
+
+th:href="@{/calendar(year=${prevYear},month=${prevMonth})}">
+
+← 前月
+
+</a>
+
+
+
+
+<div class="month-title">
+
+
+<span th:text="${year}">
+</span>
+
+年
+
+
+<span th:text="${month}">
+</span>
+
+月
+
+
+</div>
+
+
+
+
+
+<a class="month-button"
+
+th:href="@{/calendar(year=${nextYear},month=${nextMonth})}">
+
+
+次月 →
+
+
+</a>
+
+
+</section>
+
+
+
+
+
+
+<section class="calendar-wrapper">
+
+
+
+<table class="calendar-table">
+
+
+<thead>
+
+<tr>
+
+<th class="sun">
+日
+</th>
+
+
+<th>
+月
+</th>
+
+
+<th>
+火
+</th>
+
+
+<th>
+水
+</th>
+
+
+<th>
+木
+</th>
+
+
+<th>
+金
+</th>
+
+
+<th class="sat">
+土
+</th>
+
+
+</tr>
+
+</thead>
+
+
+
+
+
+<tbody>
+
+
+
+<tr th:each="week:${#numbers.sequence(0,5)}">
+
+
+
+<td th:each="day:${#numbers.sequence(0,6)}"
+
+th:with="idx=${week*7+day}">
+
+
+
+
+
+<div th:if="${idx < calendarDays.size()}">
+
+
+
+
+
+<div class="day-box"
+
+
+th:attr="data-date=${calendarDays[idx].date}"
+
+
+th:classappend="
+
+${!calendarDays[idx].currentMonth} ? ' other-month' :
+
+(${calendarDays[idx].today} ? ' today' :
+
+(${calendarDays[idx].scheduleCount > 0} ? ' has-schedule' : ''))
+
+">
+
+
+
+<div class="day-number">
+
+
+<span th:text="${calendarDays[idx].day}">
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="schedule-count"
+
+th:if="${calendarDays[idx].scheduleCount > 0}">
+
+
+🚜
+
+<span th:text="${calendarDays[idx].scheduleCount}">
+</span>
+
+件
+
+
+</div>
+
+<div class="schedule-list">
+
+
+<div th:each="schedule:${calendarDays[idx].scheduleList}"
+
+     class="schedule-card"
+
+     th:attr="data-id=${schedule.id}">
+
+
+
+<div class="schedule-time">
+
+⏰
+
+<span th:text="${schedule.startTime}">
+</span>
+
+～
+
+<span th:text="${schedule.endTime}">
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="schedule-work">
+
+🚜
+
+<span th:text="${schedule.workType}">
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="schedule-info">
+
+🌱
+
+<span th:text="${schedule.cropName}">
+</span>
+
+
+📍
+
+<span th:text="${schedule.fieldName}">
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="schedule-user">
+
+👤
+
+<span th:text="${schedule.userName}">
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</section>
+
+
+
+
+
+<!-- ==========================
+     モーダル
+========================== -->
+
+
+<div id="modal"
+     class="modal">
+
+
+
+<div class="modal-content">
+
+
+
+
+
+<h2 id="selectedDate"></h2>
+
+
+
+<h3 class="schedule-title">
+
+登録済み作業
+
+</h3>
+
+
+
+
+<div id="scheduleList"
+     class="schedule-history">
+
+読み込み中...
+
+</div>
+
+
+
+
+<hr>
+
+
+
+
+
+
+<form id="scheduleForm"
+
+      action="/save"
+
+      method="post">
+
+
+
+
+
+<input type="hidden"
+
+       id="scheduleId"
+
+       name="id">
+
+
+
+
+
+<input type="hidden"
+
+       id="date"
+
+       name="date">
+
+
+
+
+
+<label>
+開始時間
+</label>
+
+
+
+<select id="startTime"
+
+        name="startTime">
+
+
+<option value="06:00">
+06:00
+</option>
+
+
+<option value="07:00">
+07:00
+</option>
+
+
+<option value="08:00">
+08:00
+</option>
+
+
+<option value="09:00">
+09:00
+</option>
+
+
+<option value="10:00">
+10:00
+</option>
+
+
+<option value="11:00">
+11:00
+</option>
+
+
+<option value="12:00">
+12:00
+</option>
+
+
+<option value="13:00">
+13:00
+</option>
+
+
+<option value="14:00">
+14:00
+</option>
+
+
+<option value="15:00">
+15:00
+</option>
+
+
+<option value="16:00">
+16:00
+</option>
+
+
+<option value="17:00">
+17:00
+</option>
+
+
+</select>
+
+
+
+
+
+<label>
+終了時間
+</label>
+
+
+
+<select id="endTime"
+
+        name="endTime">
+
+
+<option value="07:00">
+07:00
+</option>
+
+
+<option value="08:00">
+08:00
+</option>
+
+
+<option value="09:00">
+09:00
+</option>
+
+
+<option value="10:00">
+10:00
+</option>
+
+
+<option value="11:00">
+11:00
+</option>
+
+
+<option value="12:00">
+12:00
+</option>
+
+
+<option value="13:00">
+13:00
+</option>
+
+
+<option value="14:00">
+14:00
+</option>
+
+
+<option value="15:00">
+15:00
+</option>
+
+
+<option value="16:00">
+16:00
+</option>
+
+
+<option value="17:00">
+17:00
+</option>
+
+
+<option value="18:00">
+18:00
+</option>
+
+
+</select>
+
+
+
+
+
+<label>
+担当者
+</label>
+
+
+<input type="text"
+
+       id="userName"
+
+       name="userName"
+
+       placeholder="担当者名を入力">
+
+
+
+
+
+<label>
+作業内容
+</label>
+
+
+<textarea
+
+id="schedule"
+
+name="schedule"
+
+placeholder="作業内容"
+
+required>
+
+</textarea>
+
+
+
+
+
+<label>
+圃場名
+</label>
+
+
+<input type="text"
+
+       id="fieldName"
+
+       name="fieldName"
+
+       placeholder="例：第1圃場">
+
+
+
+
+
+<label>
+作物
+</label>
+
+
+
+<select id="cropName"
+
+        name="cropName">
+
+
+<option value="さつまいも">
+さつまいも
+</option>
+
+
+<option value="米">
+米
+</option>
+
+
+<option value="野菜">
+野菜
+</option>
+
+
+<option value="その他">
+その他
+</option>
+
+
+</select>
+
+
+
+
+
+<label>
+作業種類
+</label>
+
+
+
+<select id="workType"
+
+        name="workType">
+
+
+<option value="耕起">
+耕起
+</option>
+
+
+<option value="畝立て">
+畝立て
+</option>
+
+
+<option value="植付">
+植付
+</option>
+
+
+<option value="管理">
+管理
+</option>
+
+
+<option value="除草">
+除草
+</option>
+
+
+<option value="防除">
+防除
+</option>
+
+
+<option value="収穫">
+収穫
+</option>
+
+
+<option value="出荷">
+出荷
+</option>
+
+
+</select>
+<!-- 使用資材 -->
+
+<label>
+使用資材
+</label>
+
+
+<select id="itemName"
+
+        name="itemName">
+
+
+<option value="">
+選択してください
+</option>
+
+
+<option value="肥料">
+肥料
+</option>
+
+
+<option value="農薬">
+農薬
+</option>
+
+
+<option value="種">
+種
+</option>
+
+
+<option value="苗">
+苗
+</option>
+
+
+</select>
+
+
+
+
+
+<!-- 使用数量 -->
+
+
+<label>
+使用数量
+</label>
+
+
+
+<input
+
+type="number"
+
+id="useQuantity"
+
+name="useQuantity"
+
+min="0"
+
+placeholder="使用数量を入力">
+
+
+
+
+
+
+<label>
+メモ
+</label>
+
+
+
+<textarea
+
+id="memo"
+
+name="memo"
+
+placeholder="天候・肥料・気づいたこと">
+
+</textarea>
+
+
+
+
+
+
+<div class="modal-buttons">
+
+
+
+
+
+<button
+
+id="saveBtn"
+
+type="submit">
+
+登録
+
+</button>
+
+
+
+
+
+
+<button
+
+id="updateBtn"
+
+type="button"
+
+style="display:none;"
+
+onclick="editSave()">
+
+更新
+
+</button>
+
+
+
+
+
+
+<button
+
+id="deleteBtn"
+
+type="button"
+
+style="display:none;"
+
+onclick="deleteSchedule()">
+
+消去
+
+</button>
+
+
+
+
+
+
+<button
+
+type="button"
+
+onclick="closeModal()">
+
+閉じる
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+</form>
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+</main>
+
+
+
+
+
+
+<script>
+
+
+if("serviceWorker" in navigator){
+
+
+    navigator.serviceWorker.register("/sw.js")
+
+
+    .then(function(){
+
+
+        console.log(
+        "Service Worker 登録成功"
+        );
+
+
+    })
+
+
+    .catch(function(error){
+
+
+        console.log(
+        "登録失敗",
+        error
+        );
+
+
+    });
+
+
+}
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+
+
+</html>
