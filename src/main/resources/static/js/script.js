@@ -704,75 +704,6 @@ function deleteSchedule(){
 // ========================================
 
 
-document.addEventListener("click",function(e){
-
-
-    // 作業カードクリック
-    const card =
-        e.target.closest(".schedule-card");
-
-
-    if(card){
-
-
-        e.stopPropagation();
-
-
-        const id =
-            card.dataset.id;
-
-
-        if(id){
-
-            editSchedule(id);
-
-        }
-
-
-        return;
-
-    }
-	// ==========================
-	// 編集保存
-	// ==========================
-
-	function editSave(){
-
-	    const form =
-	        document.getElementById("scheduleForm");
-
-
-	    form.action="/update";
-
-
-	    form.submit();
-
-	}
-
-
-    // 日付枠クリック
-
-    const dayBox =
-        e.target.closest(".day-box");
-
-
-    if(dayBox){
-
-
-        const date =
-            dayBox.dataset.date;
-
-
-        if(date){
-
-            openAddDay(date);
-
-        }
-
-    }
-
-
-});
 // ==========================
 // 作業カードクリック
 // ==========================
@@ -797,7 +728,6 @@ document.addEventListener("click", function(e){
 
     if(card){
 
-        e.stopPropagation();
 
         const id =
             card.dataset.id;
