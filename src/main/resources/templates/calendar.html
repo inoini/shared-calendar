@@ -394,6 +394,10 @@ th:if="${calendarDays[idx].scheduleCount > 0}">
 
     <!-- 作業種類 -->
     <label>作業種類</label>
+	<!-- 使用資材 -->
+
+
+<!-- 使用数量 -->
 
     <select id="workType" name="workType">
         <option value="耕起">耕起</option>
@@ -405,8 +409,28 @@ th:if="${calendarDays[idx].scheduleCount > 0}">
         <option value="収穫">収穫</option>
         <option value="出荷">出荷</option>
     </select>
+	<!-- 使用資材 -->
+<label>使用資材</label>
 
-    <!-- メモ -->
+<select id="itemName" name="itemName">
+    <option value="">選択してください</option>
+    <option value="肥料">肥料</option>
+    <option value="農薬">農薬</option>
+    <option value="種">種</option>
+    <option value="苗">苗</option>
+</select>
+
+<!-- 使用数量 -->
+<label>使用数量</label>
+
+<input
+    type="number"
+    id="useQuantity"
+    name="useQuantity"
+    min="0"
+    placeholder="使用数量を入力">
+
+
     <label>メモ</label>
 
     <textarea
@@ -429,7 +453,7 @@ th:if="${calendarDays[idx].scheduleCount > 0}">
     id="updateBtn"
     type="button"
     style="display:none;"
-    onclick="updateSchedule()">
+    onclick="editSave()">
     更新
 </button>
 

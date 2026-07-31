@@ -982,16 +982,18 @@ label{
 /* ==============================
    作業一覧スクロール
 ============================== */
-
 .schedule-list{
 
-    height:120px;
+    flex:1;
 
     overflow-y:auto;
 
     overflow-x:hidden;
 
+    height:auto;
+
 }
+
 
 
 
@@ -1813,11 +1815,6 @@ textarea{
     }
 
 
-    body{
-
-        overflow-x:hidden;
-
-    }
 
 
 }
@@ -2217,5 +2214,344 @@ textarea{
 
 }
 
+
+}
+/* カレンダーの余白をなくす */
+
+.calendar-table tbody td{
+    padding:0;
+}
+
+.day-box{
+
+    width:100%;
+
+    height:190px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    padding:8px;
+
+}
+/* ==========================================
+   在庫管理画面
+========================================== */
+
+.stock-container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:30px;
+
+}
+
+.stock-container h1{
+
+    color:#2E7D32;
+
+    margin-bottom:10px;
+
+}
+
+.stock-container p{
+
+    margin-bottom:25px;
+
+    color:#666;
+
+}
+
+/* ==========================
+   登録フォーム
+========================== */
+
+.stock-form{
+
+    background:#fff;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+    margin-bottom:30px;
+
+}
+
+.stock-form h2{
+
+    color:#2E7D32;
+
+    margin-bottom:20px;
+
+}
+
+.stock-form button{
+
+    width:100%;
+
+    background:#2E7D32;
+
+    color:#fff;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+.stock-form button:hover{
+
+    background:#1B5E20;
+
+}
+
+/* ==========================
+   在庫一覧
+========================== */
+
+.stock-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:#fff;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+}
+
+.stock-table th{
+
+    background:#2E7D32;
+
+    color:white;
+
+    padding:14px;
+
+}
+
+.stock-table td{
+
+    padding:12px;
+
+    border-bottom:1px solid #ddd;
+
+    text-align:center;
+
+}
+
+.stock-table tr:hover{
+
+    background:#F1F8E9;
+
+}
+
+/* ==========================
+   編集ボタン
+========================== */
+
+.stock-edit{
+
+    background:#1976D2;
+
+    color:white;
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+}
+
+.stock-edit:hover{
+
+    background:#0D47A1;
+
+}
+
+/* ==========================
+   削除ボタン
+========================== */
+
+.stock-delete{
+
+    background:#D32F2F;
+
+    color:white;
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+}
+
+.stock-delete:hover{
+
+    background:#B71C1C;
+
+}
+
+/* ==========================
+   在庫不足
+========================== */
+
+.low-stock{
+
+    color:#D32F2F;
+
+    font-weight:bold;
+
+}
+
+/* ==========================
+   スマホ対応
+========================== */
+
+@media screen and (max-width:768px){
+
+    .stock-container{
+
+        padding:15px;
+
+    }
+
+    .stock-table{
+
+        display:block;
+
+        overflow-x:auto;
+
+        white-space:nowrap;
+
+    }
+
+    .stock-form{
+
+        padding:15px;
+
+    }
+
+}
+/* ==========================
+   カレンダー高さ修正
+========================== */
+
+.calendar-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.calendar-table tbody tr{
+    height:180px;
+}
+
+
+.calendar-table tbody td{
+
+    height:180px;
+
+    padding:0;
+
+}
+
+
+.day-box{
+
+    height:180px;
+
+    min-height:0;
+
+}
+/* ===============================
+   カレンダークリック範囲修正
+=============================== */
+
+.calendar-table tbody td{
+
+    height:180px;
+
+    padding:0;
+
+}
+
+
+.day-box{
+
+    height:180px;
+
+    min-height:0;
+
+    width:100%;
+
+    cursor:pointer;
+
+}
+.sidebar.active::after{
+
+    pointer-events:none;
+
+}
+/* ===============================
+   サイドバー最終修正
+=============================== */
+
+@media screen and (max-width:768px){
+
+.sidebar{
+
+    width:80vw;
+
+    left:-80vw;
+
+    height:100vh;
+
+    z-index:9999;
+
+}
+
+
+.sidebar.active{
+
+    left:0;
+
+}
+
+
+.sidebar .menu{
+
+    position:relative;
+
+    z-index:10000;
+
+}
+
+
+.sidebar .menu a{
+
+    display:block;
+
+    position:relative;
+
+    z-index:10001;
+
+}
 
 }

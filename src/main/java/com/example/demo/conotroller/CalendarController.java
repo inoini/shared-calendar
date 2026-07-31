@@ -9,9 +9,10 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.example.demo.entity.Crop;
+
 
 import com.example.demo.entity.Schedule;
+import com.example.demo.service.StockService;
 import com.example.demo.model.CalendarDay;
 import com.example.demo.service.ScheduleService;
 import com.example.demo.repository.CropRepository;
@@ -24,97 +25,22 @@ public class CalendarController {
 
     private final ScheduleService scheduleService;
 
-    private final CropRepository cropRepository;
-
 
 
     public CalendarController(
             ScheduleService scheduleService,
-            CropRepository cropRepository){
+            CropRepository cropRepository,
+            StockService stockService){
 
         this.scheduleService = scheduleService;
-        this.cropRepository = cropRepository;
-
+     
     }
 
 
 
 
 
-    // ホーム（ダッシュボード）
-    @GetMapping("/")
-    public String home(Model model){
-
-
-        long cropCount =
-                cropRepository.count();
-
-
-
-        model.addAttribute(
-                "cropCount",
-                cropCount
-        );
-
-
-
-
-        String today =
-                LocalDate.now().toString();
-
-
-
-        List<Schedule> todaySchedules =
-                scheduleService.findByDate(today);
-
-
-
-        model.addAttribute(
-                "todaySchedules",
-                todaySchedules
-        );
-
-
-
-        model.addAttribute(
-                "todayCount",
-                todaySchedules.size()
-        );
-
-
-
-
-        List<Crop> harvestCrops =
-                cropRepository
-                .findByHarvestDateGreaterThanEqualOrderByHarvestDateAsc(
-                        LocalDate.now()
-                );
-
-
-
-        if(!harvestCrops.isEmpty()){
-
-
-            Crop nextHarvest =
-                    harvestCrops.get(0);
-
-
-
-            model.addAttribute(
-                    "nextHarvest",
-                    nextHarvest
-            );
-
-
-        }
-
-
-
-        return "index";
-
-    }
-
-
+   
 
 
 

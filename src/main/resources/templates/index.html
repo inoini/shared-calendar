@@ -65,11 +65,10 @@
                 <span>経営管理</span>
             </a>
 
-            <a href="#">
-                <span>📦</span>
-                <span>在庫管理</span>
-            </a>
-
+          	<a th:href="@{/stock}">
+    <span>📦</span>
+    <span>在庫管理</span>
+</a>
             <a href="#">
                 <span>📒</span>
                 <span>作業日報</span>
@@ -270,7 +269,117 @@
 
             </section>
                         <!-- ===== 管理メニュー ===== -->
+<!-- ==========================================
+     在庫状況
+========================================== -->
 
+<div class="panel">
+
+    <h2>📦 在庫状況</h2>
+
+    <div class="card-area">
+
+        <!-- ==========================
+             不足資材
+        ========================== -->
+        <div class="card">
+
+            <h3>🔴 不足資材</h3>
+
+            <table class="stock-status-table">
+
+                <thead>
+
+                    <tr>
+                        <th>資材</th>
+                        <th>現在</th>
+                        <th>最低</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr th:if="${#lists.isEmpty(lowStocks)}">
+                        <td colspan="3">
+                            不足資材はありません
+                        </td>
+                    </tr>
+
+                    <tr th:each="stock : ${lowStocks}">
+
+                        <td th:text="${stock.itemName}"></td>
+
+                        <td>
+                            <span th:text="${stock.quantity}"></span>
+                            <span th:text="${stock.unit}"></span>
+                        </td>
+
+                        <td>
+                            <span th:text="${stock.minimumStock}"></span>
+                            <span th:text="${stock.unit}"></span>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- ==========================
+             余剰資材
+        ========================== -->
+        <div class="card">
+
+            <h3>🟢 余剰資材</h3>
+
+            <table class="stock-status-table">
+
+                <thead>
+
+                    <tr>
+                        <th>資材</th>
+                        <th>現在</th>
+                        <th>最低</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr th:if="${#lists.isEmpty(overStocks)}">
+                        <td colspan="3">
+                            余剰資材はありません
+                        </td>
+                    </tr>
+
+                    <tr th:each="stock : ${overStocks}">
+
+                        <td th:text="${stock.itemName}"></td>
+
+                        <td>
+                            <span th:text="${stock.quantity}"></span>
+                            <span th:text="${stock.unit}"></span>
+                        </td>
+
+                        <td>
+                            <span th:text="${stock.minimumStock}"></span>
+                            <span th:text="${stock.unit}"></span>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
             
         </div>
 
