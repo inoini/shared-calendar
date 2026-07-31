@@ -1940,16 +1940,25 @@ textarea{
 
 }
 /* ==========================================
-   スマホ サイドメニュー調整
+   最終スマホ調整
 ========================================== */
 
 @media screen and (max-width:768px){
 
-    .menu{
+    .sidebar{
 
-        width:100%;
+        width:80vw;
 
-        margin-top:10px;
+        max-width:280px;
+
+        left:-80vw;
+
+    }
+
+
+    .sidebar.active{
+
+        left:0;
 
     }
 
@@ -1958,20 +1967,157 @@ textarea{
 
         display:block;
 
-        width:100%;
-
-        padding:16px 20px;
+        padding:18px 20px;
 
         font-size:16px;
 
     }
 
 
+    #clock{
+
+        width:120px;
+
+        min-width:120px;
+
+        font-size:12px;
+
+    }
+
+}/* ==========================================
+   最終スマホ調整
+========================================== */
+
+@media screen and (max-width:768px){
+
     .sidebar{
 
-        width:35vw;
+        width:80vw;
 
         max-width:280px;
+
+        left:-80vw;
+
+    }
+
+
+    .sidebar.active{
+
+        left:0;
+
+    }
+
+
+    .menu a{
+
+        display:block;
+
+        padding:18px 20px;
+
+        font-size:16px;
+
+    }
+
+
+    #clock{
+
+        width:120px;
+
+        min-width:120px;
+
+        font-size:12px;
+
+    }
+
+}
+/* ==========================================
+   最終スマホ調整
+========================================== */
+
+@media screen and (max-width:768px){
+
+    .sidebar{
+
+        width:80vw;
+
+        max-width:280px;
+
+        left:-80vw;
+
+    }
+
+
+    .sidebar.active{
+
+        left:0;
+
+    }
+
+
+    .menu a{
+
+        display:block;
+
+        padding:18px 20px;
+
+        font-size:16px;
+
+    }
+
+
+    #clock{
+
+        width:120px;
+
+        min-width:120px;
+
+        font-size:12px;
+
+    }
+
+}
+/* ==========================================
+   最終スマホ調整
+========================================== */
+
+@media screen and (max-width:768px){
+
+    .sidebar{
+
+        width:80vw;
+
+        max-width:280px;
+
+        left:-80vw;
+
+    }
+
+
+    .sidebar.active{
+
+        left:0;
+
+    }
+
+
+    .menu a{
+
+        display:block;
+
+        padding:18px 20px;
+
+        font-size:16px;
+
+    }
+
+
+    #clock{
+
+        width:120px;
+
+        min-width:120px;
+
+        font-size:12px;
 
     }
 

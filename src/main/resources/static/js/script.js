@@ -96,12 +96,12 @@ function updateClock(){
     const ss =
         String(now.getSeconds()).padStart(2,"0");
 
-    clock.textContent =
-        `${yyyy}/${mm}/${dd}<br> ${hh}:${mi}:${ss}`;
-
+		clock.innerHTML =
+		`
+		<span>${yyyy}/${mm}/${dd}</span>
+		<span>${hh}:${mi}:${ss}</span>
+		`;
 }
-
-
 
 // ==========================
 // カードアニメーション
