@@ -1,296 +1,609 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>収支確認</title>
-
-
-<style>
-
-body{
-
-    font-family:sans-serif;
-    margin:20px;
-
-}
-
-
-h1{
-
-    color:#2E7D32;
-
-}
-
-
-.summary{
-
-    background:#f1f8e9;
-
-    padding:15px;
-
-    border-radius:8px;
-
-    margin-bottom:20px;
-
-}
-
-
-.profit{
-
-    font-size:28px;
-
-    font-weight:bold;
-
-    color:#2E7D32;
-
-}
-
-
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-    margin-top:20px;
-
-}
-
-
-th,td{
-
-    border:1px solid #ccc;
-
-    padding:8px;
-
-}
-
-
-th{
-
-    background:#eeeeee;
-
-}
-
-
-
-.back{
-
-    display:inline-block;
-
-    margin-top:20px;
-
-    background:#555;
-
-    color:white;
-
-    padding:10px;
-
-    text-decoration:none;
-
-    border-radius:5px;
-
-}
-
-
-
-
-@media screen and (max-width:600px){
-
-
-body{
-
-    font-size:18px;
-
-    margin:15px;
-
-}
-
-
-h1{
-
-    font-size:28px;
-
-}
-
-
-.summary{
-
-    font-size:20px;
-
-}
-
-
-table{
-
-    font-size:14px;
-
-}
-
-
-
-th,td{
-
-    padding:8px;
-
-}
-
-
-
-.back{
-
-    width:100%;
-
-    text-align:center;
-
-    box-sizing:border-box;
-
-}
-
-
-
-}
-
-
-</style>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>収支確認 | 農業管理システム</title>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-width: 320px;
+            margin: 0;
+            background: #f3f7f3;
+            color: #263229;
+            font-family: "Yu Gothic", "Meiryo", sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .page {
+            width: min(1240px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 30px 0 40px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 18px;
+            padding: 26px 28px;
+            border: 1px solid #dfe8e0;
+            border-radius: 18px;
+            background: #ffffff;
+            box-shadow: 0 8px 24px rgba(34, 73, 39, 0.08);
+        }
+
+        .eyebrow {
+            margin: 0 0 5px;
+            color: #286894;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+        }
+
+        h1 {
+            margin: 0 0 7px;
+            color: #245d2b;
+            font-size: clamp(27px, 3vw, 36px);
+        }
+
+        .description {
+            margin: 0;
+            color: #69736b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .back-button {
+            display: inline-flex;
+            flex-shrink: 0;
+            min-height: 44px;
+            padding: 10px 16px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #a9b9ab;
+            border-radius: 9px;
+            background: #ffffff;
+            color: #2f6535;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 18px;
+            padding: 6px;
+            overflow-x: auto;
+            border: 1px solid #dfe8e0;
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .tabs a {
+            display: inline-flex;
+            flex: 1 0 auto;
+            min-height: 40px;
+            padding: 9px 14px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: #657168;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .tabs a.active {
+            background: #286d32;
+            color: #ffffff;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .metric {
+            padding: 22px;
+            border: 1px solid #dfe7e0;
+            border-top: 4px solid;
+            border-radius: 15px;
+            background: #ffffff;
+            box-shadow: 0 5px 18px rgba(38, 77, 42, 0.06);
+        }
+
+        .metric p {
+            margin: 0 0 9px;
+            color: #677269;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .metric strong {
+            display: block;
+            margin-bottom: 7px;
+            color: #263b2a;
+            font-size: clamp(23px, 3vw, 32px);
+            font-variant-numeric: tabular-nums;
+            overflow-wrap: anywhere;
+        }
+
+        .metric strong small {
+            margin-left: 4px;
+            font-size: 12px;
+        }
+
+        .metric > span {
+            color: #859087;
+            font-size: 11px;
+        }
+
+        .metric-sales {
+            border-top-color: #4f9b5a;
+        }
+
+        .metric-expenses {
+            border-top-color: #d48631;
+        }
+
+        .metric-profit {
+            border-top-color: #3a7dae;
+        }
+
+        .metric-profit.negative {
+            border-top-color: #c9473f;
+        }
+
+        .metric-profit.negative strong {
+            color: #a52d26;
+        }
+
+        .statement-grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .panel {
+            min-width: 0;
+            padding: 24px;
+            border: 1px solid #dfe7e0;
+            border-radius: 15px;
+            background: #ffffff;
+            box-shadow: 0 5px 18px rgba(38, 77, 42, 0.06);
+        }
+
+        .panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .section-label {
+            margin: 0 0 4px;
+            color: #7b897e;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+        }
+
+        .panel-heading h2 {
+            margin: 0;
+            color: #294c2e;
+            font-size: 20px;
+        }
+
+        .management-link {
+            display: inline-flex;
+            min-height: 34px;
+            padding: 7px 11px;
+            align-items: center;
+            border-radius: 8px;
+            background: #eef5ef;
+            color: #2d6633;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #e0e6e1;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 680px;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th,
+        td {
+            padding: 12px 13px;
+            border-bottom: 1px solid #e8ece8;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background: #f4f7f4;
+            color: #566359;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .money {
+            text-align: right;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .category {
+            display: inline-flex;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: #fff1df;
+            color: #8b500f;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .empty td {
+            padding: 32px 16px;
+            color: #7a857c;
+            text-align: center;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 24px 4px 0;
+            color: #748078;
+            font-size: 12px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: #32683a;
+            font-weight: 800;
+        }
+
+        @media (max-width: 760px) {
+            .metrics {
+                grid-template-columns: 1fr;
+                gap: 11px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .page {
+                width: min(100% - 20px, 1240px);
+                padding-top: 10px;
+            }
+
+            .header {
+                align-items: stretch;
+                padding: 20px;
+                flex-direction: column;
+            }
+
+            .back-button {
+                width: 100%;
+            }
+
+            .panel {
+                padding: 19px 15px;
+            }
+
+            .table-wrap {
+                overflow: visible;
+                border: 0;
+            }
+
+            table,
+            tbody,
+            tr,
+            td {
+                display: block;
+                width: 100%;
+            }
+
+            table {
+                min-width: 0;
+            }
+
+            thead {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip-path: inset(50%);
+            }
+
+            tbody {
+                display: grid;
+                gap: 10px;
+            }
+
+            tbody tr {
+                overflow: hidden;
+                border: 1px solid #dfe7e0;
+                border-radius: 10px;
+            }
+
+            td {
+                display: grid;
+                grid-template-columns: 82px 1fr;
+                gap: 10px;
+                text-align: left !important;
+            }
+
+            td::before {
+                content: attr(data-label);
+                color: #6e7970;
+                font-size: 11px;
+                font-weight: 800;
+            }
+
+            .empty td {
+                display: block;
+            }
+
+            .empty td::before {
+                content: none;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
 </head>
 
-
 <body>
-
-
-<h1>📊 収支確認</h1>
-
-
-
-<div class="summary">
-
-
-<p>
-売上合計：
-<span th:text="${salesTotal}">
-</span>
-円
-</p>
-
-
-
-<p>
-経費合計：
-<span th:text="${expenseTotal}">
-</span>
-円
-</p>
-
-
-
-<p class="profit">
-
-利益：
-<span th:text="${profit}">
-</span>
-円
-
-</p>
-
-
-</div>
-
-
-
-
-
-<h2>📈 売上一覧</h2>
-
-
-<table>
-
-
-<tr>
-
-<th>日付</th>
-<th>作物</th>
-<th>金額</th>
-<th>メモ</th>
-
-</tr>
-
-
-
-<tr th:each="s:${sales}">
-
-
-<td th:text="${s.date}"></td>
-
-<td th:text="${s.crop}"></td>
-
-<td th:text="${s.amount}"></td>
-
-<td th:text="${s.memo}"></td>
-
-
-</tr>
-
-
-</table>
-
-
-
-
-
-<h2>💰 経費一覧</h2>
-
-
-<table>
-
-
-<tr>
-
-<th>日付</th>
-<th>項目</th>
-<th>金額</th>
-<th>メモ</th>
-
-</tr>
-
-
-
-<tr th:each="e:${expenses}">
-
-
-<td th:text="${e.date}"></td>
-
-<td th:text="${e.category}"></td>
-
-<td th:text="${e.amount}"></td>
-
-<td th:text="${e.memo}"></td>
-
-
-</tr>
-
-
-</table>
-
-
-
-
-<a class="back" href="/management">
-
-経営管理へ戻る
-
-</a>
-
-
-
+<main class="page">
+
+    <header class="header">
+        <div>
+            <p class="eyebrow">
+                BUSINESS MANAGEMENT / PROFIT &amp; LOSS
+            </p>
+
+            <h1>収支確認</h1>
+
+            <p class="description">
+                登録済みの売上と経費を集計し、現在の利益と明細を確認します。
+            </p>
+        </div>
+
+        <a class="back-button"
+           th:href="@{/management}"
+           href="/management">
+            ← 経営メニューへ
+        </a>
+    </header>
+
+	<nav class="tabs" aria-label="経営管理メニュー">
+    <a th:href="@{/management}" href="/management">
+        経営メニュー
+    </a>
+
+    <a th:href="@{/expenses}" href="/expenses">
+        経費管理
+    </a>
+
+    <a th:href="@{/sales}" href="/sales">
+        売上管理
+    </a>
+
+    <a class="active"
+       th:href="@{/profit}"
+       href="/profit"
+       aria-current="page">
+        収支確認
+    </a>
+</nav>
+
+    <section class="metrics" aria-label="収支集計">
+
+        <article class="metric metric-sales">
+            <p>売上合計</p>
+
+            <strong>
+                <span th:text="${salesTotal != null ? salesTotal : 0}">
+                    0
+                </span>
+                <small>円</small>
+            </strong>
+
+            <span>登録された売上の合計</span>
+        </article>
+
+        <article class="metric metric-expenses">
+            <p>経費合計</p>
+
+            <strong>
+                <span th:text="${expenseTotal != null ? expenseTotal : 0}">
+                    0
+                </span>
+                <small>円</small>
+            </strong>
+
+            <span>登録された経費の合計</span>
+        </article>
+
+        <article class="metric metric-profit"
+                 th:classappend="${profit != null and profit &lt; 0}
+                 ? ' negative' : ''">
+
+            <p>利益</p>
+
+            <strong>
+                <span th:text="${profit != null ? profit : 0}">
+                    0
+                </span>
+                <small>円</small>
+            </strong>
+
+            <span>売上合計 − 経費合計</span>
+        </article>
+
+    </section>
+
+    <div class="statement-grid">
+
+        <section class="panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="section-label">SALES BREAKDOWN</p>
+                    <h2>売上明細</h2>
+                </div>
+
+                <a class="management-link"
+                   th:href="@{/sales}"
+                   href="/sales">
+                    売上管理へ
+                </a>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">日付</th>
+                        <th scope="col">作物</th>
+                        <th scope="col">金額</th>
+                        <th scope="col">メモ</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="s : ${sales}">
+                        <td data-label="日付"
+                            th:text="${s.date}">
+                            2026-08-16
+                        </td>
+
+                        <td data-label="作物"
+                            th:text="${s.crop}">
+                            さつまいも
+                        </td>
+
+                        <td data-label="金額" class="money">
+                            <span th:text="${s.amount}">50000</span>円
+                        </td>
+
+                        <td data-label="メモ"
+                            th:text="${s.memo}">
+                            直売所
+                        </td>
+                    </tr>
+
+                    <tr class="empty"
+                        th:if="${sales == null or #lists.isEmpty(sales)}">
+                        <td colspan="4">
+                            集計対象の売上はありません。
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="section-label">EXPENSE BREAKDOWN</p>
+                    <h2>経費明細</h2>
+                </div>
+
+                <a class="management-link"
+                   th:href="@{/expenses}"
+                   href="/expenses">
+                    経費管理へ
+                </a>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">日付</th>
+                        <th scope="col">項目</th>
+                        <th scope="col">金額</th>
+                        <th scope="col">メモ</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="e : ${expenses}">
+                        <td data-label="日付"
+                            th:text="${e.date}">
+                            2026-08-16
+                        </td>
+
+                        <td data-label="項目">
+                            <span class="category"
+                                  th:text="${e.category}">
+                                肥料
+                            </span>
+                        </td>
+
+                        <td data-label="金額" class="money">
+                            <span th:text="${e.amount}">12000</span>円
+                        </td>
+
+                        <td data-label="メモ"
+                            th:text="${e.memo}">
+                            元肥購入
+                        </td>
+                    </tr>
+
+                    <tr class="empty"
+                        th:if="${expenses == null or #lists.isEmpty(expenses)}">
+                        <td colspan="4">
+                            集計対象の経費はありません。
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>農業管理システム / 経営管理 / 収支確認</p>
+        <a th:href="@{/}" href="/">トップページへ戻る</a>
+    </footer>
+
+</main>
 </body>
-
 </html>

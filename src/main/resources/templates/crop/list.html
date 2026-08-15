@@ -1,148 +1,174 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>農業管理システム | 作物一覧</title>
 
-<title>農業管理システム | 作物一覧</title>
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}"
+          href="/css/style.css">
 
-<link rel="stylesheet" th:href="@{/css/style.css}">
-
+    <link rel="stylesheet"
+          th:href="@{/css/crop-list.css}"
+          href="/css/crop-list.css">
 </head>
 
 <body>
 
 <header class="top-header">
+    <a th:href="@{/}"
+       href="/"
+       class="logo-area"
+       aria-label="トップページへ戻る">
 
-    <a href="/" class="logo-area">
-
-        <div class="logo-icon">
-            🌱
-        </div>
+        <div class="logo-icon" aria-hidden="true">🌱</div>
 
         <div>
-
             <h1>農業管理システム</h1>
-
             <p>Smart Farm Management</p>
+        </div>
+    </a>
+</header>
+
+<main class="crop-list-page">
+
+    <section class="crop-list-header"
+             aria-labelledby="crop-list-title">
+
+        <div class="crop-list-header-row">
+
+            <div class="crop-list-header-text">
+                <h2 id="crop-list-title">🌱 作物一覧</h2>
+                <p>登録されている作物を一覧表示します</p>
+            </div>
+
+            <a th:href="@{/}"
+               href="/"
+               class="crop-home-button">
+
+                <span aria-hidden="true">🏠</span>
+                <span>トップページに戻る</span>
+            </a>
 
         </div>
 
+  		<div class="crop-list-toolbar">
+    <a th:href="@{/crop/add}"
+       href="/crop/add"
+       class="crop-list-add-button crop-register-button">
+        <span aria-hidden="true">＋</span>
+        <span>作物を登録</span>
     </a>
-
-</header>
-
-<main class="calendar-page">
-
-<div class="back-home">
-
-    <a th:href="@{/}">🏠 トップページへ戻る</a>
-
 </div>
+    </section>
 
-<section class="calendar-header">
+    <section class="crop-list-card"
+             aria-label="登録作物一覧">
 
-    <div>
+        <div class="crop-list-table-scroll">
 
-        <h2>🌱 作物一覧</h2>
+            <table class="crop-list-table">
 
-        <p>登録されている作物を一覧表示します</p>
+                <thead>
+                <tr>
+                    <th scope="col" class="crop-col-name">作物名</th>
+                    <th scope="col" class="crop-col-variety">品種</th>
+                    <th scope="col" class="crop-col-field">圃場</th>
+                    <th scope="col" class="crop-col-date">植付日</th>
+                    <th scope="col" class="crop-col-date">収穫予定日</th>
+                    <th scope="col" class="crop-col-area">面積（a）</th>
+                    <th scope="col" class="crop-col-status">状態</th>
+                    <th scope="col"
+                        class="crop-col-action crop-action-heading">
+                        編集
+                    </th>
+                    <th scope="col"
+                        class="crop-col-action crop-action-heading">
+                        消去
+                    </th>
+                </tr>
+                </thead>
 
-    </div>
+                <tbody>
 
-    <div>
+                <!-- 作物が登録されていない場合 -->
+                <tr th:if="${#lists.isEmpty(crops)}">
+                    <td colspan="9"
+                        class="crop-list-empty">
+                        登録されている作物はありません。
+                    </td>
+                </tr>
 
-        <a th:href="@{/crop/add}" class="month-button">
+                <!-- 登録されている作物 -->
+                <tr th:each="crop : ${crops}">
 
-    ＋ 作物を登録
+                    <td th:text="${crop.cropName}">
+                        さつまいも
+                    </td>
 
-</a>
+                    <td th:text="${crop.variety}">
+                        紅はるか
+                    </td>
 
-    </div>
+                    <td th:text="${crop.fieldName}">
+                        第1圃場
+                    </td>
 
-</section>
+                    <td class="crop-date-cell"
+                        th:text="${crop.plantingDate}">
+                        2026-08-15
+                    </td>
 
-<section class="calendar-wrapper">
+                    <td class="crop-date-cell"
+                        th:text="${crop.harvestDate}">
+                        2026-10-16
+                    </td>
 
-<table class="calendar-table">
+                    <td th:text="${crop.area}">
+                        30.0
+                    </td>
 
-<thead>
+                    <td>
+                        <span class="crop-status"
+                              th:text="${crop.status}">
+                            栽培準備
+                        </span>
+                    </td>
 
-<tr>
+                    <!-- 編集ボタン -->
+                    <td class="crop-action-cell">
 
-<th>作物名</th>
+                        <a th:href="@{/crop/edit/{id}(id=${crop.id})}"
+                           href="/crop/edit/1"
+                           class="crop-edit-button">
+                            編集
+                        </a>
 
-<th>品種</th>
+                    </td>
 
-<th>圃場</th>
+                    <!-- 消去ボタン -->
+                    <td class="crop-action-cell">
 
-<th>植付日</th>
+                        <a th:href="@{/crop/delete/{id}(id=${crop.id})}"
+                           href="/crop/delete/1"
+                           class="crop-delete-button"
+                           onclick="return confirm('この作物を消去しますか？');">
+                            消去
+                        </a>
 
-<th>収穫予定日</th>
+                    </td>
 
-<th>面積(a)</th>
+                </tr>
+                </tbody>
 
-<th>状態</th>
-<th>編集</th>
-<th>削除</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr th:if="${#lists.isEmpty(crops)}">
-
-    <td colspan="9" style="text-align:center;">
-        登録されている作物はありません。
-    </td>
-
-</tr>
-
-<tr th:each="crop : ${crops}">
-
-    <td th:text="${crop.cropName}"></td>
-
-    <td th:text="${crop.variety}"></td>
-
-    <td th:text="${crop.fieldName}"></td>
-
-    <td th:text="${crop.plantingDate}"></td>
-
-    <td th:text="${crop.harvestDate}"></td>
-
-    <td th:text="${crop.area}"></td>
-
-    <td th:text="${crop.status}"></td>
-
-    <td>
-        <a th:href="@{/crop/edit/{id}(id=${crop.id})}"
-           class="month-button">
-            編集
-        </a>
-    </td>
-
-    <td>
-        <a th:href="@{/crop/delete/{id}(id=${crop.id})}"
-           class="month-button"
-           onclick="return confirm('削除しますか？');">
-            削除
-        </a>
-    </td>
-
-</tr>
-
-</tbody>
-</table>
-
-</section>
+            </table>
+        </div>
+    </section>
 
 </main>
 
 </body>
-
 </html>
-

@@ -50,7 +50,7 @@ public class Schedule {
     // ==========================
     // Getter
     // ==========================
-
+    
     public Long getId() {
         return id;
     }

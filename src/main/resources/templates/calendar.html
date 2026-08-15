@@ -1,1012 +1,477 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#2E7D32">
 
-<meta charset="UTF-8">
+    <title>農業管理システム | 作業カレンダー</title>
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1">
+    <link rel="manifest" th:href="@{/manifest.json}" href="/manifest.json">
+    <link rel="apple-touch-icon" th:href="@{/icons/icon-192.png}" href="/icons/icon-192.png">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+    <script defer th:src="@{/js/script.js}" src="/js/script.js"></script>
 
-<title>
-農業管理システム | 作業カレンダー
-</title>
+    <style>
+        /* 作業カレンダー見出しとトップページボタン */
+        .calendar-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
 
+        .calendar-header-text h2 {
+            margin-bottom: 8px;
+        }
 
-<meta name="theme-color"
-      content="#2E7D32">
+        .calendar-header-text p {
+            margin: 0;
+        }
 
+        .calendar-home-button {
+            display: inline-flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 48px;
+            padding: 12px 22px;
+            border: 2px solid #1b5e20;
+            border-radius: 12px;
+            background: #2e7d32;
+            color: #ffffff;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(27, 94, 32, 0.25);
+            transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
 
-<link rel="manifest"
-      href="/manifest.json">
+        .calendar-home-button:hover {
+            background: #1b5e20;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(27, 94, 32, 0.32);
+        }
 
+        .calendar-home-button:focus-visible {
+            outline: 3px solid #f9a825;
+            outline-offset: 3px;
+        }
 
-<link rel="apple-touch-icon"
-      href="/icons/icon-192.png">
+        @media (max-width: 700px) {
+            .calendar-header-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
 
-
-<link rel="stylesheet"
-      th:href="@{/css/style.css}">
-
-
-<script defer
-        th:src="@{/js/script.js}">
-</script>
-
-
+            .calendar-home-button {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
 </head>
 
-
 <body>
-
-
 <header class="top-header">
-
-
-    <a href="/"
-       class="logo-area">
-
-
-        <div class="logo-icon">
-
-            🌱
-
-        </div>
-
-
+    <a th:href="@{/}" href="/" class="logo-area" aria-label="トップページへ戻る">
+        <div class="logo-icon" aria-hidden="true">🌱</div>
         <div>
-
-            <h1>
-                農業管理システム
-            </h1>
-
-
-            <p>
-                Smart Farm Management
-            </p>
-
-
+            <h1>農業管理システム</h1>
+            <p>Smart Farm Management</p>
         </div>
-
-
     </a>
-
-
 </header>
 
-
-
-
-
 <main class="calendar-page">
-
-
-
-<div class="page-home">
-
-<a href="/"
-   class="home-button">
-
-🏠 トップページへ戻る
-
-</a>
-
-</div>
-
-
-
-
-
-<section class="calendar-header">
-
-
-<h2>
-📅 作業カレンダー
-</h2>
-
-
-<p>
-作業予定・担当者・圃場・作物を一元管理
-</p>
-
-
-</section>
-
-
-
-
-
-
-
-<section class="month-nav">
-
-
-<a class="month-button"
-
-th:href="@{/calendar(year=${prevYear},month=${prevMonth})}">
-
-← 前月
-
-</a>
-
-
-
-
-<div class="month-title">
-
-
-<span th:text="${year}">
-</span>
-
-年
-
-
-<span th:text="${month}">
-</span>
-
-月
-
-
-</div>
-
-
-
-
-
-<a class="month-button"
-
-th:href="@{/calendar(year=${nextYear},month=${nextMonth})}">
-
-
-次月 →
-
-
-</a>
-
-
-</section>
-
-
-
-
-
-
-<section class="calendar-wrapper">
-
-
-
-<table class="calendar-table">
-
-
-<thead>
-
-<tr>
-
-<th class="sun">
-日
-</th>
-
-
-<th>
-月
-</th>
-
-
-<th>
-火
-</th>
-
-
-<th>
-水
-</th>
-
-
-<th>
-木
-</th>
-
-
-<th>
-金
-</th>
-
-
-<th class="sat">
-土
-</th>
-
-
-</tr>
-
-</thead>
-
-
-
-
-
-<tbody>
-
-
-
-<tr th:each="week:${#numbers.sequence(0,5)}">
-
-
-
-<td th:each="day:${#numbers.sequence(0,6)}"
-
-th:with="idx=${week*7+day}">
-
-
-
-
-
-<div th:if="${idx < calendarDays.size()}">
-
-
-
-
-
-<div class="day-box"
-
-
-th:attr="data-date=${calendarDays[idx].date}"
-
-
-th:classappend="
-
-${!calendarDays[idx].currentMonth} ? ' other-month' :
-
-(${calendarDays[idx].today} ? ' today' :
-
-(${calendarDays[idx].scheduleCount > 0} ? ' has-schedule' : ''))
-
-">
-
-
-
-<div class="day-number">
-
-
-<span th:text="${calendarDays[idx].day}">
-</span>
-
-
-</div>
-
-
-
-
-
-<div class="schedule-count"
-
-th:if="${calendarDays[idx].scheduleCount > 0}">
-
-
-🚜
-
-<span th:text="${calendarDays[idx].scheduleCount}">
-</span>
-
-件
-
-
-</div>
-
-<div class="schedule-list">
-
-
-<div th:each="schedule:${calendarDays[idx].scheduleList}"
-
-     class="schedule-card"
-
-     th:attr="data-id=${schedule.id}">
-
-
-
-<div class="schedule-time">
-
-⏰
-
-<span th:text="${schedule.startTime}">
-</span>
-
-～
-
-<span th:text="${schedule.endTime}">
-</span>
-
-
-</div>
-
-
-
-
-
-<div class="schedule-work">
-
-🚜
-
-<span th:text="${schedule.workType}">
-</span>
-
-
-</div>
-
-
-
-
-
-<div class="schedule-info">
-
-🌱
-
-<span th:text="${schedule.cropName}">
-</span>
-
-
-📍
-
-<span th:text="${schedule.fieldName}">
-</span>
-
-
-</div>
-
-
-
-
-
-<div class="schedule-user">
-
-👤
-
-<span th:text="${schedule.userName}">
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
-
-</td>
-
-
-</tr>
-
-
-</tbody>
-
-
-</table>
-
-
-</section>
-
-
-
-
-
-<!-- ==========================
-     モーダル
-========================== -->
-
-
-<div id="modal"
-     class="modal">
-
-
-
-<div class="modal-content">
-
-
-
-
-
-<h2 id="selectedDate"></h2>
-
-
-
-<h3 class="schedule-title">
-
-登録済み作業
-
-</h3>
-
-
-
-
-<div id="scheduleList"
-     class="schedule-history">
-
-読み込み中...
-
-</div>
-
-
-
-
-<hr>
-
-
-
-
-
-
-<form id="scheduleForm"
-
-      action="/save"
-
-      method="post">
-
-
-
-
-
-<input type="hidden"
-
-       id="scheduleId"
-
-       name="id">
-
-
-
-
-
-<input type="hidden"
-
-       id="date"
-
-       name="date">
-
-
-
-
-
-<label>
-開始時間
-</label>
-
-
-
-<select id="startTime"
-
-        name="startTime">
-
-
-<option value="06:00">
-06:00
-</option>
-
-
-<option value="07:00">
-07:00
-</option>
-
-
-<option value="08:00">
-08:00
-</option>
-
-
-<option value="09:00">
-09:00
-</option>
-
-
-<option value="10:00">
-10:00
-</option>
-
-
-<option value="11:00">
-11:00
-</option>
-
-
-<option value="12:00">
-12:00
-</option>
-
-
-<option value="13:00">
-13:00
-</option>
-
-
-<option value="14:00">
-14:00
-</option>
-
-
-<option value="15:00">
-15:00
-</option>
-
-
-<option value="16:00">
-16:00
-</option>
-
-
-<option value="17:00">
-17:00
-</option>
-
-
-</select>
-
-
-
-
-
-<label>
-終了時間
-</label>
-
-
-
-<select id="endTime"
-
-        name="endTime">
-
-
-<option value="07:00">
-07:00
-</option>
-
-
-<option value="08:00">
-08:00
-</option>
-
-
-<option value="09:00">
-09:00
-</option>
-
-
-<option value="10:00">
-10:00
-</option>
-
-
-<option value="11:00">
-11:00
-</option>
-
-
-<option value="12:00">
-12:00
-</option>
-
-
-<option value="13:00">
-13:00
-</option>
-
-
-<option value="14:00">
-14:00
-</option>
-
-
-<option value="15:00">
-15:00
-</option>
-
-
-<option value="16:00">
-16:00
-</option>
-
-
-<option value="17:00">
-17:00
-</option>
-
-
-<option value="18:00">
-18:00
-</option>
-
-
-</select>
-
-
-
-
-
-<label>
-担当者
-</label>
-
-
-<input type="text"
-
-       id="userName"
-
-       name="userName"
-
-       placeholder="担当者名を入力">
-
-
-
-
-
-<label>
-作業内容
-</label>
-
-
-<textarea
-
-id="schedule"
-
-name="schedule"
-
-placeholder="作業内容"
-
-required>
-
-</textarea>
-
-
-
-
-
-<label>
-圃場名
-</label>
-
-
-<input type="text"
-
-       id="fieldName"
-
-       name="fieldName"
-
-       placeholder="例：第1圃場">
-
-
-
-
-
-<label>
-作物
-</label>
-
-
-
-<select id="cropName"
-
-        name="cropName">
-
-
-<option value="さつまいも">
-さつまいも
-</option>
-
-
-<option value="米">
-米
-</option>
-
-
-<option value="野菜">
-野菜
-</option>
-
-
-<option value="その他">
-その他
-</option>
-
-
-</select>
-
-
-
-
-
-<label>
-作業種類
-</label>
-
-
-
-<select id="workType"
-
-        name="workType">
-
-
-<option value="耕起">
-耕起
-</option>
-
-
-<option value="畝立て">
-畝立て
-</option>
-
-
-<option value="植付">
-植付
-</option>
-
-
-<option value="管理">
-管理
-</option>
-
-
-<option value="除草">
-除草
-</option>
-
-
-<option value="防除">
-防除
-</option>
-
-
-<option value="収穫">
-収穫
-</option>
-
-
-<option value="出荷">
-出荷
-</option>
-
-
-</select>
-<!-- 使用資材 -->
-
-<label>
-使用資材
-</label>
-
-
-<select id="itemName"
-
-        name="itemName">
-
-
-<option value="">
-選択してください
-</option>
-
-
-<option value="肥料">
-肥料
-</option>
-
-
-<option value="農薬">
-農薬
-</option>
-
-
-<option value="種">
-種
-</option>
-
-
-<option value="苗">
-苗
-</option>
-
-
-</select>
-
-
-
-
-
-<!-- 使用数量 -->
-
-
-<label>
-使用数量
-</label>
-
-
-
-<input
-
-type="number"
-
-id="useQuantity"
-
-name="useQuantity"
-
-min="0"
-
-placeholder="使用数量を入力">
-
-
-
-
-
-
-<label>
-メモ
-</label>
-
-
-
-<textarea
-
-id="memo"
-
-name="memo"
-
-placeholder="天候・肥料・気づいたこと">
-
-</textarea>
-
-
-
-
-
-
-<div class="modal-buttons">
-
-
-
-
-
-<button
-
-id="saveBtn"
-
-type="submit">
-
-登録
-
-</button>
-
-
-
-
-
-
-<button
-
-id="updateBtn"
-
-type="button"
-
-style="display:none;"
-
-onclick="editSave()">
-
-更新
-
-</button>
-
-
-
-
-
-
-<button
-
-id="deleteBtn"
-
-type="button"
-
-style="display:none;"
-
-onclick="deleteSchedule()">
-
-消去
-
-</button>
-
-
-
-
-
-
-<button
-
-type="button"
-
-onclick="closeModal()">
-
-閉じる
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-</form>
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
+    <section class="calendar-header" aria-labelledby="calendar-heading">
+        <div class="calendar-header-row">
+            <div class="calendar-header-text">
+                <h2 id="calendar-heading">📅 作業カレンダー</h2>
+                <p>作業予定・担当者・圃場・作物を一元管理</p>
+            </div>
+
+            <a th:href="@{/}"
+               href="/"
+               class="calendar-home-button"
+               aria-label="トップページへ戻る">
+                <span aria-hidden="true">🏠</span>
+                <span>トップページに戻る</span>
+            </a>
+        </div>
+    </section>
+
+    <div th:if="${successMessage}"
+         class="alert alert-success"
+         role="status"
+         th:text="${successMessage}">
+        作業予定を登録しました。
+    </div>
+
+    <div th:if="${errorMessage}"
+         class="alert alert-error"
+         role="alert"
+         th:text="${errorMessage}">
+        入力内容を確認してください。
+    </div>
+
+    <section class="month-nav" aria-label="表示月の切り替え">
+        <a class="month-button"
+           th:href="@{/calendar(year=${prevYear},month=${prevMonth})}">
+            ← 前月
+        </a>
+
+        <div class="month-title" aria-live="polite">
+            <span th:text="${year}">2026</span>年
+            <span th:text="${month}">8</span>月
+        </div>
+
+        <a class="month-button"
+           th:href="@{/calendar(year=${nextYear},month=${nextMonth})}">
+            次月 →
+        </a>
+    </section>
+
+    <section class="calendar-wrapper" aria-label="月間作業予定">
+        <table class="calendar-table">
+            <thead>
+            <tr>
+                <th class="sun" scope="col">日</th>
+                <th scope="col">月</th>
+                <th scope="col">火</th>
+                <th scope="col">水</th>
+                <th scope="col">木</th>
+                <th scope="col">金</th>
+                <th class="sat" scope="col">土</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="week : ${#numbers.sequence(0, 5)}">
+                <td th:each="day : ${#numbers.sequence(0, 6)}"
+                    th:with="idx=${week * 7 + day}">
+                    <div th:if="${idx < calendarDays.size()}"
+                         class="day-box"
+                         th:attr="data-date=${calendarDays[idx].date}"
+                         th:classappend="${!calendarDays[idx].currentMonth} ? ' other-month' :
+                             (${calendarDays[idx].today} ? ' today' :
+                             (${calendarDays[idx].scheduleCount > 0} ? ' has-schedule' : ''))">
+
+                        <div class="day-number">
+                            <span th:text="${calendarDays[idx].day}">1</span>
+                        </div>
+
+                        <button type="button"
+                                class="add-schedule-button"
+                                aria-haspopup="dialog"
+                                th:attr="aria-label=${calendarDays[idx].date + 'の作業を追加'}">
+                            ＋ 新規追加
+                        </button>
+
+                        <div class="schedule-count"
+                             th:if="${calendarDays[idx].scheduleCount > 0}">
+                            🚜 <span th:text="${calendarDays[idx].scheduleCount}">1</span>件
+                        </div>
+
+                        <div class="schedule-list">
+                            <div th:each="schedule : ${calendarDays[idx].scheduleList}"
+                                 class="schedule-card"
+                                 role="button"
+                                 tabindex="0"
+                                 aria-label="作業予定を編集"
+                                 th:attr="data-id=${schedule.id}">
+                                <div class="schedule-time">
+                                    ⏰
+                                    <span th:text="${schedule.startTime}">08:00</span>
+                                    ～
+                                    <span th:text="${schedule.endTime}">12:00</span>
+                                </div>
+
+                                <div class="schedule-work">
+                                    🚜 <span th:text="${schedule.workType ?: '作業'}">管理</span>
+                                </div>
+
+                                <div class="schedule-info">
+                                    🌱 <span th:text="${schedule.cropName ?: '未設定'}">さつまいも</span>
+                                    📍 <span th:text="${schedule.fieldName ?: '未設定'}">第1圃場</span>
+                                </div>
+
+                                <div class="schedule-user">
+                                    👤 <span th:text="${schedule.userName}">担当者</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <div id="modal"
+         class="modal"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="selectedDate"
+         aria-hidden="true">
+        <div class="modal-content" role="document">
+            <button type="button"
+                    class="modal-close"
+                    aria-label="入力画面を閉じる"
+                    onclick="closeModal()">×</button>
+
+            <h2 id="selectedDate">作業登録</h2>
+
+            <section aria-labelledby="registered-schedule-heading">
+                <h3 id="registered-schedule-heading" class="schedule-title">登録済み作業</h3>
+                <div id="scheduleList" class="schedule-history" aria-live="polite">
+                    日付を選択してください。
+                </div>
+            </section>
+
+            <hr>
+
+            <form id="scheduleForm" th:action="@{/save}" action="/save" method="post">
+                <input type="hidden" id="scheduleId" name="id">
+                <input type="hidden" id="date" name="date">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startTime">開始時間 <span class="required">必須</span></label>
+                        <input type="time"
+                               id="startTime"
+                               name="startTime"
+                               value="08:00"
+                               step="300"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endTime">終了時間 <span class="required">必須</span></label>
+                        <input type="time"
+                               id="endTime"
+                               name="endTime"
+                               value="09:00"
+                               step="300"
+                               required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="userName">担当者 <span class="required">必須</span></label>
+                    <input type="text"
+                           id="userName"
+                           name="userName"
+                           maxlength="50"
+                           autocomplete="name"
+                           placeholder="例：関根"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="schedule">作業内容 <span class="required">必須</span></label>
+                    <textarea id="schedule"
+                              name="schedule"
+                              maxlength="500"
+                              rows="3"
+                              placeholder="例：苗の植え付けを行う"
+                              required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="fieldName">圃場名</label>
+                    <input type="text"
+                           id="fieldName"
+                           name="fieldName"
+                           maxlength="100"
+                           placeholder="例：第1圃場">
+                </div>
+
+                <div class="form-group">
+                    <label for="cropName">作物</label>
+                    <select id="cropName" name="cropName">
+                        <option value="">選択してください</option>
+                        <option value="さつまいも">さつまいも</option>
+                        <option value="じゃがいも">じゃがいも</option>
+                        <option value="米">米</option>
+                        <option value="野菜">野菜</option>
+                        <option value="その他">その他</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="workType">作業種類</label>
+                    <select id="workType" name="workType">
+                        <option value="">選択してください</option>
+                        <option value="耕起">耕起</option>
+                        <option value="畝立て">畝立て</option>
+                        <option value="植付">植付</option>
+                        <option value="管理">管理</option>
+                        <option value="除草">除草</option>
+                        <option value="防除">防除</option>
+                        <option value="収穫">収穫</option>
+                        <option value="出荷">出荷</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="memo">メモ</label>
+                    <textarea id="memo"
+                              name="memo"
+                              maxlength="1000"
+                              rows="4"
+                              placeholder="天候・使用資材・気づいたこと"></textarea>
+                </div>
+
+                <p id="formError" class="form-error" role="alert" hidden></p>
+
+                <div class="modal-buttons">
+                    <button id="saveBtn" type="submit">登録</button>
+                    <button id="updateBtn"
+                            type="button"
+                            style="display:none;"
+                            onclick="editSave()">更新</button>
+                    <button id="deleteBtn"
+                            type="button"
+                            class="danger-button"
+                            style="display:none;"
+                            onclick="deleteSchedule()">削除</button>
+                    <button type="button" class="secondary-button" onclick="closeModal()">閉じる</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </main>
 
-
-
-
-
-
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("modal");
+    const modalContent = modal ? modal.querySelector(".modal-content") : null;
+    const form = document.getElementById("scheduleForm");
+    const startTime = document.getElementById("startTime");
+    const endTime = document.getElementById("endTime");
+    const formError = document.getElementById("formError");
+    let lastFocusedElement = null;
 
+    function openNewScheduleModal(date) {
+        if (!modal || !date) {
+            return;
+        }
 
-if("serviceWorker" in navigator){
+        if (typeof window.openModal === "function") {
+            window.openModal(date);
+            return;
+        }
 
+        lastFocusedElement = document.activeElement;
+        form.reset();
+        document.getElementById("scheduleId").value = "";
+        document.getElementById("date").value = date;
+        document.getElementById("selectedDate").textContent = date + " の作業登録";
+        document.getElementById("saveBtn").style.display = "inline-block";
+        document.getElementById("updateBtn").style.display = "none";
+        document.getElementById("deleteBtn").style.display = "none";
+        startTime.value = "08:00";
+        endTime.value = "09:00";
+        clearFormError();
 
-    navigator.serviceWorker.register("/sw.js")
+        modal.classList.add("show");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+        startTime.focus();
+    }
 
+    function clearFormError() {
+        formError.textContent = "";
+        formError.hidden = true;
+        endTime.setCustomValidity("");
+    }
 
-    .then(function(){
+    function validateTimes() {
+        clearFormError();
+        if (startTime.value && endTime.value && startTime.value >= endTime.value) {
+            const message = "終了時間は開始時間より後にしてください。";
+            formError.textContent = message;
+            formError.hidden = false;
+            endTime.setCustomValidity(message);
+            return false;
+        }
+        return true;
+    }
 
-
-        console.log(
-        "Service Worker 登録成功"
-        );
-
-
-    })
-
-
-    .catch(function(error){
-
-
-        console.log(
-        "登録失敗",
-        error
-        );
-
-
+    document.querySelectorAll(".day-box").forEach(function (dayBox) {
+        dayBox.addEventListener("click", function (event) {
+            if (event.target.closest(".schedule-card")) {
+                return;
+            }
+            openNewScheduleModal(dayBox.dataset.date);
+        });
     });
 
+    document.querySelectorAll(".schedule-card").forEach(function (card) {
+        card.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                card.click();
+            }
+        });
+    });
 
+    if (form) {
+        form.addEventListener("submit", function (event) {
+            if (!validateTimes()) {
+                event.preventDefault();
+                endTime.focus();
+            }
+        });
+    }
+
+    startTime.addEventListener("change", validateTimes);
+    endTime.addEventListener("change", validateTimes);
+
+    if (typeof window.closeModal !== "function") {
+        window.closeModal = function () {
+            if (!modal) {
+                return;
+            }
+            modal.classList.remove("show");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("modal-open");
+            clearFormError();
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
+        };
+    }
+
+    if (modal) {
+        modal.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                window.closeModal();
+            }
+        });
+    }
+
+    if (modalContent) {
+        modalContent.addEventListener("click", function (event) {
+            event.stopPropagation();
+        });
+    }
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && modal && modal.classList.contains("show")) {
+            window.closeModal();
+        }
+    });
+});
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js")
+        .catch(function (error) {
+            console.error("Service Workerの登録に失敗しました。", error);
+        });
 }
-
-
-
 </script>
-
-
-
-
-
-
 </body>
-
-
 </html>

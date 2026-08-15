@@ -27,7 +27,7 @@ public class StockController {
 
     // 在庫画面表示
     @GetMapping
-    public String index(Model model){
+    public String indexini(Model model){
 
 
         model.addAttribute(

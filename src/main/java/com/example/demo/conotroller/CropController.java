@@ -19,53 +19,43 @@ public class CropController {
     @Autowired
     private CropRepository cropRepository;
 
-    // 作物一覧
+    // 作物一覧とポップアップ登録フォームを表示
     @GetMapping("/crop")
     public String cropList(Model model) {
-
         List<Crop> crops = cropRepository.findAll();
 
         model.addAttribute("crops", crops);
+        model.addAttribute("crop", new Crop());
 
         return "crop/list";
     }
 
-    // 新規登録画面
+    // 新規登録画面（予備画面として残す）
     @GetMapping("/crop/add")
     public String cropAdd(Model model) {
-
         model.addAttribute("crop", new Crop());
-
         return "crop/add";
     }
 
     // 編集画面
     @GetMapping("/crop/edit/{id}")
     public String editCrop(@PathVariable Long id, Model model) {
-
         Crop crop = cropRepository.findById(id).orElse(new Crop());
-
         model.addAttribute("crop", crop);
-
         return "crop/add";
     }
 
     // 新規保存・更新
     @PostMapping("/crop/save")
     public String saveCrop(@ModelAttribute Crop crop) {
-
         cropRepository.save(crop);
-
         return "redirect:/crop";
     }
 
     // 削除
     @GetMapping("/crop/delete/{id}")
     public String deleteCrop(@PathVariable Long id) {
-
         cropRepository.deleteById(id);
-
         return "redirect:/crop";
     }
-
 }

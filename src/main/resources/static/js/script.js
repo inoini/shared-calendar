@@ -837,3 +837,49 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 });
+document.addEventListener("DOMContentLoaded", function () {
+
+    const addButtons =
+        document.querySelectorAll(".add-schedule-button");
+
+    addButtons.forEach(function (button) {
+
+        button.addEventListener("click", function (event) {
+
+            event.stopPropagation();
+
+            const date = button.dataset.date;
+
+            openNewScheduleModal(date);
+        });
+    });
+});
+
+
+function openNewScheduleModal(date) {
+
+    const modal = document.getElementById("modal");
+
+    const form = document.getElementById("scheduleForm");
+
+    // 新規登録用にフォームを初期化
+    form.reset();
+
+    // カレンダーでクリックした日付を設定
+    document.getElementById("date").value = date;
+
+    // IDは新規登録なので空にする
+    document.getElementById("scheduleId").value = "";
+
+    // ボタン表示を新規登録用にする
+    document.getElementById("saveBtn").style.display = "inline-block";
+    document.getElementById("updateBtn").style.display = "none";
+    document.getElementById("deleteBtn").style.display = "none";
+
+    // 日付をタイトルに表示
+    document.getElementById("selectedDate").textContent =
+        date + " の作業登録";
+
+    // モーダルを表示
+    modal.style.display = "block";
+}

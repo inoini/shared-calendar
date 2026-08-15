@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>作業予定の新規登録</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="top-header">
+    <a href="/" class="logo-area">
+        <div class="logo-icon">🌱</div>
+
+        <div>
+            <h1>農業管理システム</h1>
+            <p>Smart Farm Management</p>
+        </div>
+    </a>
+</header>
+
+<main class="form-page">
+
+    <h2>📅 作業予定の新規登録</h2>
+
+    <form th:action="@{/save}"
+          th:object="${schedule}"
+          method="post">
+
+        <!-- カレンダーで選択した日付 -->
+        <label for="date">日付</label>
+        <input type="date"
+               id="date"
+               th:field="*{date}"
+               required>
+
+        <label for="startTime">開始時間</label>
+        <select id="startTime"
+                th:field="*{startTime}">
+            <option value="06:00">06:00</option>
+            <option value="07:00">07:00</option>
+            <option value="08:00">08:00</option>
+            <option value="09:00">09:00</option>
+            <option value="10:00">10:00</option>
+            <option value="11:00">11:00</option>
+            <option value="12:00">12:00</option>
+            <option value="13:00">13:00</option>
+            <option value="14:00">14:00</option>
+            <option value="15:00">15:00</option>
+            <option value="16:00">16:00</option>
+            <option value="17:00">17:00</option>
+        </select>
+
+        <label for="endTime">終了時間</label>
+        <select id="endTime"
+                th:field="*{endTime}">
+            <option value="07:00">07:00</option>
+            <option value="08:00">08:00</option>
+            <option value="09:00">09:00</option>
+            <option value="10:00">10:00</option>
+            <option value="11:00">11:00</option>
+            <option value="12:00">12:00</option>
+            <option value="13:00">13:00</option>
+            <option value="14:00">14:00</option>
+            <option value="15:00">15:00</option>
+            <option value="16:00">16:00</option>
+            <option value="17:00">17:00</option>
+            <option value="18:00">18:00</option>
+        </select>
+
+        <label for="userName">担当者</label>
+        <input type="text"
+               id="userName"
+               th:field="*{userName}"
+               placeholder="担当者名を入力">
+
+        <label for="schedule">作業内容</label>
+        <textarea id="schedule"
+                  th:field="*{schedule}"
+                  placeholder="作業内容"
+                  required></textarea>
+
+        <label for="fieldName">圃場名</label>
+        <input type="text"
+               id="fieldName"
+               th:field="*{fieldName}"
+               placeholder="例：第1圃場">
+
+        <label for="cropName">作物</label>
+        <select id="cropName"
+                th:field="*{cropName}">
+            <option value="さつまいも">さつまいも</option>
+            <option value="米">米</option>
+            <option value="野菜">野菜</option>
+            <option value="その他">その他</option>
+        </select>
+
+        <label for="workType">作業種類</label>
+        <select id="workType"
+                th:field="*{workType}">
+            <option value="耕起">耕起</option>
+            <option value="畝立て">畝立て</option>
+            <option value="植付">植付</option>
+            <option value="管理">管理</option>
+            <option value="除草">除草</option>
+            <option value="防除">防除</option>
+            <option value="収穫">収穫</option>
+            <option value="出荷">出荷</option>
+        </select>
+
+        <label for="itemName">使用資材</label>
+        <select id="itemName"
+                th:field="*{itemName}">
+            <option value="">選択してください</option>
+            <option value="肥料">肥料</option>
+            <option value="農薬">農薬</option>
+            <option value="種">種</option>
+            <option value="苗">苗</option>
+        </select>
+
+        <label for="useQuantity">使用数量</label>
+        <input type="number"
+               id="useQuantity"
+               th:field="*{useQuantity}"
+               min="0"
+               placeholder="使用数量を入力">
+
+        <label for="memo">メモ</label>
+        <textarea id="memo"
+                  th:field="*{memo}"
+                  placeholder="天候・肥料・気づいたこと"></textarea>
+
+        <div class="form-buttons">
+            <button type="submit">登録</button>
+
+            <a th:href="@{/calendar}"
+               class="cancel-button">
+                キャンセル
+            </a>
+        </div>
+
+    </form>
+
+</main>
+
+</body>
