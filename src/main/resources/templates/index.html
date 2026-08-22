@@ -19,14 +19,15 @@
 
 </head>
 
-<body>
-<button id="menuBtn" class="menu-btn">
-☰
+<body class="dashboard-body">
+<button id="menuBtn" class="menu-btn" type="button"
+        aria-label="メニューを開閉" aria-controls="mainSidebar" aria-expanded="false">
+    ☰
 </button>
 <div class="app-layout">
 
     <!-- ===== サイドバー ===== -->
-    <aside class="sidebar">
+    <aside id="mainSidebar" class="sidebar">
 
         <div class="sidebar-header">
 
@@ -114,7 +115,7 @@
 
                     <h3>📅 今日の予定</h3>
 
-                    <p th:text="${todayCount} + '件'">0件</p>
+                    <p th:text="${todayCount != null ? todayCount : 0} + '件'">0件</p>
 
                 </div>
 
@@ -122,7 +123,7 @@
 
                     <h3>🌱 管理作物</h3>
 
-                    <p th:text="${cropCount} + '種類'">0種類</p>
+                    <p th:text="${cropCount != null ? cropCount : 0} + '種類'">0種類</p>
 
                 </div>
 
@@ -130,7 +131,9 @@
 
                     <h3>🚜 作業状況</h3>
 
-                    <p>順調</p>
+                    <p th:text="${todayCount != null and todayCount > 0 ? '作業予定あり' : '予定なし'}">
+                        予定なし
+                    </p>
 
                 </div>
 
@@ -139,7 +142,7 @@
                     <h3>🍠 次回収穫</h3>
 
                     <p th:if="${nextHarvest != null}"
-                       th:text="${nextHarvest.cropName}">
+                       th:text="${#strings.isEmpty(nextHarvest.cropName) ? '作物未設定' : nextHarvest.cropName}">
                     </p>
 
                     <p th:if="${nextHarvest == null}">
@@ -169,7 +172,7 @@
 
                     <h3>🌱 作物</h3>
 
-                    <p th:text="${cropCount} + '種類'">0種類</p>
+                    <p th:text="${cropCount != null ? cropCount : 0} + '種類'">0種類</p>
 
                     <span>管理中</span>
 
@@ -179,7 +182,7 @@
 
                     <h3>📅 今日の予定</h3>
 
-                    <p th:text="${todayCount} + '件'">0件</p>
+                    <p th:text="${todayCount != null ? todayCount : 0} + '件'">0件</p>
 
                     <span>本日の作業</span>
 
@@ -189,7 +192,7 @@
 
                     <h3>🍠 収穫予定</h3>
 
-                    <p th:if="${nextHarvest != null}"
+                    <p th:if="${nextHarvest != null and nextHarvest.harvestDate != null}"
                        th:text="${#temporals.format(nextHarvest.harvestDate,'yyyy/MM/dd')}">
                     </p>
 
@@ -197,8 +200,12 @@
                         予定なし
                     </p>
 
+                    <p th:if="${nextHarvest != null and nextHarvest.harvestDate == null}">
+                        日付未設定
+                    </p>
+
                     <span th:if="${nextHarvest != null}"
-                          th:text="${nextHarvest.cropName}">
+                          th:text="${#strings.isEmpty(nextHarvest.cropName) ? '作物未設定' : nextHarvest.cropName}">
                     </span>
 
                     <span th:if="${nextHarvest == null}">
@@ -219,15 +226,22 @@
                 <div class="work-item"
                      th:each="work : ${todaySchedules}">
 
-                    <h3 th:text="${work.schedule}">
+                    <h3 th:text="${#strings.isEmpty(work.schedule) ? '作業内容未設定' : work.schedule}">
                         作業名
                     </h3>
+
+                    <p class="work-time">
+                        <strong>時間：</strong>
+                        <span th:text="${work.startTime != null ? work.startTime : '--:--'}">--:--</span>
+                        ～
+                        <span th:text="${work.endTime != null ? work.endTime : '--:--'}">--:--</span>
+                    </p>
 
                     <p>
 
                         <strong>場所：</strong>
 
-                        <span th:text="${work.fieldName}">
+                        <span th:text="${#strings.isEmpty(work.fieldName) ? '未設定' : work.fieldName}">
                         </span>
 
                     </p>
@@ -236,7 +250,7 @@
 
                         <strong>作物：</strong>
 
-                        <span th:text="${work.cropName}">
+                        <span th:text="${#strings.isEmpty(work.cropName) ? '未設定' : work.cropName}">
                         </span>
 
                     </p>
@@ -245,7 +259,7 @@
 
                         <strong>担当：</strong>
 
-                        <span th:text="${work.userName}">
+                        <span th:text="${#strings.isEmpty(work.userName) ? '未設定' : work.userName}">
                         </span>
 
                     </p>
@@ -260,6 +274,11 @@
                     <p>
                         新しい予定を登録してください。
                     </p>
+
+                    <a class="dashboard-action-button"
+                       th:href="@{/calendar}" href="/calendar">
+                        作業予定を追加する
+                    </a>
 
                 </div>
 
@@ -278,7 +297,7 @@
         <!-- ==========================
              不足資材
         ========================== -->
-        <div class="card">
+        <div class="card stock-card stock-card-low">
 
             <h3>🔴 不足資材</h3>
 
@@ -304,16 +323,16 @@
 
                     <tr th:each="stock : ${lowStocks}">
 
-                        <td th:text="${stock.itemName}"></td>
+                        <td th:text="${#strings.isEmpty(stock.itemName) ? '名称未設定' : stock.itemName}"></td>
 
                         <td>
-                            <span th:text="${stock.quantity}"></span>
-                            <span th:text="${stock.unit}"></span>
+                            <span th:text="${stock.quantity != null ? stock.quantity : 0}">0</span>
+                            <span th:text="${#strings.isEmpty(stock.unit) ? '単位未設定' : stock.unit}">単位未設定</span>
                         </td>
 
                         <td>
-                            <span th:text="${stock.minimumStock}"></span>
-                            <span th:text="${stock.unit}"></span>
+                            <span th:text="${stock.minimumStock != null ? stock.minimumStock : 0}">0</span>
+                            <span th:text="${#strings.isEmpty(stock.unit) ? '単位未設定' : stock.unit}">単位未設定</span>
                         </td>
 
                     </tr>
@@ -327,7 +346,7 @@
         <!-- ==========================
              余剰資材
         ========================== -->
-        <div class="card">
+        <div class="card stock-card stock-card-over">
 
             <h3>🟢 余剰資材</h3>
 
@@ -353,16 +372,16 @@
 
                     <tr th:each="stock : ${overStocks}">
 
-                        <td th:text="${stock.itemName}"></td>
+                        <td th:text="${#strings.isEmpty(stock.itemName) ? '名称未設定' : stock.itemName}"></td>
 
                         <td>
-                            <span th:text="${stock.quantity}"></span>
-                            <span th:text="${stock.unit}"></span>
+                            <span th:text="${stock.quantity != null ? stock.quantity : 0}">0</span>
+                            <span th:text="${#strings.isEmpty(stock.unit) ? '単位未設定' : stock.unit}">単位未設定</span>
                         </td>
 
                         <td>
-                            <span th:text="${stock.minimumStock}"></span>
-                            <span th:text="${stock.unit}"></span>
+                            <span th:text="${stock.minimumStock != null ? stock.minimumStock : 0}">0</span>
+                            <span th:text="${#strings.isEmpty(stock.unit) ? '単位未設定' : stock.unit}">単位未設定</span>
                         </td>
 
                     </tr>

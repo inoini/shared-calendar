@@ -3737,3 +3737,339 @@ body.modal-open {
         transition: none;
     }
 }
+
+/* ==========================================
+   ダッシュボード・カレンダー 最終改善
+   null対策後の表示、スマホ、操作性
+========================================== */
+
+.dashboard-body {
+    min-width: 320px;
+    background:
+        radial-gradient(circle at top right, rgba(102, 187, 106, 0.12), transparent 34rem),
+        #f4f7f4;
+    color: #263328;
+}
+
+.dashboard-body .header {
+    gap: 24px;
+    border-bottom: 1px solid #e3e9e4;
+}
+
+.dashboard-body .header h1 {
+    margin-bottom: 4px;
+    line-height: 1.35;
+}
+
+.dashboard-body .header > div:first-child > p {
+    color: #69746b;
+}
+
+.dashboard-body .dashboard-summary,
+.dashboard-body .status-area {
+    align-items: stretch;
+}
+
+.dashboard-body .summary-card,
+.dashboard-body .status-card {
+    border: 1px solid #e1e8e2;
+    box-shadow: 0 6px 18px rgba(37, 74, 41, 0.07);
+}
+
+.dashboard-body .summary-card p,
+.dashboard-body .status-card p {
+    overflow-wrap: anywhere;
+    color: #243027;
+}
+
+.dashboard-body .welcome {
+    margin-bottom: 24px;
+    padding: 24px 28px;
+    border: 1px solid #dbe7dc;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #edf8ee, #ffffff);
+    box-shadow: 0 5px 16px rgba(37, 74, 41, 0.06);
+}
+
+.dashboard-body .welcome h2 {
+    margin-bottom: 7px;
+    color: #245d2b;
+}
+
+.dashboard-body .welcome p {
+    color: #667169;
+}
+
+.dashboard-body .work-item {
+    border: 1px solid #e1e9e2;
+    border-left: 5px solid #43a047;
+    background: #fbfdfb;
+}
+
+.dashboard-body .work-item h3 {
+    margin-bottom: 12px;
+    color: #285d2e;
+}
+
+.dashboard-body .work-item p {
+    margin-top: 6px;
+    line-height: 1.65;
+}
+
+.dashboard-body .work-time {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: #edf7ee;
+    color: #275c2d;
+}
+
+.dashboard-action-button {
+    display: inline-flex;
+    min-height: 44px;
+    margin-top: 14px;
+    padding: 10px 18px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #2e7d32;
+    color: #ffffff;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(46, 125, 50, 0.2);
+}
+
+.dashboard-action-button:hover {
+    background: #1b5e20;
+    color: #ffffff;
+}
+
+.dashboard-action-button:focus-visible,
+.dashboard-body .menu a:focus-visible,
+.dashboard-body .menu-btn:focus-visible {
+    outline: 3px solid #f9a825;
+    outline-offset: 3px;
+}
+
+.dashboard-body .stock-card {
+    overflow-x: auto;
+    border: 1px solid #e1e8e2;
+    box-shadow: none;
+}
+
+.dashboard-body .stock-card:hover {
+    transform: none;
+    box-shadow: 0 6px 18px rgba(37, 74, 41, 0.08);
+}
+
+.dashboard-body .stock-card-low {
+    border-top: 4px solid #d84343;
+}
+
+.dashboard-body .stock-card-over {
+    border-top: 4px solid #43a047;
+}
+
+.dashboard-body .stock-status-table {
+    width: 100%;
+    min-width: 430px;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.dashboard-body .stock-status-table th,
+.dashboard-body .stock-status-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #e8ece8;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.dashboard-body .stock-status-table th {
+    background: #f1f6f2;
+    color: #3c6041;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.dashboard-body .stock-status-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.calendar-page .schedule-description {
+    display: -webkit-box;
+    margin-top: 5px;
+    overflow: hidden;
+    color: #3f4c42;
+    font-size: 12px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.calendar-page .schedule-history-card p {
+    margin: 6px 0 0;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+.calendar-page .modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.calendar-page .modal-content,
+.calendar-page .modal.show .modal-content {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: min(850px, 100%);
+    max-width: 850px;
+    max-height: calc(100dvh - 32px);
+    margin: 0;
+    overflow-y: auto;
+    transform: none;
+    overscroll-behavior: contain;
+}
+
+.calendar-page .modal-close {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    float: right;
+    width: 44px;
+    min-height: 44px;
+    margin: 0 0 8px 12px;
+    border-radius: 50%;
+    background: #eef2ef;
+    color: #334237;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.calendar-page .modal-buttons {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    padding-top: 12px;
+    padding-bottom: max(4px, env(safe-area-inset-bottom));
+    background: #ffffff;
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-body .main-content,
+    .dashboard-body .footer {
+        margin-left: 0;
+    }
+
+    .dashboard-body .header {
+        padding: 20px;
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .dashboard-body .header h1 {
+        font-size: clamp(23px, 7vw, 29px);
+    }
+
+    .dashboard-body .header-right {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 10px;
+    }
+
+    .dashboard-body #clock,
+    .dashboard-body .weather-box {
+        min-width: 0;
+        padding: 11px;
+    }
+
+    .dashboard-body .container {
+        padding: 16px 12px 28px;
+    }
+
+    .dashboard-body .dashboard-summary,
+    .dashboard-body .status-area {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .dashboard-body .summary-card,
+    .dashboard-body .status-card,
+    .dashboard-body .panel,
+    .dashboard-body .card {
+        padding: 18px;
+    }
+
+    .dashboard-body .summary-card p,
+    .dashboard-body .status-card p {
+        font-size: 23px;
+    }
+
+    .calendar-page .modal.show {
+        padding: 0;
+    }
+
+    .calendar-page .modal-content,
+    .calendar-page .modal.show .modal-content {
+        width: 100%;
+        height: 100dvh;
+        max-width: none;
+        max-height: 100dvh;
+        padding: 18px 16px calc(22px + env(safe-area-inset-bottom));
+        border-radius: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .dashboard-body .header-right,
+    .dashboard-body .dashboard-summary,
+    .dashboard-body .status-area {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dashboard-body .welcome,
+    .dashboard-body .summary-card,
+    .dashboard-body .status-card,
+    .dashboard-body .panel,
+    .dashboard-body .card {
+        padding: 16px;
+        border-radius: 13px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-body *,
+    .calendar-page * {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+/* デスクトップ：作業登録画面を必ず中央へ配置 */
+@media screen and (min-width: 769px) {
+    .calendar-page > .modal.show {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 24px !important;
+    }
+
+    .calendar-page > .modal.show > .modal-content {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: min(900px, calc(100vw - 48px)) !important;
+        max-width: 900px !important;
+        max-height: calc(100dvh - 48px) !important;
+        margin: 0 !important;
+        transform: none !important;
+    }
+}
