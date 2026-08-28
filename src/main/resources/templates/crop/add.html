@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>農業管理システム | 作物登録</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css(v='20260822-3')}" href="/css/style.css?v=20260822-3">
+    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260822-6')}" href="/css/professional-ui.css?v=20260822-6">
 </head>
 
-<body>
+<body class="crop-screen">
 <header class="top-header">
     <a th:href="@{/}" href="/" class="logo-area" aria-label="トップページへ戻る">
         <div class="logo-icon" aria-hidden="true">🌱</div>
@@ -28,7 +29,7 @@
 
             <a th:href="@{/}"
                href="/"
-               class="crop-home-button"
+               class="crop-home-button app-home-button"
                aria-label="トップページへ戻る">
                 <span aria-hidden="true">🏠</span>
                 <span>トップページに戻る</span>

@@ -471,9 +471,12 @@
             }
         }
     </style>
+    <link rel="stylesheet"
+          th:href="@{/css/professional-ui.css(v='20260822-6')}"
+          href="/css/professional-ui.css?v=20260822-6">
 </head>
 
-<body>
+<body class="management-screen">
 <main class="page">
 
     <header class="header">
@@ -635,21 +638,21 @@
                     <tbody>
                     <tr th:each="s : ${sales}">
                         <td data-label="日付"
-                            th:text="${s.date}">
+                            th:text="${s.date != null ? s.date : '未設定'}">
                             2026-08-16
                         </td>
 
                         <td data-label="作物"
-                            th:text="${s.crop}">
+                            th:text="${#strings.isEmpty(s.crop) ? '未設定' : s.crop}">
                             さつまいも
                         </td>
 
                         <td data-label="金額" class="money">
-                            <span th:text="${s.amount}">50000</span>円
+                            <span th:text="${s.amount != null ? s.amount : 0}">0</span>円
                         </td>
 
                         <td data-label="メモ"
-                            th:text="${s.memo}">
+                            th:text="${#strings.isEmpty(s.memo) ? '—' : s.memo}">
                             直売所
                         </td>
 
@@ -685,7 +688,7 @@
 
     <footer>
         <p>農業管理システム / 経営管理 / 売上管理</p>
-        <a th:href="@{/}" href="/">トップページへ戻る</a>
+        <a class="app-home-button app-home-button-compact" th:href="@{/}" href="/">トップページへ戻る</a>
     </footer>
 
 </main>

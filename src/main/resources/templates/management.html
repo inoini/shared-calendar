@@ -304,9 +304,12 @@
             }
         }
     </style>
+    <link rel="stylesheet"
+          th:href="@{/css/professional-ui.css(v='20260822-7')}"
+          href="/css/professional-ui.css?v=20260822-7">
 </head>
 
-<body>
+<body class="management-screen">
 <main class="page">
 
     <header class="header">
@@ -318,8 +321,9 @@
             </p>
         </div>
 
-        <a class="back-button" th:href="@{/}" href="/">
-            ← トップページへ
+        <a class="back-button app-home-button" th:href="@{/}" href="/">
+            <span aria-hidden="true">🏠</span>
+            <span>トップページに戻る</span>
         </a>
     </header>
 
@@ -425,7 +429,6 @@
 
     <footer>
         <p>農業管理システム / 経営管理</p>
-        <a th:href="@{/}" href="/">トップページへ戻る</a>
     </footer>
 
 </main>

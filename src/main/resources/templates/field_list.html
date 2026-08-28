@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="圃場の所在地、面積、作物、メモをまとめて管理する一覧画面です。">
     <title>圃場一覧 | 農業管理システム</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
-    <script th:src="@{/js/field-list.js}" src="/js/field-list.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/style.css(v='20260822-3')}" href="/css/style.css?v=20260822-3">
+    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260822-7')}" href="/css/professional-ui.css?v=20260822-7">
+    <script th:src="@{/js/field-list.js(v='20260822-3')}" src="/js/field-list.js?v=20260822-3" defer></script>
 </head>
 
 <body class="field-list-body">
@@ -22,6 +23,13 @@
             </div>
 
             <nav class="field-header-actions" aria-label="圃場メニュー">
+                <a class="app-home-button"
+                   th:href="@{/}"
+                   href="/"
+                   aria-label="トップページへ戻る">
+                    <span aria-hidden="true">🏠</span>
+                    <span>トップページに戻る</span>
+                </a>
                 <a class="field-button field-button-secondary"
                    th:href="@{/field/map}"
                    href="/field/map">
@@ -226,9 +234,6 @@
             </div>
         </section>
 
-        <footer class="field-page-footer">
-            <a th:href="@{/}" href="/">← トップページへ戻る</a>
-        </footer>
     </main>
 </body>
 

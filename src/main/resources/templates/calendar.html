@@ -9,8 +9,9 @@
 
     <link rel="manifest" th:href="@{/manifest.json}" href="/manifest.json">
     <link rel="apple-touch-icon" th:href="@{/icons/icon-192.png}" href="/icons/icon-192.png">
-    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
-    <script defer th:src="@{/js/script.js}" src="/js/script.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css(v='20260822-3')}" href="/css/style.css?v=20260822-3">
+    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260822-6')}" href="/css/professional-ui.css?v=20260822-6">
+    <script defer th:src="@{/js/script.js(v='20260822-4')}" src="/js/script.js?v=20260822-4"></script>
 
     <style>
         /* 作業カレンダー見出しとトップページボタン */
@@ -73,7 +74,7 @@
     </style>
 </head>
 
-<body>
+<body class="calendar-screen">
 <header class="top-header">
     <a th:href="@{/}" href="/" class="logo-area" aria-label="トップページへ戻る">
         <div class="logo-icon" aria-hidden="true">🌱</div>
@@ -94,7 +95,7 @@
 
             <a th:href="@{/}"
                href="/"
-               class="calendar-home-button"
+               class="calendar-home-button app-home-button"
                aria-label="トップページへ戻る">
                 <span aria-hidden="true">🏠</span>
                 <span>トップページに戻る</span>
@@ -165,7 +166,7 @@
                         <button type="button"
                                 class="add-schedule-button"
                                 aria-haspopup="dialog"
-                                th:attr="aria-label=${calendarDays[idx].date + 'の作業を追加'}">
+                                th:attr="data-date=${calendarDays[idx].date},aria-label=${calendarDays[idx].date + 'の作業を追加'}">
                             ＋ 新規追加
                         </button>
 
@@ -183,9 +184,9 @@
                                  th:attr="data-id=${schedule.id}">
                                 <div class="schedule-time">
                                     ⏰
-                                    <span th:text="${schedule.startTime}">08:00</span>
+                                    <span th:text="${#strings.isEmpty(schedule.startTime) ? '--:--' : schedule.startTime}">08:00</span>
                                     ～
-                                    <span th:text="${schedule.endTime}">12:00</span>
+                                    <span th:text="${#strings.isEmpty(schedule.endTime) ? '--:--' : schedule.endTime}">12:00</span>
                                 </div>
 
                                 <div class="schedule-work">
@@ -198,7 +199,7 @@
                                 </div>
 
                                 <div class="schedule-user">
-                                    👤 <span th:text="${schedule.userName}">担当者</span>
+                                    👤 <span th:text="${#strings.isEmpty(schedule.userName) ? '担当者未設定' : schedule.userName}">担当者</span>
                                 </div>
                             </div>
                         </div>
@@ -466,12 +467,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js")
-        .catch(function (error) {
-            console.error("Service Workerの登録に失敗しました。", error);
-        });
-}
 </script>
 </body>
 </html>

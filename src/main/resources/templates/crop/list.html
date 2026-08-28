@@ -8,15 +8,18 @@
     <title>農業管理システム | 作物一覧</title>
 
     <link rel="stylesheet"
-          th:href="@{/css/style.css}"
-          href="/css/style.css">
+          th:href="@{/css/style.css(v='20260822-3')}"
+          href="/css/style.css?v=20260822-3">
 
     <link rel="stylesheet"
-          th:href="@{/css/crop-list.css}"
-          href="/css/crop-list.css">
+          th:href="@{/css/crop-list.css(v='20260822-3')}"
+          href="/css/crop-list.css?v=20260822-3">
+    <link rel="stylesheet"
+          th:href="@{/css/professional-ui.css(v='20260822-6')}"
+          href="/css/professional-ui.css?v=20260822-6">
 </head>
 
-<body>
+<body class="crop-screen">
 
 <header class="top-header">
     <a th:href="@{/}"
@@ -47,7 +50,7 @@
 
             <a th:href="@{/}"
                href="/"
-               class="crop-home-button">
+               class="crop-home-button app-home-button">
 
                 <span aria-hidden="true">🏠</span>
                 <span>トップページに戻る</span>
@@ -105,35 +108,35 @@
                 <!-- 登録されている作物 -->
                 <tr th:each="crop : ${crops}">
 
-                    <td th:text="${crop.cropName}">
+                    <td th:text="${#strings.isEmpty(crop.cropName) ? '名称未設定' : crop.cropName}">
                         さつまいも
                     </td>
 
-                    <td th:text="${crop.variety}">
+                    <td th:text="${#strings.isEmpty(crop.variety) ? '未設定' : crop.variety}">
                         紅はるか
                     </td>
 
-                    <td th:text="${crop.fieldName}">
+                    <td th:text="${#strings.isEmpty(crop.fieldName) ? '未設定' : crop.fieldName}">
                         第1圃場
                     </td>
 
                     <td class="crop-date-cell"
-                        th:text="${crop.plantingDate}">
+                        th:text="${crop.plantingDate != null ? crop.plantingDate : '未設定'}">
                         2026-08-15
                     </td>
 
                     <td class="crop-date-cell"
-                        th:text="${crop.harvestDate}">
+                        th:text="${crop.harvestDate != null ? crop.harvestDate : '未設定'}">
                         2026-10-16
                     </td>
 
-                    <td th:text="${crop.area}">
+                    <td th:text="${crop.area != null ? crop.area : 0}">
                         30.0
                     </td>
 
                     <td>
                         <span class="crop-status"
-                              th:text="${crop.status}">
+                              th:text="${#strings.isEmpty(crop.status) ? '未設定' : crop.status}">
                             栽培準備
                         </span>
                     </td>

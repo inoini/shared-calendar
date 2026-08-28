@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="登録圃場の位置を地図で確認する画面です。">
     <title>圃場マップ | 農業管理システム</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css(v='20260822-3')}" href="/css/style.css?v=20260822-3">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-    <link rel="stylesheet" th:href="@{/css/field-management.css}" href="/css/field-management.css">
+    <link rel="stylesheet" th:href="@{/css/field-management.css(v='20260822-3')}" href="/css/field-management.css?v=20260822-3">
+    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260822-6')}" href="/css/professional-ui.css?v=20260822-6">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
-    <script th:src="@{/js/field-map.js}" src="/js/field-map.js" defer></script>
+    <script th:src="@{/js/field-map.js(v='20260822-3')}" src="/js/field-map.js?v=20260822-3" defer></script>
 </head>
 
 <body class="field-management-body">
@@ -26,7 +27,7 @@
 
             <div class="field-map-header-actions">
                 <span class="field-map-count">
-                    <strong th:text="${mapMarkerCount}">0</strong>件の目印
+                    <strong th:text="${mapMarkerCount != null ? mapMarkerCount : 0}">0</strong>件の目印
                 </span>
                 <a class="field-button field-button-secondary"
                    th:href="@{/field}"
@@ -66,10 +67,10 @@
                                      data-edit-url=@{/field/edit/{id}(id=${field.id})}">
                         <span class="field-map-item-marker" aria-hidden="true">●</span>
                         <span class="field-map-item-content">
-                            <strong th:text="${field.name}">圃場名</strong>
+                            <strong th:text="${#strings.isEmpty(field.name) ? '圃場名未設定' : field.name}">圃場名</strong>
                             <span th:text="${#strings.isEmpty(field.location) ? '住所未登録' : field.location}">住所</span>
                             <small th:if="${!#strings.isEmpty(field.cropName)}"
-                                   th:text="${field.cropName}">作物</small>
+                                   th:text="${#strings.isEmpty(field.cropName) ? '未設定' : field.cropName}">作物</small>
                         </span>
                         <span class="field-map-item-status"
                               th:if="${field.latitude == null or field.longitude == null}">位置未取得</span>

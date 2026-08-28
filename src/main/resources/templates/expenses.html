@@ -470,9 +470,12 @@
             }
         }
     </style>
+    <link rel="stylesheet"
+          th:href="@{/css/professional-ui.css(v='20260822-6')}"
+          href="/css/professional-ui.css?v=20260822-6">
 </head>
 
-<body>
+<body class="management-screen">
 <main class="page">
     <header class="header">
         <div>
@@ -637,23 +640,23 @@
                     <tbody>
                     <tr th:each="expense : ${expenses}">
                         <td data-label="日付"
-                            th:text="${expense.date}">
+                            th:text="${expense.date != null ? expense.date : '未設定'}">
                             2026-08-16
                         </td>
 
                         <td data-label="項目">
                             <span class="category"
-                                  th:text="${expense.category}">
+                                  th:text="${#strings.isEmpty(expense.category) ? '未設定' : expense.category}">
                                 肥料
                             </span>
                         </td>
 
                         <td data-label="金額" class="money">
-                            <span th:text="${expense.amount}">12000</span>円
+                            <span th:text="${expense.amount != null ? expense.amount : 0}">0</span>円
                         </td>
 
                         <td data-label="メモ"
-                            th:text="${expense.memo}">
+                            th:text="${#strings.isEmpty(expense.memo) ? '—' : expense.memo}">
                             元肥購入
                         </td>
 
@@ -689,7 +692,7 @@
 
     <footer>
         <p>農業管理システム / 経営管理 / 経費管理</p>
-        <a th:href="@{/}" href="/">トップページへ戻る</a>
+        <a class="app-home-button app-home-button-compact" th:href="@{/}" href="/">トップページへ戻る</a>
     </footer>
 </main>
 </body>
