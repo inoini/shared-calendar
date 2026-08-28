@@ -3920,6 +3920,10 @@ body.modal-open {
     align-items: center;
     justify-content: center;
     padding: 16px;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
 }
 
 .calendar-page .modal-content,
@@ -3934,6 +3938,8 @@ body.modal-open {
     overflow-y: auto;
     transform: none;
     overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
 }
 
 .calendar-page .modal-close {

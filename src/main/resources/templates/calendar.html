@@ -9,9 +9,9 @@
 
     <link rel="manifest" th:href="@{/manifest.json}" href="/manifest.json">
     <link rel="apple-touch-icon" th:href="@{/icons/icon-192.png}" href="/icons/icon-192.png">
-    <link rel="stylesheet" th:href="@{/css/style.css(v='20260822-3')}" href="/css/style.css?v=20260822-3">
+    <link rel="stylesheet" th:href="@{/css/style.css(v='20260829-1')}" href="/css/style.css?v=20260829-1">
     <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260822-6')}" href="/css/professional-ui.css?v=20260822-6">
-    <script defer th:src="@{/js/script.js(v='20260822-4')}" src="/js/script.js?v=20260822-4"></script>
+    <script defer th:src="@{/js/script.js(v='20260829-1')}" src="/js/script.js?v=20260829-1"></script>
 
     <style>
         /* 作業カレンダー見出しとトップページボタン */
@@ -360,8 +360,9 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (typeof window.openModal === "function") {
-            window.openModal(date);
+        if (typeof window.openAddDay === "function") {
+            lastFocusedElement = document.activeElement;
+            window.openAddDay(date);
             return;
         }
 
@@ -406,6 +407,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (event.target.closest(".schedule-card")) {
                 return;
             }
+            event.stopPropagation();
             openNewScheduleModal(dayBox.dataset.date);
         });
     });

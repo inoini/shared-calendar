@@ -590,6 +590,8 @@ function cardAnimation(){
 // モーダル表示
 // ==========================
 
+let modalCloseTimer = null;
+
 function showModal(){
 
     const modal =
@@ -601,14 +603,26 @@ function showModal(){
     }
 
 
-    modal.style.display="block";
+    if(modalCloseTimer){
+        clearTimeout(modalCloseTimer);
+        modalCloseTimer = null;
+    }
+
+    modal.style.display="flex";
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+
+    const modalContent = modal.querySelector(".modal-content");
+    if(modalContent){
+        modalContent.scrollTop = 0;
+    }
 
 
-    setTimeout(function(){
+    requestAnimationFrame(function(){
 
         modal.classList.add("show");
 
-    },10);
+    });
 
 }
 
@@ -631,11 +645,14 @@ function closeModal(){
 
 
     modal.classList.remove("show");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
 
 
-    setTimeout(function(){
+    modalCloseTimer = setTimeout(function(){
 
         modal.style.display="none";
+        modalCloseTimer = null;
 
     },300);
 
@@ -1223,7 +1240,7 @@ if ("serviceWorker" in navigator) {
 
     window.addEventListener("load", function(){
 
-		navigator.serviceWorker.register("/service-worker.js?v=20260822-8")
+		navigator.serviceWorker.register("/service-worker.js?v=20260829-1")
         .then(function(registration){
 
             console.log("PWA Ready");

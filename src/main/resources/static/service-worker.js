@@ -1,12 +1,12 @@
-const CACHE_NAME = "farm-system-20260822-8";
+const CACHE_NAME = "farm-system-20260829-1";
 
 const STATIC_ASSETS = [
     "/manifest.json",
     "/icons/icon-192.png",
     "/icons/icon-512.png",
-    "/css/style.css?v=20260822-3",
+    "/css/style.css?v=20260829-1",
     "/css/professional-ui.css?v=20260822-8",
-    "/js/script.js?v=20260822-8"
+    "/js/script.js?v=20260829-1"
 ];
 
 self.addEventListener("install", (event) => {
