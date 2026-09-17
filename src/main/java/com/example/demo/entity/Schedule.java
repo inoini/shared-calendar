@@ -36,6 +36,9 @@ public class Schedule {
     // 作業種類
     private String workType;
 
+    // 進捗状態（未着手・進行中・完了）
+    private String status = "未着手";
+
     // メモ
     private String memo;
 
@@ -85,6 +88,10 @@ public class Schedule {
 
     public String getWorkType() {
         return workType;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public String getMemo() {
@@ -137,6 +144,10 @@ public class Schedule {
 
     public void setWorkType(String workType) {
         this.workType = workType;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setMemo(String memo) {

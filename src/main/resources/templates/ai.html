@@ -1,159 +1,79 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-<title>AI農業アシスタント</title>
-
-
-<link rel="stylesheet" th:href="@{/css/style.css}">
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="登録作物の情報を踏まえて栽培・病害虫・肥料について相談できるAI画面です。">
+    <title>AI農業アシスタント | 農業管理システム</title>
+    <link rel="stylesheet"
+          th:href="@{/css/style.css(v='20260822-2')}"
+          href="/css/style.css?v=20260822-2">
+    <link rel="stylesheet"
+          th:href="@{/css/professional-ui.css(v='20260822-2')}"
+          href="/css/professional-ui.css?v=20260822-2">
 </head>
 
-
-<body>
-
-
-<header class="header">
-
-
-<h1>
-🤖 AI農業アシスタント
-</h1>
-
-
-<p>
-Smart Farm Support
-</p>
-
-
-</header>
-
-
-
-
-<main class="container">
-
-
-
-<section class="welcome">
-
-
-<h2>
-農業相談AI
-</h2>
-
-
-<p>
-作物の管理方法、病害虫、肥料、栽培について相談できます。
-</p>
-
-
-</section>
-
-
-
-
-
-<section class="panel">
-
-
-
-<h2>
-質問入力
-</h2>
-
-
-
-<form action="/ai" method="post">
-
-
-<textarea 
-name="question"
-placeholder="例：さつまいもの葉が黄色くなりました。原因を教えてください。"
-th:text="${question}">
-</textarea>
-
-
-
-<button type="submit">
-🌱 AIに相談する
-</button>
-
-
-
-</form>
-
-
-
-</section>
-
-
-
-
-
-
-<section class="panel"
-         th:if="${answer}">
-
-
-
-<h2>
-🤖 AI回答
-</h2>
-
-
-
-<div class="answer">
-
-
-<p th:text="${answer}">
-</p>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-<div class="back-home">
-
-
-<a href="/">
-← ダッシュボードへ戻る
-</a>
-
-
-</div>
-
-
-
-
+<body class="ai-screen">
+<main class="assistant-page">
+    <header class="app-page-header">
+        <div>
+            <p class="app-eyebrow">FARM SUPPORT AI</p>
+            <h1>🤖 AI農業アシスタント</h1>
+            <p>登録済みの作物情報を踏まえて、栽培・病害虫・肥料について回答します。</p>
+        </div>
+        <a class="app-back-button" th:href="@{/}" href="/">
+            ← ダッシュボードへ戻る
+        </a>
+    </header>
+
+    <div class="assistant-grid">
+        <section class="app-panel" aria-labelledby="assistant-question-title">
+            <div class="app-panel-heading">
+                <div>
+                    <p class="section-kicker">QUESTION</p>
+                    <h2 id="assistant-question-title">相談内容</h2>
+                    <p>症状、発生時期、圃場の状態を具体的に入力すると回答が正確になります。</p>
+                </div>
+            </div>
+
+            <form class="standalone-form" th:action="@{/ai}" action="/ai" method="post">
+                <div class="app-field">
+                    <label for="question">質問 <span class="required-badge">必須</span></label>
+                    <textarea id="question"
+                              name="question"
+                              rows="9"
+                              maxlength="2000"
+                              placeholder="例：さつまいもの葉が黄色くなりました。下葉から広がり、数日前に雨が続きました。考えられる原因と対策を教えてください。"
+                              th:text="${question}"
+                              required></textarea>
+                </div>
+
+                <button class="app-primary-button" type="submit">🌱 AIに相談する</button>
+            </form>
+        </section>
+
+        <section class="app-panel" aria-labelledby="assistant-answer-title">
+            <div class="app-panel-heading">
+                <div>
+                    <p class="section-kicker">RESPONSE</p>
+                    <h2 id="assistant-answer-title">AIからの回答</h2>
+                    <p>最終的な農薬・肥料の使用判断は、ラベルや専門機関の案内も確認してください。</p>
+                </div>
+            </div>
+
+            <div class="assistant-answer" th:if="${answer != null}" th:text="${answer}">
+                AIの回答がここに表示されます。
+            </div>
+
+            <div class="assistant-placeholder" th:if="${answer == null}">
+                <div>
+                    <p aria-hidden="true" style="font-size: 38px; margin: 0 0 10px;">🌿</p>
+                    <strong>左側に相談内容を入力してください</strong>
+                    <p>回答はこの場所に表示されます。</p>
+                </div>
+            </div>
+        </section>
+    </div>
 </main>
-
-
-
-
-<footer class="footer">
-
-Version 1.0
-
-</footer>
-
-
-
 </body>
-
 </html>

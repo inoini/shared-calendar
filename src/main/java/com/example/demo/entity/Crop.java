@@ -22,6 +22,9 @@ public class Crop {
 
     private Double area;
 
+    // 収穫予定量（kg）
+    private Double expectedHarvestKg;
+
     private String status;
 
     public Crop() {
@@ -81,6 +84,14 @@ public class Crop {
 
     public void setArea(Double area) {
         this.area = area;
+    }
+
+    public Double getExpectedHarvestKg() {
+        return expectedHarvestKg;
+    }
+
+    public void setExpectedHarvestKg(Double expectedHarvestKg) {
+        this.expectedHarvestKg = expectedHarvestKg;
     }
 
     public String getStatus() {

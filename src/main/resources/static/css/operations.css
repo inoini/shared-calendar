@@ -1,0 +1,313 @@
+.operations-page {
+    width: min(1380px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 22px 0 42px;
+}
+
+.operations-heading {
+    display: flex;
+    margin-bottom: 18px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.operations-heading h1 {
+    margin: 0 0 5px;
+    color: #173f2b;
+    font-size: clamp(24px, 3vw, 34px);
+}
+
+.operations-heading p {
+    margin: 0;
+    color: #66736b;
+}
+
+.operations-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.6fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.operations-panel {
+    padding: 20px;
+    border: 1px solid #dce5df;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 5px 18px rgba(23, 63, 43, 0.06);
+}
+
+.operations-panel h2 {
+    margin: 0 0 16px;
+    color: #225638;
+    font-size: 19px;
+}
+
+.operations-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 12px;
+}
+
+.operations-form-grid .wide {
+    grid-column: 1 / -1;
+}
+
+.operations-panel input,
+.operations-panel select,
+.operations-panel textarea {
+    min-height: 42px;
+    margin: 5px 0 12px;
+}
+
+.operations-checkbox {
+    display: flex;
+    margin: 8px 0 16px;
+    align-items: center;
+    gap: 8px;
+}
+
+.operations-checkbox input {
+    width: 18px;
+    min-height: 18px;
+    margin: 0;
+}
+
+.operations-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.operation-button {
+    display: inline-flex;
+    min-height: 38px;
+    padding: 8px 13px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #cfdad3;
+    border-radius: 6px;
+    background: #fff;
+    color: #31503e;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.operation-button.primary {
+    border-color: #08734b;
+    background: #08734b;
+    color: #fff;
+}
+
+.operation-button.danger {
+    border-color: #efc4c1;
+    background: #fff4f3;
+    color: #b8332e;
+}
+
+.operations-table-wrap {
+    overflow-x: auto;
+}
+
+.operations-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.operations-table th,
+.operations-table td {
+    padding: 11px 10px;
+    border-bottom: 1px solid #e4eae6;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.operations-table th {
+    background: #f3f8f5;
+    color: #456052;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.operations-table .inline-status {
+    display: flex;
+    min-width: 145px;
+    align-items: center;
+    gap: 5px;
+}
+
+.operations-table .inline-status select {
+    min-height: 34px;
+    margin: 0;
+    padding: 5px;
+    font-size: 11px;
+}
+
+.status-pill {
+    display: inline-flex;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #eaf4ee;
+    color: #227044;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.operations-empty {
+    padding: 42px 20px;
+    color: #77847c;
+    text-align: center;
+}
+
+.report-card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.report-card {
+    padding: 18px;
+    border: 1px solid #dce5df;
+    border-radius: 9px;
+    background: #fff;
+}
+
+.report-card span {
+    display: block;
+    color: #68776e;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.report-card strong {
+    display: block;
+    margin-top: 8px;
+    color: #173f2b;
+    font-size: 26px;
+}
+
+.work-type-row {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr) 48px;
+    gap: 10px;
+    margin: 10px 0;
+    align-items: center;
+    font-size: 13px;
+}
+
+.work-type-bar {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e8efea;
+}
+
+.work-type-bar i {
+    display: block;
+    height: 100%;
+    min-width: 4px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #0c8a56, #65bd87);
+}
+
+@media screen and (max-width: 980px) {
+    .operations-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .report-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .operations-page {
+        width: calc(100% - 24px);
+        padding-top: 16px;
+    }
+
+    .operations-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .operations-form-grid,
+    .report-card-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .operations-form-grid .wide {
+        grid-column: auto;
+    }
+}
+
+.work-type-bar {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e7eee9;
+}
+
+.work-type-bar i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #2e9a62;
+}
+
+@media (max-width: 1000px) {
+    .operations-grid,
+    .report-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .operations-grid .operations-panel:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .operations-page {
+        width: calc(100% - 24px);
+        padding-top: 16px;
+    }
+
+    .operations-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .operations-grid,
+    .report-card-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .operations-grid .operations-panel:last-child {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 520px) {
+    .operations-form-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .operations-form-grid .wide {
+        grid-column: auto;
+    }
+}
+
+/* 作業履歴の編集画面 */
+.history-notice { padding: 12px; background: #eaf6ee; color: #165d36; }
+.history-error { padding: 12px; background: #fff0ee; color: #a32920; }
+.history-row-actions { min-width: 125px; }
+.history-row-actions form, .history-editor-actions form { margin: 0; }
+.history-overlay { position: fixed; inset: 0; z-index: 10000; background: #0008; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.history-editor { width: min(680px, 100%); max-height: calc(100dvh - 32px); overflow-y: auto; box-sizing: border-box; }
+.history-editor input, .history-editor select, .history-editor textarea { width: 100%; box-sizing: border-box; }
+.history-editor-actions { position: sticky; bottom: -20px; background: #fff; padding: 14px 0; border-top: 1px solid #dce5df; }
+.history-editor .operation-button { min-height: 44px; font-size: 15px; cursor: pointer; }

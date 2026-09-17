@@ -8,15 +8,15 @@
     <title>農業管理システム | 作物一覧</title>
 
     <link rel="stylesheet"
-          th:href="@{/css/style.css(v='20260822-3')}"
-          href="/css/style.css?v=20260822-3">
+          th:href="@{/css/style.css(v='20260822-2')}"
+          href="/css/style.css?v=20260822-2">
 
     <link rel="stylesheet"
-          th:href="@{/css/crop-list.css(v='20260822-3')}"
-          href="/css/crop-list.css?v=20260822-3">
+          th:href="@{/css/crop-list.css(v='20260822-2')}"
+          href="/css/crop-list.css?v=20260822-2">
     <link rel="stylesheet"
-          th:href="@{/css/professional-ui.css(v='20260822-6')}"
-          href="/css/professional-ui.css?v=20260822-6">
+          th:href="@{/css/professional-ui.css(v='20260822-2')}"
+          href="/css/professional-ui.css?v=20260822-2">
 </head>
 
 <body class="crop-screen">
@@ -50,7 +50,7 @@
 
             <a th:href="@{/}"
                href="/"
-               class="crop-home-button app-home-button">
+               class="crop-home-button">
 
                 <span aria-hidden="true">🏠</span>
                 <span>トップページに戻る</span>
@@ -83,6 +83,7 @@
                     <th scope="col" class="crop-col-date">植付日</th>
                     <th scope="col" class="crop-col-date">収穫予定日</th>
                     <th scope="col" class="crop-col-area">面積（a）</th>
+                    <th scope="col" class="crop-col-area">収穫予定（kg）</th>
                     <th scope="col" class="crop-col-status">状態</th>
                     <th scope="col"
                         class="crop-col-action crop-action-heading">
@@ -99,7 +100,7 @@
 
                 <!-- 作物が登録されていない場合 -->
                 <tr th:if="${#lists.isEmpty(crops)}">
-                    <td colspan="9"
+                    <td colspan="10"
                         class="crop-list-empty">
                         登録されている作物はありません。
                     </td>
@@ -132,6 +133,10 @@
 
                     <td th:text="${crop.area != null ? crop.area : 0}">
                         30.0
+                    </td>
+
+                    <td th:text="${crop.expectedHarvestKg != null ? crop.expectedHarvestKg : 0}">
+                        560
                     </td>
 
                     <td>

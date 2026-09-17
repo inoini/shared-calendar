@@ -17,12 +17,12 @@
           th:href="@{/css/style.css(v='20260822-3')}"
           href="/css/style.css?v=20260822-3">
     <link rel="stylesheet"
-          th:href="@{/css/professional-ui.css(v='20260822-8')}"
-          href="/css/professional-ui.css?v=20260822-8">
+          th:href="@{/css/professional-ui.css(v='20260822-5')}"
+          href="/css/professional-ui.css?v=20260822-5">
 
     <script defer
-            th:src="@{/js/script.js(v='20260822-8')}"
-            src="/js/script.js?v=20260822-8"></script>
+            th:src="@{/js/script.js(v='20260822-5')}"
+            src="/js/script.js?v=20260822-5"></script>
 
 </head>
 
@@ -68,6 +68,11 @@
                 <span>圃場管理</span>
             </a>
 
+            <a th:href="@{/work-history}">
+                <span>◷</span>
+                <span>作業履歴</span>
+            </a>
+
             <a th:href="@{/management}">
                 <span>💰</span>
                 <span>経営管理</span>
@@ -76,6 +81,26 @@
             <a th:href="@{/stock}">
                 <span>📦</span>
                 <span>在庫管理</span>
+            </a>
+
+            <a th:href="@{/workers}">
+                <span>👥</span>
+                <span>作業者管理</span>
+            </a>
+
+            <a th:href="@{/harvests}">
+                <span>🚚</span>
+                <span>収穫・出荷管理</span>
+            </a>
+
+            <a th:href="@{/reports}">
+                <span>📊</span>
+                <span>分析・レポート</span>
+            </a>
+
+            <a th:href="@{/settings}">
+                <span>⚙</span>
+                <span>設定</span>
             </a>
 
         </nav>
@@ -101,26 +126,12 @@
 
         <div id="clock"></div>
 
-        <div class="weather-control">
-            <button id="weatherButton"
-                    class="header-primary-action weather-fetch-button"
-                    type="button"
-                    aria-controls="weatherResult"
-                    aria-expanded="false">
-                <span aria-hidden="true">🌤️</span>
-                <span id="weatherButtonLabel">天気を取得</span>
-            </button>
-
-            <section id="weatherResult"
-                     class="dashboard-weather-result"
-                     aria-label="現在地の天気"
-                     aria-live="polite"
-                     hidden>
-                <p id="weatherCurrent" class="weather-current"></p>
-                <p id="weatherDetails" class="weather-details"></p>
-                <div id="weatherForecast" class="weather-forecast-grid"></div>
-            </section>
-        </div>
+        <a class="header-primary-action"
+   href="https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=120000"
+   target="_blank"
+   rel="noopener noreferrer">
+    ☀ 天気予報を見る
+</a>
 
     </div>
 

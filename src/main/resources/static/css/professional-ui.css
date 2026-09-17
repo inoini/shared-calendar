@@ -214,7 +214,7 @@ html {
     padding: 12px max(20px, calc((100vw - 1240px) / 2));
     border-bottom: 1px solid rgba(255, 255, 255, 0.14);
     background: var(--ui-green-950);
-    color: #ffffff !important;
+    color: #ffffff;
     box-shadow: 0 6px 18px rgba(15, 50, 31, 0.16);
 }
 
@@ -243,7 +243,7 @@ html {
 .crop-screen .top-header h1,
 .form-screen .top-header h1 {
     margin: 0;
-    color: #ffffff !important;
+    color: #ffffff;
     font-size: 18px;
 }
 
@@ -350,8 +350,6 @@ html {
 .dashboard-body .header-right {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    justify-content: flex-end;
     gap: 12px;
 }
 
@@ -378,112 +376,6 @@ html {
     font-size: 14px;
     font-weight: 800;
     box-shadow: 0 5px 13px rgba(40, 115, 63, 0.2);
-}
-
-.dashboard-body .weather-control {
-    display: grid;
-    min-width: 300px;
-    gap: 8px;
-}
-
-.dashboard-body .weather-fetch-button {
-    width: 100%;
-    border: 0;
-    font: inherit;
-    cursor: pointer;
-}
-
-.dashboard-body .weather-fetch-button:disabled {
-    cursor: wait;
-    opacity: 0.72;
-}
-
-.dashboard-body .dashboard-weather-result {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #cfe0d2;
-    border-radius: 12px;
-    background: #ffffff;
-    color: var(--ui-ink);
-    box-shadow: var(--ui-shadow-sm);
-}
-
-.dashboard-body .dashboard-weather-result[hidden] {
-    display: none;
-}
-
-.dashboard-body .dashboard-weather-result.is-error {
-    border-color: #efb8b4;
-    background: var(--ui-danger-bg);
-    color: var(--ui-danger);
-}
-
-.dashboard-body .weather-current {
-    margin: 0;
-    color: var(--ui-green-900);
-    font-size: 17px;
-    font-weight: 900;
-}
-
-.dashboard-body .dashboard-weather-result.is-error .weather-current {
-    color: var(--ui-danger);
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-.dashboard-body .weather-details {
-    margin: 5px 0 0;
-    color: var(--ui-muted);
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-.dashboard-body .weather-forecast-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 7px;
-    margin-top: 11px;
-}
-
-.dashboard-body .weather-forecast-item {
-    min-width: 0;
-    padding: 9px 6px;
-    border: 1px solid #e0e8e1;
-    border-radius: 9px;
-    background: var(--ui-green-50);
-    text-align: center;
-}
-
-.dashboard-body .weather-forecast-item p {
-    margin: 0;
-}
-
-.dashboard-body .weather-forecast-date {
-    color: var(--ui-muted);
-    font-size: 10px;
-    font-weight: 800;
-}
-
-.dashboard-body .weather-forecast-condition {
-    margin-top: 4px !important;
-    color: var(--ui-green-900);
-    font-size: 11px;
-    font-weight: 800;
-    white-space: nowrap;
-}
-
-.dashboard-body .weather-forecast-temperature {
-    margin-top: 4px !important;
-    color: var(--ui-ink);
-    font-size: 11px;
-    font-weight: 800;
-}
-
-.dashboard-body .weather-forecast-rain {
-    margin-top: 3px !important;
-    color: var(--ui-info);
-    font-size: 10px;
-    font-weight: 700;
 }
 
 .dashboard-body .container {
@@ -1038,15 +930,6 @@ html {
         grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
     }
 
-    .dashboard-body .weather-control {
-        min-width: 0;
-        width: 100%;
-    }
-
-    .dashboard-body .dashboard-weather-result {
-        padding: 12px;
-    }
-
     .dashboard-body #clock,
     .dashboard-body .header-primary-action {
         min-width: 0;
@@ -1108,18 +991,6 @@ html {
 }
 
 @media screen and (max-width: 560px) {
-    .dashboard-body .header-right {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .dashboard-body .weather-control {
-        min-width: 0;
-    }
-
-    .dashboard-body .weather-forecast-grid {
-        gap: 5px;
-    }
-
     .dashboard-body .dashboard-summary {
         grid-template-columns: minmax(0, 1fr);
     }
@@ -1208,5 +1079,102 @@ html {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
+    }
+}
+
+/* =========================================================
+   作業カレンダー：ダッシュボード共通サイドバーレイアウト
+========================================================= */
+.dashboard-body.calendar-screen > .menu-btn {
+    display: none;
+}
+
+.dashboard-body.calendar-screen .sidebar {
+    z-index: 80;
+}
+
+.dashboard-body.calendar-screen .calendar-main-content {
+    overflow-x: hidden;
+}
+
+.dashboard-body.calendar-screen .calendar-app-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+}
+
+.dashboard-body.calendar-screen .calendar-page {
+    max-width: none;
+    padding-bottom: 44px;
+}
+
+.dashboard-body.calendar-screen .calendar-header {
+    padding: 22px 24px;
+}
+
+.dashboard-body.calendar-screen .calendar-header-text h2 {
+    margin: 0 0 7px;
+    color: var(--ui-green-900);
+    font-size: clamp(20px, 2vw, 27px);
+}
+
+.dashboard-body.calendar-screen .calendar-header-text p {
+    color: var(--ui-muted);
+    line-height: 1.6;
+}
+
+.dashboard-body.calendar-screen .month-nav {
+    gap: 16px;
+    padding: 4px 2px;
+}
+
+.dashboard-body.calendar-screen .calendar-wrapper {
+    min-width: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-body.calendar-screen > .menu-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dashboard-body.calendar-screen .calendar-app-header {
+        position: relative;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .dashboard-body.calendar-screen .calendar-app-header .header-right {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .dashboard-body.calendar-screen .calendar-page {
+        width: 100%;
+        padding: 14px 12px 32px;
+    }
+
+    .dashboard-body.calendar-screen .calendar-header {
+        padding: 18px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .dashboard-body.calendar-screen .calendar-app-header .header-right {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dashboard-body.calendar-screen .month-nav {
+        gap: 8px;
+    }
+
+    .dashboard-body.calendar-screen .month-button {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .dashboard-body.calendar-screen .month-title {
+        font-size: 21px;
     }
 }

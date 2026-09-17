@@ -199,10 +199,12 @@
                                     <a class="field-action-button field-edit-button"
                                        th:href="@{/field/edit/{id}(id=${field.id})}"
                                        href="#">編集</a>
-                                    <a class="field-action-button field-delete-button"
-                                       th:href="@{/field/delete/{id}(id=${field.id})}"
-                                       href="#"
-                                       th:attr="data-field-name=${field.name}">削除</a>
+                                    <form th:action="@{/field/delete/{id}(id=${field.id})}"
+                                          method="post" style="margin:0;display:inline-flex;">
+                                        <button class="field-action-button field-delete-button"
+                                                type="submit"
+                                                th:attr="data-field-name=${field.name}">消去</button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>

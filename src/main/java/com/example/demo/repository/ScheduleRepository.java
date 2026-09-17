@@ -24,5 +24,8 @@ public interface ScheduleRepository
             String userName
     );
 
+    List<Schedule> findAllByOrderByDateDescStartTimeDesc();
+
+    
 
 }

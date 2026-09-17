@@ -3,8 +3,12 @@ package com.example.demo.conotroller;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +20,9 @@ import com.example.demo.service.StockService;
 import com.example.demo.model.CalendarDay;
 import com.example.demo.service.ScheduleService;
 import com.example.demo.repository.CropRepository;
+import com.example.demo.repository.FieldRepository;
+import com.example.demo.repository.AppSettingRepository;
+import com.example.demo.repository.WorkerRepository;
 
 
 
@@ -24,16 +31,26 @@ public class CalendarController {
 
 
     private final ScheduleService scheduleService;
+    private final CropRepository cropRepository;
+    private final FieldRepository fieldRepository;
+    private final WorkerRepository workerRepository;
+    private final AppSettingRepository settingRepository;
 
 
 
     public CalendarController(
             ScheduleService scheduleService,
             CropRepository cropRepository,
-            StockService stockService){
+            StockService stockService,
+            FieldRepository fieldRepository,
+            WorkerRepository workerRepository,
+            AppSettingRepository settingRepository){
 
         this.scheduleService = scheduleService;
-     
+        this.cropRepository = cropRepository;
+        this.fieldRepository = fieldRepository;
+        this.workerRepository = workerRepository;
+        this.settingRepository = settingRepository;
     }
 
 
@@ -59,6 +76,7 @@ public class CalendarController {
 
         model.addAttribute("year", ym.getYear());
         model.addAttribute("month", ym.getMonthValue());
+        model.addAttribute("monthValue", ym.toString());
 
         YearMonth prev = ym.minusMonths(1);
         YearMonth next = ym.plusMonths(1);
@@ -131,7 +149,70 @@ public class CalendarController {
 
         model.addAttribute("calendarDays", calendarDays);
 
+        LocalDate today = LocalDate.now();
+        List<Schedule> todaySchedules = scheduleService.findByDate(today.toString());
+        long completedCount = todaySchedules.stream()
+                .filter(schedule -> "完了".equals(schedule.getStatus()))
+                .count();
+
+        List<com.example.demo.entity.Crop> crops = cropRepository.findAll();
+        long activeCropCount = crops.stream()
+                .filter(crop -> !"収穫済".equals(crop.getStatus()))
+                .count();
+        double monthlyHarvestKg = crops.stream()
+                .filter(crop -> crop.getHarvestDate() != null)
+                .filter(crop -> YearMonth.from(crop.getHarvestDate()).equals(ym))
+                .map(com.example.demo.entity.Crop::getExpectedHarvestKg)
+                .filter(value -> value != null && value > 0)
+                .mapToDouble(Double::doubleValue)
+                .sum();
+        double harvestTargetKg = settingRepository.findById(1L)
+                .map(setting -> setting.getMonthlyHarvestTargetKg() == null
+                        ? 1000.0 : setting.getMonthlyHarvestTargetKg())
+                .orElse(1000.0);
+        if (harvestTargetKg <= 0) {
+            harvestTargetKg = 1000.0;
+        }
+        int harvestProgress = (int) Math.min(100,
+                Math.round((monthlyHarvestKg / harvestTargetKg) * 100));
+
+        List<Schedule> allSchedules = scheduleService.findAll();
+        Set<String> workers = new LinkedHashSet<>();
+        Set<String> cropNames = new LinkedHashSet<>();
+        Set<String> workTypes = new LinkedHashSet<>();
+        workerRepository.findAllByOrderByNameAsc().stream()
+                .filter(worker -> !Boolean.FALSE.equals(worker.getActive()))
+                .forEach(worker -> addIfPresent(workers, worker.getName()));
+        allSchedules.forEach(schedule -> {
+            addIfPresent(workers, schedule.getUserName());
+            addIfPresent(cropNames, schedule.getCropName());
+            addIfPresent(workTypes, schedule.getWorkType());
+        });
+        model.addAttribute("todayLabel", today.format(
+                DateTimeFormatter.ofPattern("yyyy年M月d日（E）", Locale.JAPANESE)));
+        model.addAttribute("todayShortLabel", today.format(
+                DateTimeFormatter.ofPattern("M/d")));
+        model.addAttribute("todayIso", today.toString());
+        model.addAttribute("todaySchedules", todaySchedules);
+        model.addAttribute("todayScheduleCount", todaySchedules.size());
+        model.addAttribute("completedCount", completedCount);
+        model.addAttribute("unfinishedCount", todaySchedules.size() - completedCount);
+        model.addAttribute("fieldCount", fieldRepository.count());
+        model.addAttribute("activeCropCount", activeCropCount);
+        model.addAttribute("monthlyHarvestKg", monthlyHarvestKg);
+        model.addAttribute("harvestTargetKg", harvestTargetKg);
+        model.addAttribute("harvestProgress", harvestProgress);
+        model.addAttribute("workers", workers);
+        model.addAttribute("cropNames", cropNames);
+        model.addAttribute("workTypes", workTypes);
+
         return "calendar";
+    }
+
+    private void addIfPresent(Set<String> values, String value) {
+        if (value != null && !value.isBlank()) {
+            values.add(value.strip());
+        }
     }
 
 
@@ -154,6 +235,7 @@ public class CalendarController {
             @RequestParam(required=false) String fieldName,
             @RequestParam(required=false) String cropName,
             @RequestParam(required=false) String workType,
+            @RequestParam(required=false) String status,
             @RequestParam(required=false) String memo){
 
         Schedule s;
@@ -183,6 +265,7 @@ public class CalendarController {
         s.setFieldName(fieldName);
         s.setCropName(cropName);
         s.setWorkType(workType);
+        s.setStatus(status == null || status.isBlank() ? "未着手" : status);
         s.setMemo(memo);
 
         scheduleService.save(s);
@@ -239,6 +322,7 @@ public class CalendarController {
          @RequestParam(required=false) String fieldName,
          @RequestParam(required=false) String cropName,
          @RequestParam(required=false) String workType,
+         @RequestParam(required=false) String status,
          @RequestParam(required=false) String memo
 
  ){
@@ -269,6 +353,8 @@ public class CalendarController {
      s.setCropName(cropName);
 
      s.setWorkType(workType);
+
+     s.setStatus(status == null || status.isBlank() ? "未着手" : status);
 
      s.setMemo(memo);
 

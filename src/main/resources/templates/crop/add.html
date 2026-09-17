@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>農業管理システム | 作物登録</title>
-    <link rel="stylesheet" th:href="@{/css/style.css(v='20260822-3')}" href="/css/style.css?v=20260822-3">
-    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260822-6')}" href="/css/professional-ui.css?v=20260822-6">
+    <link rel="stylesheet" th:href="@{/css/style.css(v='20260822-2')}" href="/css/style.css?v=20260822-2">
+    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260822-2')}" href="/css/professional-ui.css?v=20260822-2">
 </head>
 
 <body class="crop-screen">
@@ -29,7 +29,7 @@
 
             <a th:href="@{/}"
                href="/"
-               class="crop-home-button app-home-button"
+               class="crop-home-button"
                aria-label="トップページへ戻る">
                 <span aria-hidden="true">🏠</span>
                 <span>トップページに戻る</span>
@@ -92,6 +92,16 @@
                            step="0.1"
                            inputmode="decimal"
                            placeholder="例：30.0">
+                </div>
+
+                <div class="crop-form-group">
+                    <label for="expectedHarvestKg">収穫予定量（kg）</label>
+                    <input type="number"
+                           th:field="*{expectedHarvestKg}"
+                           min="0"
+                           step="0.1"
+                           inputmode="decimal"
+                           placeholder="例：560">
                 </div>
 
                 <div class="crop-form-group">

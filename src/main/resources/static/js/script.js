@@ -17,8 +17,6 @@ window.addEventListener("DOMContentLoaded", function () {
     updateClock();
     setInterval(updateClock, 1000);
 
-    setupWeatherButton();
-
     cardAnimation();
 
 });
@@ -126,425 +124,6 @@ function updateClock(){
 		`;
 }
 
-function setupWeatherButton(){
-
-    const button =
-        document.getElementById("weatherButton");
-
-    if(!button){
-        return;
-    }
-
-    button.addEventListener("click", requestCurrentWeather);
-}
-
-function requestCurrentWeather(){
-
-    const button =
-        document.getElementById("weatherButton");
-
-    const label =
-        document.getElementById("weatherButtonLabel");
-
-    if(!button || !label){
-        return;
-    }
-
-    if(!navigator.geolocation){
-        showWeatherMessage(
-            "この端末では現在地を取得できません。",
-            true
-        );
-        label.textContent = "もう一度試す";
-        return;
-    }
-
-    button.disabled = true;
-    label.textContent = "現在地を確認中";
-    showWeatherMessage(
-        "位置情報の許可を確認しています…",
-        false
-    );
-
-    navigator.geolocation.getCurrentPosition(
-        function(position){
-            fetchCurrentWeather(
-                position.coords.latitude,
-                position.coords.longitude
-            );
-        },
-        function(error){
-            button.disabled = false;
-            label.textContent = "もう一度試す";
-            showWeatherMessage(
-                getGeolocationErrorMessage(error),
-                true
-            );
-        },
-        {
-            enableHighAccuracy: false,
-            timeout: 12000,
-            maximumAge: 600000
-        }
-    );
-}
-
-async function fetchCurrentWeather(latitude, longitude){
-
-    const button =
-        document.getElementById("weatherButton");
-
-    const label =
-        document.getElementById("weatherButtonLabel");
-
-    try{
-        label.textContent = "天気を取得中";
-        showWeatherMessage(
-            "現在地の天気を取得しています…",
-            false
-        );
-
-        const params =
-            new URLSearchParams({
-                latitude: String(latitude),
-                longitude: String(longitude),
-                current: [
-                    "temperature_2m",
-                    "apparent_temperature",
-                    "relative_humidity_2m",
-                    "precipitation",
-                    "weather_code",
-                    "wind_speed_10m"
-                ].join(","),
-                daily: [
-                    "weather_code",
-                    "temperature_2m_max",
-                    "temperature_2m_min",
-                    "precipitation_probability_max"
-                ].join(","),
-                timezone: "auto",
-                forecast_days: "3"
-            });
-
-        const response =
-            await fetch(
-                "https://api.open-meteo.com/v1/forecast?"
-                + params.toString(),
-                {
-                    headers: {
-                        "Accept": "application/json"
-                    }
-                }
-            );
-
-        if(!response.ok){
-            throw new Error(
-                "Weather API returned " + response.status
-            );
-        }
-
-        const data =
-            await response.json();
-
-        if(!data.current){
-            throw new Error("Current weather is missing");
-        }
-
-        renderWeather(data);
-
-        label.textContent = "天気を更新";
-        button.setAttribute("aria-expanded", "true");
-
-    }catch(error){
-        console.error("Weather Error:", error);
-
-        label.textContent = "もう一度試す";
-        showWeatherMessage(
-            "天気情報を取得できませんでした。通信状況を確認してください。",
-            true
-        );
-
-    }finally{
-        button.disabled = false;
-    }
-}
-
-function renderWeather(data){
-
-    const result =
-        document.getElementById("weatherResult");
-
-    const currentElement =
-        document.getElementById("weatherCurrent");
-
-    const detailsElement =
-        document.getElementById("weatherDetails");
-
-    const forecastElement =
-        document.getElementById("weatherForecast");
-
-    if(
-        !result
-        || !currentElement
-        || !detailsElement
-        || !forecastElement
-    ){
-        return;
-    }
-
-    const current = data.current;
-    const weather =
-        getWeatherCodeInfo(current.weather_code);
-
-    result.hidden = false;
-    result.classList.remove("is-error");
-
-    currentElement.textContent =
-        weather.icon
-        + " 現在地 "
-        + weather.label
-        + " "
-        + formatWeatherNumber(
-            current.temperature_2m,
-            0
-        )
-        + "℃";
-
-    detailsElement.textContent =
-        "体感 "
-        + formatWeatherNumber(
-            current.apparent_temperature,
-            0
-        )
-        + "℃・湿度 "
-        + formatWeatherNumber(
-            current.relative_humidity_2m,
-            0
-        )
-        + "%・雨量 "
-        + formatWeatherNumber(
-            current.precipitation,
-            1
-        )
-        + "mm・風速 "
-        + formatWeatherNumber(
-            current.wind_speed_10m,
-            1
-        )
-        + "km/h";
-
-    forecastElement.replaceChildren();
-
-    const daily = data.daily;
-
-    if(!daily || !Array.isArray(daily.time)){
-        return;
-    }
-
-    const dayCount =
-        Math.min(3, daily.time.length);
-
-    for(let index = 0; index < dayCount; index++){
-
-        const item =
-            document.createElement("article");
-
-        item.className = "weather-forecast-item";
-
-        const date =
-            document.createElement("p");
-
-        date.className = "weather-forecast-date";
-        date.textContent =
-            formatWeatherDate(daily.time[index]);
-
-        const weatherInfo =
-            getWeatherCodeInfo(
-                daily.weather_code?.[index]
-            );
-
-        const condition =
-            document.createElement("p");
-
-        condition.className =
-            "weather-forecast-condition";
-
-        condition.textContent =
-            weatherInfo.icon
-            + " "
-            + weatherInfo.label;
-
-        const temperature =
-            document.createElement("p");
-
-        temperature.className =
-            "weather-forecast-temperature";
-
-        temperature.textContent =
-            formatWeatherNumber(
-                daily.temperature_2m_max?.[index],
-                0
-            )
-            + "℃ / "
-            + formatWeatherNumber(
-                daily.temperature_2m_min?.[index],
-                0
-            )
-            + "℃";
-
-        const rain =
-            document.createElement("p");
-
-        rain.className =
-            "weather-forecast-rain";
-
-        rain.textContent =
-            "降水 "
-            + formatWeatherNumber(
-                daily.precipitation_probability_max?.[index],
-                0
-            )
-            + "%";
-
-        item.append(
-            date,
-            condition,
-            temperature,
-            rain
-        );
-
-        forecastElement.appendChild(item);
-    }
-}
-
-function showWeatherMessage(message, isError){
-
-    const result =
-        document.getElementById("weatherResult");
-
-    const currentElement =
-        document.getElementById("weatherCurrent");
-
-    const detailsElement =
-        document.getElementById("weatherDetails");
-
-    const forecastElement =
-        document.getElementById("weatherForecast");
-
-    if(
-        !result
-        || !currentElement
-        || !detailsElement
-        || !forecastElement
-    ){
-        return;
-    }
-
-    result.hidden = false;
-    result.classList.toggle(
-        "is-error",
-        Boolean(isError)
-    );
-
-    currentElement.textContent = message;
-    detailsElement.textContent = "";
-    forecastElement.replaceChildren();
-}
-
-function getGeolocationErrorMessage(error){
-
-    if(error && error.code === 1){
-        return "位置情報が許可されていません。ブラウザの設定から位置情報を許可してください。";
-    }
-
-    if(error && error.code === 2){
-        return "現在地を取得できませんでした。GPSまたは通信状況を確認してください。";
-    }
-
-    if(error && error.code === 3){
-        return "現在地の取得がタイムアウトしました。もう一度お試しください。";
-    }
-
-    return "現在地を取得できませんでした。";
-}
-
-function getWeatherCodeInfo(code){
-
-    const value = Number(code);
-
-    if(value === 0){
-        return { icon: "☀️", label: "快晴" };
-    }
-
-    if([1, 2].includes(value)){
-        return { icon: "🌤️", label: "晴れ" };
-    }
-
-    if(value === 3){
-        return { icon: "☁️", label: "くもり" };
-    }
-
-    if([45, 48].includes(value)){
-        return { icon: "🌫️", label: "霧" };
-    }
-
-    if([51, 53, 55, 56, 57].includes(value)){
-        return { icon: "🌦️", label: "霧雨" };
-    }
-
-    if([61, 63, 65, 66, 67].includes(value)){
-        return { icon: "🌧️", label: "雨" };
-    }
-
-    if([71, 73, 75, 77, 85, 86].includes(value)){
-        return { icon: "🌨️", label: "雪" };
-    }
-
-    if([80, 81, 82].includes(value)){
-        return { icon: "🌦️", label: "にわか雨" };
-    }
-
-    if([95, 96, 99].includes(value)){
-        return { icon: "⛈️", label: "雷雨" };
-    }
-
-    return { icon: "🌤️", label: "天気不明" };
-}
-
-function formatWeatherNumber(value, digits){
-
-    const number = Number(value);
-
-    if(!Number.isFinite(number)){
-        return "—";
-    }
-
-    return number.toFixed(digits);
-}
-
-function formatWeatherDate(value){
-
-    const date =
-        new Date(String(value) + "T00:00:00");
-
-    if(Number.isNaN(date.getTime())){
-        return String(value);
-    }
-
-    const weekdays =
-        ["日", "月", "火", "水", "木", "金", "土"];
-
-    return (
-        (date.getMonth() + 1)
-        + "/"
-        + date.getDate()
-        + "（"
-        + weekdays[date.getDay()]
-        + "）"
-    );
-}
-
-
 // ==========================
 // カードアニメーション
 // ==========================
@@ -590,8 +169,6 @@ function cardAnimation(){
 // モーダル表示
 // ==========================
 
-let modalCloseTimer = null;
-
 function showModal(){
 
     const modal =
@@ -603,26 +180,14 @@ function showModal(){
     }
 
 
-    if(modalCloseTimer){
-        clearTimeout(modalCloseTimer);
-        modalCloseTimer = null;
-    }
-
-    modal.style.display="flex";
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("modal-open");
-
-    const modalContent = modal.querySelector(".modal-content");
-    if(modalContent){
-        modalContent.scrollTop = 0;
-    }
+    modal.style.display="block";
 
 
-    requestAnimationFrame(function(){
+    setTimeout(function(){
 
         modal.classList.add("show");
 
-    });
+    },10);
 
 }
 
@@ -645,14 +210,11 @@ function closeModal(){
 
 
     modal.classList.remove("show");
-    modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
 
 
-    modalCloseTimer = setTimeout(function(){
+    setTimeout(function(){
 
         modal.style.display="none";
-        modalCloseTimer = null;
 
     },300);
 
@@ -1068,6 +630,11 @@ function editSchedule(id){
         .value =
         work.workType ?? "";
 
+        const statusSelect = document.getElementById("status");
+        if(statusSelect){
+            statusSelect.value = work.status ?? "未着手";
+        }
+
 
 
 
@@ -1240,7 +807,7 @@ if ("serviceWorker" in navigator) {
 
     window.addEventListener("load", function(){
 
-		navigator.serviceWorker.register("/service-worker.js?v=20260829-1")
+		navigator.serviceWorker.register("/service-worker.js?v=20260822-5")
         .then(function(registration){
 
             console.log("PWA Ready");
@@ -1279,6 +846,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
         menuBtn.addEventListener("click", function(){
 
+            if(window.innerWidth > 768 && document.body.classList.contains("sidebar-is-collapsed")){
+                document.body.classList.remove("sidebar-is-collapsed");
+                menuBtn.setAttribute("aria-expanded", "true");
+                return;
+            }
+
 
             sidebar.classList.toggle("active");
 
@@ -1291,6 +864,20 @@ document.addEventListener("DOMContentLoaded", function(){
         });
 
 
+    }
+
+    const sidebarCloseControl = document.querySelector(".sidebar-close-control");
+    if(sidebarCloseControl && sidebar){
+        sidebarCloseControl.addEventListener("click", function(){
+            if(window.innerWidth > 768){
+                document.body.classList.add("sidebar-is-collapsed");
+            }else{
+                sidebar.classList.remove("active");
+            }
+            if(menuBtn){
+                menuBtn.setAttribute("aria-expanded", "false");
+            }
+        });
     }
 
 
@@ -1336,4 +923,51 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+});
+
+// ==========================
+// カレンダー表示月・絞り込み
+// ==========================
+document.addEventListener("DOMContentLoaded", function(){
+
+    const monthPicker = document.getElementById("calendarMonthPicker");
+    if(monthPicker){
+        monthPicker.addEventListener("change", function(){
+            if(!monthPicker.value){
+                return;
+            }
+            const parts = monthPicker.value.split("-");
+            window.location.href = "/calendar?year=" + encodeURIComponent(parts[0])
+                + "&month=" + encodeURIComponent(Number(parts[1]));
+        });
+    }
+
+    const filterIds = ["workerFilter", "cropFilter", "workTypeFilter"];
+    const filters = filterIds.map(function(id){
+        return document.getElementById(id);
+    }).filter(Boolean);
+
+    function applyCalendarFilters(){
+        const worker = document.getElementById("workerFilter")?.value ?? "";
+        const crop = document.getElementById("cropFilter")?.value ?? "";
+        const workType = document.getElementById("workTypeFilter")?.value ?? "";
+
+        document.querySelectorAll(".schedule-card[data-id]").forEach(function(card){
+            const matches = (!worker || card.dataset.worker === worker)
+                && (!crop || card.dataset.crop === crop)
+                && (!workType || card.dataset.workType === workType);
+            card.hidden = !matches;
+        });
+    }
+
+    filters.forEach(function(filter){
+        filter.addEventListener("change", applyCalendarFilters);
+    });
+
+    const openTodaySchedule = document.getElementById("openTodaySchedule");
+    if(openTodaySchedule){
+        openTodaySchedule.addEventListener("click", function(){
+            openAddDay(openTodaySchedule.dataset.date);
+        });
+    }
 });
