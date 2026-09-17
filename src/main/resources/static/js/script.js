@@ -200,28 +200,27 @@ function showModal(){
 
 function closeModal(){
 
-    const modal =
-        document.getElementById("modal");
+	function closeModal() {
 
+	    // ページ全体のスクロールを再開する
+	    document.body.classList.remove("modal-open");
 
-    if(!modal){
-        return;
-    }
+	    const modal = document.getElementById("modal");
 
+	    if (!modal) {
+	        return;
+	    }
 
-    modal.classList.remove("show");
+	    modal.classList.remove("show");
+	    modal.setAttribute("aria-hidden", "true");
 
+	    setTimeout(function () {
+	        modal.style.display = "none";
+	    }, 300);
 
-    setTimeout(function(){
-
-        modal.style.display="none";
-
-    },300);
+	}
 
 }
-
-
-
 
 // ==========================
 // 背景クリック
