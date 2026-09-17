@@ -1,4 +1,4 @@
-/* 作業カレンダー専用：業務システム型レイアウト */
+/* 菴懈･ｭ繧ｫ繝ｬ繝ｳ繝�繝ｼ蟆ら畑�ｼ壽･ｭ蜍吶す繧ｹ繝�繝�蝙九Ξ繧､繧｢繧ｦ繝� */
 .calendar-screen {
     --calendar-sidebar: 220px;
     --calendar-green: #08734b;
@@ -24,7 +24,7 @@
     border: 0;
 }
 
-/* 左メニュー */
+/* 蟾ｦ繝｡繝九Η繝ｼ */
 .dashboard-body.calendar-screen .sidebar {
     width: var(--calendar-sidebar);
     background: linear-gradient(180deg, #07583f 0%, #003c2d 100%);
@@ -132,7 +132,7 @@
     box-shadow: 0 4px 14px rgba(0, 67, 46, 0.24);
 }
 
-/* 上部バー */
+/* 荳企Κ繝舌�ｼ */
 .dashboard-body.calendar-screen .calendar-app-header {
     min-height: 58px;
     padding: 9px 18px;
@@ -234,7 +234,7 @@
     font-size: 12px;
 }
 
-/* ページ見出しと集計 */
+/* 繝壹�ｼ繧ｸ隕句�ｺ縺励→髮�險� */
 .dashboard-body.calendar-screen .calendar-page {
     width: 100%;
     padding: 14px 16px 28px;
@@ -326,7 +326,7 @@
 .kpi-emerald .kpi-icon { color: #159863; background: #e4f7ef; }
 .kpi-purple .kpi-icon { color: #8758d9; background: #efe8fb; }
 
-/* 操作バー */
+/* 謫堺ｽ懊ヰ繝ｼ */
 .calendar-screen .calendar-toolbar {
     display: flex;
     margin-bottom: 10px;
@@ -406,7 +406,7 @@
     background: #066d44;
 }
 
-/* 月間カレンダーと今日の作業 */
+/* 譛磯俣繧ｫ繝ｬ繝ｳ繝�繝ｼ縺ｨ莉頑律縺ｮ菴懈･ｭ */
 .calendar-workspace {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 255px;
@@ -524,11 +524,11 @@
     line-height: 1.3;
 }
 
-.calendar-screen .calendar-month-panel .schedule-card[data-work-type="収穫"] { border-left-color: #e3ad30; background: #fff5d8; color: #826418; }
-.calendar-screen .calendar-month-panel .schedule-card[data-work-type="出荷"] { border-left-color: #3382ce; background: #e8f3fd; color: #275d91; }
-.calendar-screen .calendar-month-panel .schedule-card[data-work-type="防除"] { border-left-color: #db625f; background: #fdeae9; color: #934340; }
-.calendar-screen .calendar-month-panel .schedule-card[data-work-type="管理"],
-.calendar-screen .calendar-month-panel .schedule-card[data-work-type="除草"] { border-left-color: #45a16c; background: #e7f6ec; color: #31704b; }
+.calendar-screen .calendar-month-panel .schedule-card[data-work-type="蜿守ｩｫ"] { border-left-color: #e3ad30; background: #fff5d8; color: #826418; }
+.calendar-screen .calendar-month-panel .schedule-card[data-work-type="蜃ｺ闕ｷ"] { border-left-color: #3382ce; background: #e8f3fd; color: #275d91; }
+.calendar-screen .calendar-month-panel .schedule-card[data-work-type="髦ｲ髯､"] { border-left-color: #db625f; background: #fdeae9; color: #934340; }
+.calendar-screen .calendar-month-panel .schedule-card[data-work-type="邂｡逅�"],
+.calendar-screen .calendar-month-panel .schedule-card[data-work-type="髯､闕�"] { border-left-color: #45a16c; background: #e7f6ec; color: #31704b; }
 
 .calendar-event-title,
 .calendar-event-worker {
@@ -554,7 +554,7 @@
 }
 
 .calendar-event-worker::before {
-    content: "担当：";
+    content: "諡�蠖難ｼ�";
     font-weight: 500;
 }
 
@@ -811,5 +811,67 @@
 
     .calendar-screen .new-work-button {
         flex: 1 1 100%;
+    }
+}
+/* スマホ：カレンダー表示とメニューの影を修正 */
+@media screen and (max-width: 768px) {
+
+    /* カレンダーを縦・横の両方向にスクロール */
+    .dashboard-body.calendar-screen .calendar-month-panel {
+        min-width: 0;
+        max-width: 100%;
+        overflow: auto !important;
+        touch-action: auto;
+        overscroll-behavior: auto;
+        scrollbar-gutter: auto;
+    }
+
+    /* 7列の幅をそろえる */
+    .calendar-screen .calendar-table {
+        width: 100%;
+        min-width: 700px;
+        table-layout: fixed;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    /* 日付枠と中身の高さをそろえる */
+    .calendar-screen .calendar-table tbody tr,
+    .calendar-screen .calendar-table tbody td {
+        height: 180px;
+    }
+
+    .calendar-screen .calendar-table tbody td {
+        padding: 0;
+        vertical-align: top;
+    }
+
+    .calendar-screen .calendar-table .day-box {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: 180px;
+        min-height: 0;
+        box-sizing: border-box;
+    }
+
+    /* 日付内の作業一覧は縦スクロール */
+    .calendar-screen .day-box .schedule-list {
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        touch-action: auto;
+        scrollbar-gutter: auto;
+    }
+
+    /* メニュー右側の暗い領域を消す */
+    .dashboard-body.calendar-screen .sidebar.active::after {
+        content: none;
+        display: none;
+    }
+
+    /* メニュー自体の影も消す */
+    .dashboard-body.calendar-screen .sidebar {
+        box-shadow: none;
     }
 }
