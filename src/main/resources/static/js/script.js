@@ -198,28 +198,18 @@ function showModal(){
 // モーダル閉じる
 // ==========================
 
-function closeModal(){
+function closeModal() {
+    // ページ全体のスクロールを再開する
+    document.body.classList.remove("modal-open");
 
-	function closeModal() {
+    const modal = document.getElementById("modal");
+    if (!modal) {
+        return;
+    }
 
-	    // ページ全体のスクロールを再開する
-	    document.body.classList.remove("modal-open");
-
-	    const modal = document.getElementById("modal");
-
-	    if (!modal) {
-	        return;
-	    }
-
-	    modal.classList.remove("show");
-	    modal.setAttribute("aria-hidden", "true");
-
-	    setTimeout(function () {
-	        modal.style.display = "none";
-	    }, 300);
-
-	}
-
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden", "true");
+    modal.style.display = "none";
 }
 
 // ==========================
@@ -965,8 +955,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
     const openTodaySchedule = document.getElementById("openTodaySchedule");
     if(openTodaySchedule){
-        openTodaySchedule.addEventListener("click", function(){
-            openAddDay(openTodaySchedule.dataset.date);
+        d.addEventListener("click", function(){
+           
         });
     }
 });
