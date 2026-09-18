@@ -1,4 +1,4 @@
-/* 菴懈･ｭ繧ｫ繝ｬ繝ｳ繝�繝ｼ蟆ら畑�ｼ壽･ｭ蜍吶す繧ｹ繝�繝�蝙九Ξ繧､繧｢繧ｦ繝� */
+/* 菴懈･ｭ繧ｫ繝ｬ繝ｳ繝 繝ｼ蟆ら畑 ｼ壽･ｭ蜍吶す繧ｹ繝 繝 蝙九Ξ繧､繧｢繧ｦ繝  */
 .calendar-screen {
     --calendar-sidebar: 220px;
     --calendar-green: #08734b;
@@ -132,7 +132,7 @@
     box-shadow: 0 4px 14px rgba(0, 67, 46, 0.24);
 }
 
-/* 荳企Κ繝舌�ｼ */
+/* 荳企Κ繝舌 ｼ */
 .dashboard-body.calendar-screen .calendar-app-header {
     min-height: 58px;
     padding: 9px 18px;
@@ -234,7 +234,7 @@
     font-size: 12px;
 }
 
-/* 繝壹�ｼ繧ｸ隕句�ｺ縺励→髮�險� */
+/* 繝壹 ｼ繧ｸ隕句 ｺ縺励→髮 險  */
 .dashboard-body.calendar-screen .calendar-page {
     width: 100%;
     padding: 14px 16px 28px;
@@ -406,7 +406,7 @@
     background: #066d44;
 }
 
-/* 譛磯俣繧ｫ繝ｬ繝ｳ繝�繝ｼ縺ｨ莉頑律縺ｮ菴懈･ｭ */
+/* 譛磯俣繧ｫ繝ｬ繝ｳ繝 繝ｼ縺ｨ莉頑律縺ｮ菴懈･ｭ */
 .calendar-workspace {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 255px;
@@ -527,8 +527,8 @@
 .calendar-screen .calendar-month-panel .schedule-card[data-work-type="蜿守ｩｫ"] { border-left-color: #e3ad30; background: #fff5d8; color: #826418; }
 .calendar-screen .calendar-month-panel .schedule-card[data-work-type="蜃ｺ闕ｷ"] { border-left-color: #3382ce; background: #e8f3fd; color: #275d91; }
 .calendar-screen .calendar-month-panel .schedule-card[data-work-type="髦ｲ髯､"] { border-left-color: #db625f; background: #fdeae9; color: #934340; }
-.calendar-screen .calendar-month-panel .schedule-card[data-work-type="邂｡逅�"],
-.calendar-screen .calendar-month-panel .schedule-card[data-work-type="髯､闕�"] { border-left-color: #45a16c; background: #e7f6ec; color: #31704b; }
+.calendar-screen .calendar-month-panel .schedule-card[data-work-type="邂｡逅 "],
+.calendar-screen .calendar-month-panel .schedule-card[data-work-type="髯､闕 "] { border-left-color: #45a16c; background: #e7f6ec; color: #31704b; }
 
 .calendar-event-title,
 .calendar-event-worker {
@@ -554,7 +554,7 @@
 }
 
 .calendar-event-worker::before {
-    content: "諡�蠖難ｼ�";
+   content: "\62C5\5F53\FF1A";
     font-weight: 500;
 }
 
