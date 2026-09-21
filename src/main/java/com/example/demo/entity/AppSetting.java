@@ -14,6 +14,8 @@ public class AppSetting {
     private String farmName = "農業管理システム";
     private Double monthlyHarvestTargetKg = 1000.0;
     private Boolean notificationsEnabled = true;
+    private String uiTheme = "green";
+    private String layoutMode = "standard";
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -23,4 +25,8 @@ public class AppSetting {
     public void setMonthlyHarvestTargetKg(Double monthlyHarvestTargetKg) { this.monthlyHarvestTargetKg = monthlyHarvestTargetKg; }
     public Boolean getNotificationsEnabled() { return notificationsEnabled; }
     public void setNotificationsEnabled(Boolean notificationsEnabled) { this.notificationsEnabled = notificationsEnabled; }
+    public String getUiTheme() { return uiTheme; }
+    public void setUiTheme(String uiTheme) { this.uiTheme = uiTheme; }
+    public String getLayoutMode() { return layoutMode; }
+    public void setLayoutMode(String layoutMode) { this.layoutMode = layoutMode; }
 }

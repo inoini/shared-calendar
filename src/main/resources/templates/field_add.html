@@ -10,10 +10,10 @@
     </title>
     <link rel="stylesheet" th:href="@{/css/style.css(v='20260822-2')}" href="/css/style.css?v=20260822-2">
     <link rel="stylesheet" th:href="@{/css/field-management.css(v='20260822-2')}" href="/css/field-management.css?v=20260822-2">
-    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260822-2')}" href="/css/professional-ui.css?v=20260822-2">
+    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260921-2')}" href="/css/professional-ui.css?v=20260921-2">
 </head>
 
-<body class="field-management-body">
+<body class="field-management-body" th:classappend="|theme-${uiTheme} layout-${layoutMode}|">
     <a class="skip-link" href="#field-form-main">本文へ移動</a>
 
     <main id="field-form-main" class="field-form-page">

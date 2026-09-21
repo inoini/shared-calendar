@@ -9,11 +9,11 @@
           th:href="@{/css/style.css(v='20260822-2')}"
           href="/css/style.css?v=20260822-2">
     <link rel="stylesheet"
-          th:href="@{/css/professional-ui.css(v='20260822-2')}"
-          href="/css/professional-ui.css?v=20260822-2">
+          th:href="@{/css/professional-ui.css(v='20260921-2')}"
+          href="/css/professional-ui.css?v=20260921-2">
 </head>
 
-<body class="ai-screen">
+<body class="ai-screen" th:classappend="|theme-${uiTheme} layout-${layoutMode}|">
 <main class="assistant-page">
     <header class="app-page-header">
         <div>

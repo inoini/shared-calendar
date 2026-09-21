@@ -296,7 +296,10 @@ public class OperationsController {
 
     @GetMapping("/settings")
     public String settings(Model model) {
-        model.addAttribute("setting", settingRepository.findById(1L).orElse(new AppSetting()));
+        AppSetting setting = settingRepository.findById(1L).orElse(new AppSetting());
+        setting.setUiTheme(validTheme(setting.getUiTheme()));
+        setting.setLayoutMode(validLayout(setting.getLayoutMode()));
+        model.addAttribute("setting", setting);
         return "operations/settings";
     }
 
@@ -306,7 +309,23 @@ public class OperationsController {
             @RequestParam(defaultValue = "false") boolean notificationsEnabled) {
         setting.setId(1L);
         setting.setNotificationsEnabled(notificationsEnabled);
+        setting.setUiTheme(validTheme(setting.getUiTheme()));
+        setting.setLayoutMode(validLayout(setting.getLayoutMode()));
         settingRepository.save(setting);
         return "redirect:/settings?saved";
+    }
+
+    private String validTheme(String value) {
+        return switch (value == null ? "" : value) {
+            case "blue", "earth", "discord" -> value;
+            default -> "green";
+        };
+    }
+
+    private String validLayout(String value) {
+        return switch (value == null ? "" : value) {
+            case "compact", "wide" -> value;
+            default -> "standard";
+        };
     }
 }

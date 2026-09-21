@@ -305,11 +305,11 @@
         }
     </style>
     <link rel="stylesheet"
-          th:href="@{/css/professional-ui.css(v='20260822-7')}"
-          href="/css/professional-ui.css?v=20260822-7">
+          th:href="@{/css/professional-ui.css(v='20260921-2')}"
+          href="/css/professional-ui.css?v=20260921-2">
 </head>
 
-<body class="management-screen">
+<body class="management-screen" th:classappend="|theme-${uiTheme} layout-${layoutMode}|">
 <main class="page">
 
     <header class="header">

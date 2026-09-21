@@ -7,11 +7,11 @@
     <meta name="description" content="圃場の所在地、面積、作物、メモをまとめて管理する一覧画面です。">
     <title>圃場一覧 | 農業管理システム</title>
     <link rel="stylesheet" th:href="@{/css/style.css(v='20260822-3')}" href="/css/style.css?v=20260822-3">
-    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260822-7')}" href="/css/professional-ui.css?v=20260822-7">
+    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260921-2')}" href="/css/professional-ui.css?v=20260921-2">
     <script th:src="@{/js/field-list.js(v='20260822-3')}" src="/js/field-list.js?v=20260822-3" defer></script>
 </head>
 
-<body class="field-list-body">
+<body class="field-list-body" th:classappend="|theme-${uiTheme} layout-${layoutMode}|">
     <a class="skip-link" href="#field-list-main">本文へ移動</a>
 
     <main id="field-list-main" class="field-list-page">

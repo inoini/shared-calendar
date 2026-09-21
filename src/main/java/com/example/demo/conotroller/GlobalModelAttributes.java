@@ -22,5 +22,21 @@ public class GlobalModelAttributes {
         model.addAttribute("farmName", setting.getFarmName());
         model.addAttribute("notificationsEnabled",
                 !Boolean.FALSE.equals(setting.getNotificationsEnabled()));
+        model.addAttribute("uiTheme", validTheme(setting.getUiTheme()));
+        model.addAttribute("layoutMode", validLayout(setting.getLayoutMode()));
+    }
+
+    private String validTheme(String value) {
+        return switch (value == null ? "" : value) {
+            case "blue", "earth", "discord" -> value;
+            default -> "green";
+        };
+    }
+
+    private String validLayout(String value) {
+        return switch (value == null ? "" : value) {
+            case "compact", "wide" -> value;
+            default -> "standard";
+        };
     }
 }

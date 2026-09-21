@@ -10,12 +10,13 @@
     <link rel="manifest" th:href="@{/manifest.json}" href="/manifest.json">
     <link rel="apple-touch-icon" th:href="@{/icons/icon-192.png}" href="/icons/icon-192.png">
     <link rel="stylesheet" th:href="@{/css/style.css(v='20260908-1')}" href="/css/style.css?v=20260908-1">
-    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260908-1')}" href="/css/professional-ui.css?v=20260908-1">
-       <link rel="stylesheet"
+    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260921-2')}" href="/css/professional-ui.css?v=20260921-2">
+   	<link rel="stylesheet"
       th:href="@{/css/calendar-dashboard.css(v='20260919-1')}"
-      href="/css/calendar-dashboard.css?v=20260919-1"> 	<script defer
-        th:src="@{/js/script.js(v='20260917-3')}"
-        src="/js/script.js?v=20260917-3"></script>
+      href="/css/calendar-dashboard.css?v=20260919-1">
+    	<script defer
+        th:src="@{/js/script.js(v='20260918-1')}"
+        src="/js/script.js?v=20260918-1"></script>
 
     <style>
         /* 作業カレンダー見出しとトップページボタン */
@@ -75,10 +76,14 @@
                 box-sizing: border-box;
             }
         }
+         .calendar-event-worker::before {
+        content: "\62C5\5F53\FF1A" !important;
+    }
     </style>
+    
 </head>
 
-<body class="dashboard-body calendar-screen">
+<body class="dashboard-body calendar-screen" th:classappend="|theme-${uiTheme} layout-${layoutMode}|">
 <button id="menuBtn"
         class="menu-btn"
         type="button"

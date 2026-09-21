@@ -9,12 +9,12 @@
     <link rel="stylesheet" th:href="@{/css/style.css(v='20260822-2')}" href="/css/style.css?v=20260822-2">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" th:href="@{/css/field-management.css(v='20260822-2')}" href="/css/field-management.css?v=20260822-2">
-    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260822-2')}" href="/css/professional-ui.css?v=20260822-2">
+    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260921-2')}" href="/css/professional-ui.css?v=20260921-2">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
     <script th:src="@{/js/field-map.js(v='20260822-2')}" src="/js/field-map.js?v=20260822-2" defer></script>
 </head>
 
-<body class="field-management-body">
+<body class="field-management-body" th:classappend="|theme-${uiTheme} layout-${layoutMode}|">
     <a class="skip-link" href="#field-map-main">本文へ移動</a>
 
     <main id="field-map-main" class="field-map-page">

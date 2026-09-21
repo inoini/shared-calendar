@@ -8,11 +8,11 @@
           th:href="@{/css/style.css(v='20260822-2')}"
           href="/css/style.css?v=20260822-2">
     <link rel="stylesheet"
-          th:href="@{/css/professional-ui.css(v='20260822-2')}"
-          href="/css/professional-ui.css?v=20260822-2">
+          th:href="@{/css/professional-ui.css(v='20260921-2')}"
+          href="/css/professional-ui.css?v=20260921-2">
 </head>
 
-<body class="form-screen">
+<body class="form-screen" th:classappend="|theme-${uiTheme} layout-${layoutMode}|">
 <header class="top-header">
     <a th:href="@{/}" href="/" class="logo-area" aria-label="トップページへ戻る">
         <div class="logo-icon" aria-hidden="true">🌱</div>

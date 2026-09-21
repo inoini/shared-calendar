@@ -9,11 +9,11 @@
           th:href="@{/css/style.css(v='20260822-3')}"
           href="/css/style.css?v=20260822-3">
     <link rel="stylesheet"
-          th:href="@{/css/professional-ui.css(v='20260822-7')}"
-          href="/css/professional-ui.css?v=20260822-7">
+          th:href="@{/css/professional-ui.css(v='20260921-2')}"
+          href="/css/professional-ui.css?v=20260921-2">
 </head>
 
-<body class="stock-screen">
+<body class="stock-screen" th:classappend="|theme-${uiTheme} layout-${layoutMode}|">
 <main class="stock-page">
     <header class="app-page-header">
         <div>

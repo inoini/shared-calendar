@@ -1083,6 +1083,296 @@ html {
 }
 
 /* =========================================================
+   設定で切り替える配色・レイアウト
+========================================================= */
+body.theme-blue {
+    --ui-green-950: #172554;
+    --ui-green-900: #1e3a8a;
+    --ui-green-800: #1d4ed8;
+    --ui-green-700: #2563eb;
+    --ui-green-600: #3b82f6;
+    --ui-green-100: #dbeafe;
+    --ui-green-50: #eff6ff;
+    --ui-ink: #172033;
+    --ui-muted: #60708a;
+    --ui-border: #cfdae9;
+    --ui-canvas: #f3f7fc;
+}
+
+body.theme-earth {
+    --ui-green-950: #3f2d1f;
+    --ui-green-900: #5b3c26;
+    --ui-green-800: #755033;
+    --ui-green-700: #90643e;
+    --ui-green-600: #ad7b50;
+    --ui-green-100: #efe2d2;
+    --ui-green-50: #faf5ee;
+    --ui-ink: #33281f;
+    --ui-muted: #77685c;
+    --ui-border: #e1d5c8;
+    --ui-canvas: #f7f2eb;
+}
+
+body.theme-discord {
+    color-scheme: dark;
+    --ui-green-950: #3730a3;
+    --ui-green-900: #4752c4;
+    --ui-green-800: #5865f2;
+    --ui-green-700: #7983f5;
+    --ui-green-600: #949cf7;
+    --ui-green-100: #3c4270;
+    --ui-green-50: #353743;
+    --ui-ink: #f2f3f5;
+    --ui-muted: #b5bac1;
+    --ui-border: #3f4147;
+    --ui-surface: #2b2d31;
+    --ui-canvas: #313338;
+    --ui-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.22);
+    --ui-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-blue .sidebar,
+body.theme-blue.dashboard-body.calendar-screen .sidebar {
+    background: linear-gradient(180deg, #1e4f91 0%, #153566 100%);
+}
+
+body.theme-earth .sidebar,
+body.theme-earth.dashboard-body.calendar-screen .sidebar {
+    background: linear-gradient(180deg, #65472f 0%, #3f2d1f 100%);
+}
+
+body.theme-discord .sidebar,
+body.theme-discord.dashboard-body.calendar-screen .sidebar {
+    background: #1e1f22;
+    box-shadow: 5px 0 18px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-blue .menu a.active,
+body.theme-blue .operation-button.primary,
+body.theme-blue .app-primary-button {
+    background: #2563eb;
+}
+
+body.theme-earth .menu a.active,
+body.theme-earth .operation-button.primary,
+body.theme-earth .app-primary-button {
+    background: #8a5d39;
+}
+
+body.theme-discord .menu a.active,
+body.theme-discord .operation-button.primary,
+body.theme-discord .app-primary-button {
+    border-color: #5865f2;
+    background: #5865f2;
+}
+
+body.theme-discord,
+body.theme-discord .main-content,
+body.theme-discord.dashboard-body.calendar-screen .main-content {
+    background: var(--ui-canvas);
+    color: var(--ui-ink);
+}
+
+body.theme-discord :is(
+    .app-page-header,
+    .operations-panel,
+    .dashboard-card,
+    .summary-card,
+    .calendar-header,
+    .calendar-wrapper,
+    .management-header,
+    .management-panel,
+    .stock-card,
+    .edit-card,
+    .form-card
+) {
+    border-color: var(--ui-border);
+    background: var(--ui-surface);
+    color: var(--ui-ink);
+    box-shadow: var(--ui-shadow-sm);
+}
+
+body.theme-discord :is(h1, h2, h3, h4, label, strong),
+body.theme-discord .operations-heading h1,
+body.theme-discord .operations-panel h2,
+body.theme-discord .app-page-header h1 {
+    color: var(--ui-ink);
+}
+
+body.theme-discord :is(p, small, .settings-help),
+body.theme-discord .operations-heading p {
+    color: var(--ui-muted);
+}
+
+body.theme-discord :is(input, select, textarea) {
+    border-color: #4e5058;
+    background: #1e1f22;
+    color: #f2f3f5;
+}
+
+body.theme-discord :is(input, select, textarea)::placeholder {
+    color: #949ba4;
+}
+
+body.theme-discord :is(table, th, td) {
+    border-color: #3f4147;
+    color: var(--ui-ink);
+}
+
+body.theme-discord :is(th, .operations-table th) {
+    background: #232428;
+    color: #dbdee1;
+}
+
+body.layout-compact {
+    --calendar-sidebar: 200px;
+}
+
+body.layout-compact .sidebar {
+    width: 210px;
+}
+
+body.layout-compact .main-content {
+    margin-left: 210px;
+}
+
+body.layout-compact :is(.app-page-shell, .stock-page, .edit-page, .operations-page, .management-page) {
+    width: min(1440px, calc(100% - 24px));
+    padding-top: 16px;
+}
+
+body.layout-compact :is(.operations-panel, .app-page-header, .dashboard-card, .summary-card) {
+    padding: 14px;
+}
+
+body.layout-wide :is(.app-page-shell, .stock-page, .edit-page, .operations-page, .management-page) {
+    width: calc(100% - 28px);
+    max-width: none;
+}
+
+.dashboard-body.calendar-screen.layout-compact .sidebar {
+    width: var(--calendar-sidebar);
+}
+
+.dashboard-body.calendar-screen.layout-compact .main-content {
+    width: calc(100% - var(--calendar-sidebar));
+    margin-left: var(--calendar-sidebar);
+}
+
+.settings-page {
+    max-width: 1120px;
+}
+
+.settings-section {
+    margin-bottom: 18px;
+}
+
+.settings-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.settings-help {
+    margin: -8px 0 14px;
+    color: var(--ui-muted);
+}
+
+.settings-choice-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.theme-choice-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.settings-choice {
+    display: grid;
+    min-height: 126px;
+    margin: 0;
+    padding: 14px;
+    border: 2px solid var(--ui-border);
+    border-radius: 12px;
+    background: var(--ui-surface);
+    color: var(--ui-ink);
+    cursor: pointer;
+    gap: 7px;
+}
+
+.settings-choice:has(input:checked) {
+    border-color: var(--ui-green-700);
+    box-shadow: 0 0 0 3px var(--ui-green-100);
+}
+
+.settings-choice input {
+    width: 18px;
+    min-height: 18px;
+    margin: 0;
+}
+
+.settings-choice small {
+    color: var(--ui-muted);
+    line-height: 1.45;
+}
+
+.theme-preview {
+    display: block;
+    height: 34px;
+    border-radius: 8px;
+}
+
+.theme-preview-green { background: linear-gradient(90deg, #17452d 0 34%, #e8f4eb 34%); }
+.theme-preview-blue { background: linear-gradient(90deg, #1e4f91 0 34%, #dbeafe 34%); }
+.theme-preview-earth { background: linear-gradient(90deg, #65472f 0 34%, #efe2d2 34%); }
+.theme-preview-discord { background: linear-gradient(90deg, #1e1f22 0 34%, #5865f2 34% 60%, #313338 60%); }
+
+.layout-choice {
+    min-height: 98px;
+}
+
+.settings-save-bar {
+    position: sticky;
+    bottom: 12px;
+    z-index: 20;
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px;
+    border: 1px solid var(--ui-border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--ui-surface) 92%, transparent);
+    box-shadow: var(--ui-shadow);
+    backdrop-filter: blur(10px);
+}
+
+.settings-save-bar .operation-button {
+    min-height: 46px;
+    padding-inline: 22px;
+}
+
+@media screen and (max-width: 900px) {
+    .theme-choice-grid,
+    .settings-choice-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body.layout-compact .main-content,
+    .dashboard-body.calendar-screen.layout-compact .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .settings-form-grid,
+    .theme-choice-grid,
+    .settings-choice-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* =========================================================
    作業カレンダー：ダッシュボード共通サイドバーレイアウト
 ========================================================= */
 .dashboard-body.calendar-screen > .menu-btn {
