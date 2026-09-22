@@ -14,13 +14,13 @@
 
 .operations-heading h1 {
     margin: 0 0 5px;
-    color: #173f2b;
+    color: var(--discord-text, #173f2b);
     font-size: clamp(24px, 3vw, 34px);
 }
 
 .operations-heading p {
     margin: 0;
-    color: #66736b;
+    color: var(--discord-text-muted, #66736b);
 }
 
 .operations-grid {
@@ -32,15 +32,15 @@
 
 .operations-panel {
     padding: 20px;
-    border: 1px solid #dce5df;
+    border: 1px solid var(--discord-border, #dce5df);
     border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 5px 18px rgba(23, 63, 43, 0.06);
+    background: var(--discord-surface, #fff);
+    box-shadow: 0 5px 18px var(--discord-shadow, rgba(23, 63, 43, 0.06));
 }
 
 .operations-panel h2 {
     margin: 0 0 16px;
-    color: #225638;
+    color: var(--discord-text, #225638);
     font-size: 19px;
 }
 
@@ -86,24 +86,24 @@
     padding: 8px 13px;
     align-items: center;
     justify-content: center;
-    border: 1px solid #cfdad3;
+    border: 1px solid var(--discord-border, #cfdad3);
     border-radius: 6px;
-    background: #fff;
-    color: #31503e;
+    background: var(--discord-surface, #fff);
+    color: var(--discord-text-muted, #31503e);
     font-size: 13px;
     font-weight: 800;
 }
 
 .operation-button.primary {
-    border-color: #08734b;
-    background: #08734b;
-    color: #fff;
+    border-color: var(--discord-border, #08734b);
+    background: var(--discord-accent, #08734b);
+    color: var(--discord-text, #fff);
 }
 
 .operation-button.danger {
-    border-color: #efc4c1;
-    background: #fff4f3;
-    color: #b8332e;
+    border-color: var(--discord-border, #efc4c1);
+    background: var(--discord-surface, #fff4f3);
+    color: var(--discord-text-danger, #b8332e);
 }
 
 .operations-table-wrap {
@@ -119,14 +119,14 @@
 .operations-table th,
 .operations-table td {
     padding: 11px 10px;
-    border-bottom: 1px solid #e4eae6;
+    border-bottom: 1px solid var(--discord-border, #e4eae6);
     text-align: left;
     vertical-align: middle;
 }
 
 .operations-table th {
-    background: #f3f8f5;
-    color: #456052;
+    background: var(--discord-surface-raised, #f3f8f5);
+    color: var(--discord-text-muted, #456052);
     font-size: 11px;
     white-space: nowrap;
 }
@@ -149,8 +149,8 @@
     display: inline-flex;
     padding: 3px 8px;
     border-radius: 999px;
-    background: #eaf4ee;
-    color: #227044;
+    background: var(--discord-surface-raised, #eaf4ee);
+    color: var(--discord-text-accent, #227044);
     font-size: 10px;
     font-weight: 800;
     white-space: nowrap;
@@ -158,7 +158,7 @@
 
 .operations-empty {
     padding: 42px 20px;
-    color: #77847c;
+    color: var(--discord-text-muted, #77847c);
     text-align: center;
 }
 
@@ -171,14 +171,14 @@
 
 .report-card {
     padding: 18px;
-    border: 1px solid #dce5df;
+    border: 1px solid var(--discord-border, #dce5df);
     border-radius: 9px;
-    background: #fff;
+    background: var(--discord-surface, #fff);
 }
 
 .report-card span {
     display: block;
-    color: #68776e;
+    color: var(--discord-text-muted, #68776e);
     font-size: 12px;
     font-weight: 700;
 }
@@ -186,7 +186,7 @@
 .report-card strong {
     display: block;
     margin-top: 8px;
-    color: #173f2b;
+    color: var(--discord-text, #173f2b);
     font-size: 26px;
 }
 
@@ -203,7 +203,7 @@
     height: 10px;
     overflow: hidden;
     border-radius: 999px;
-    background: #e8efea;
+    background: var(--discord-surface-raised, #e8efea);
 }
 
 .work-type-bar i {
@@ -211,7 +211,7 @@
     height: 100%;
     min-width: 4px;
     border-radius: inherit;
-    background: linear-gradient(90deg, #0c8a56, #65bd87);
+    background: linear-gradient(90deg, var(--discord-accent, #0c8a56), var(--discord-accent, #65bd87));
 }
 
 @media screen and (max-width: 980px) {
@@ -249,14 +249,14 @@
     height: 10px;
     overflow: hidden;
     border-radius: 999px;
-    background: #e7eee9;
+    background: var(--discord-surface-raised, #e7eee9);
 }
 
 .work-type-bar i {
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: #2e9a62;
+    background: var(--discord-accent, #2e9a62);
 }
 
 @media (max-width: 1000px) {
@@ -302,12 +302,12 @@
 }
 
 /* 作業履歴の編集画面 */
-.history-notice { padding: 12px; background: #eaf6ee; color: #165d36; }
-.history-error { padding: 12px; background: #fff0ee; color: #a32920; }
+.history-notice { padding: 12px; background: var(--discord-surface-raised, #eaf6ee); color: var(--discord-text, #165d36); }
+.history-error { padding: 12px; background: var(--discord-surface-raised, #fff0ee); color: var(--discord-text-danger, #a32920); }
 .history-row-actions { min-width: 125px; }
 .history-row-actions form, .history-editor-actions form { margin: 0; }
-.history-overlay { position: fixed; inset: 0; z-index: 10000; background: #0008; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.history-overlay { position: fixed; inset: 0; z-index: 10000; background: var(--discord-overlay, #0008); display: flex; align-items: center; justify-content: center; padding: 16px; }
 .history-editor { width: min(680px, 100%); max-height: calc(100dvh - 32px); overflow-y: auto; box-sizing: border-box; }
 .history-editor input, .history-editor select, .history-editor textarea { width: 100%; box-sizing: border-box; }
-.history-editor-actions { position: sticky; bottom: -20px; background: #fff; padding: 14px 0; border-top: 1px solid #dce5df; }
+.history-editor-actions { position: sticky; bottom: -20px; background: var(--discord-surface, #fff); padding: 14px 0; border-top: 1px solid var(--discord-border, #dce5df); }
 .history-editor .operation-button { min-height: 44px; font-size: 15px; cursor: pointer; }

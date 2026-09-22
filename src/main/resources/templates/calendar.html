@@ -9,11 +9,11 @@
 
     <link rel="manifest" th:href="@{/manifest.json}" href="/manifest.json">
     <link rel="apple-touch-icon" th:href="@{/icons/icon-192.png}" href="/icons/icon-192.png">
-    <link rel="stylesheet" th:href="@{/css/style.css(v='20260908-1')}" href="/css/style.css?v=20260908-1">
-    <link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260921-2')}" href="/css/professional-ui.css?v=20260921-2">
+    <link rel="stylesheet" th:href="@{/css/style.css(v='20260922-1')}" href="/css/style.css?v=20260922-1">
+    
    	<link rel="stylesheet"
-      th:href="@{/css/calendar-dashboard.css(v='20260919-1')}"
-      href="/css/calendar-dashboard.css?v=20260919-1">
+      th:href="@{/css/calendar-dashboard.css(v='20260922-1')}"
+      href="/css/calendar-dashboard.css?v=20260922-1">
     	<script defer
         th:src="@{/js/script.js(v='20260918-1')}"
         src="/js/script.js?v=20260918-1"></script>
@@ -43,25 +43,25 @@
             gap: 8px;
             min-height: 48px;
             padding: 12px 22px;
-            border: 2px solid #1b5e20;
+            border: 2px solid var(--discord-border, #1b5e20);
             border-radius: 12px;
-            background: #2e7d32;
-            color: #ffffff;
+            background: var(--discord-accent, #2e7d32);
+            color: var(--discord-text, #ffffff);
             font-weight: 700;
             text-decoration: none;
-            box-shadow: 0 4px 10px rgba(27, 94, 32, 0.25);
+            box-shadow: 0 4px 10px var(--discord-shadow, rgba(27, 94, 32, 0.25));
             transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
         }
 
         .calendar-home-button:hover {
-            background: #1b5e20;
-            color: #ffffff;
+            background: var(--discord-accent, #1b5e20);
+            color: var(--discord-text, #ffffff);
             transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(27, 94, 32, 0.32);
+            box-shadow: 0 6px 14px var(--discord-shadow, rgba(27, 94, 32, 0.32));
         }
 
         .calendar-home-button:focus-visible {
-            outline: 3px solid #f9a825;
+            outline: 3px solid var(--discord-border, #f9a825);
             outline-offset: 3px;
         }
 
@@ -81,6 +81,8 @@
     }
     </style>
     
+<link rel="stylesheet" th:href="@{/css/professional-ui.css(v='20260922-1')}" href="/css/professional-ui.css?v=20260922-1">
+    <link rel="stylesheet" th:href="@{/css/discord-theme.css(v='20260922-1')}" href="/css/discord-theme.css?v=20260922-1">
 </head>
 
 <body class="dashboard-body calendar-screen" th:classappend="|theme-${uiTheme} layout-${layoutMode}|">

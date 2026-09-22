@@ -16,8 +16,8 @@
         body {
             min-width: 320px;
             margin: 0;
-            background: #f3f7f3;
-            color: #263229;
+            background: var(--discord-surface-raised, #f3f7f3);
+            color: var(--discord-text, #263229);
             font-family: "Yu Gothic", "Meiryo", sans-serif;
         }
 
@@ -39,15 +39,15 @@
             gap: 24px;
             margin-bottom: 18px;
             padding: 26px 28px;
-            border: 1px solid #dfe8e0;
+            border: 1px solid var(--discord-border, #dfe8e0);
             border-radius: 18px;
-            background: #ffffff;
-            box-shadow: 0 8px 24px rgba(34, 73, 39, 0.08);
+            background: var(--discord-surface, #ffffff);
+            box-shadow: 0 8px 24px var(--discord-shadow, rgba(34, 73, 39, 0.08));
         }
 
         .eyebrow {
             margin: 0 0 5px;
-            color: #2d7938;
+            color: var(--discord-text-accent, #2d7938);
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.12em;
@@ -55,13 +55,13 @@
 
         h1 {
             margin: 0 0 7px;
-            color: #245d2b;
+            color: var(--discord-text-accent, #245d2b);
             font-size: clamp(27px, 3vw, 36px);
         }
 
         .description {
             margin: 0;
-            color: #69736b;
+            color: var(--discord-text-muted, #69736b);
             font-size: 14px;
             line-height: 1.7;
         }
@@ -73,10 +73,10 @@
             padding: 10px 16px;
             align-items: center;
             justify-content: center;
-            border: 1px solid #a9b9ab;
+            border: 1px solid var(--discord-border, #a9b9ab);
             border-radius: 9px;
-            background: #ffffff;
-            color: #2f6535;
+            background: var(--discord-surface, #ffffff);
+            color: var(--discord-text-accent, #2f6535);
             font-size: 13px;
             font-weight: 800;
         }
@@ -87,9 +87,9 @@
             margin-bottom: 22px;
             padding: 6px;
             overflow-x: auto;
-            border: 1px solid #dfe8e0;
+            border: 1px solid var(--discord-border, #dfe8e0);
             border-radius: 12px;
-            background: #ffffff;
+            background: var(--discord-surface, #ffffff);
         }
 
         .tabs a {
@@ -100,15 +100,15 @@
             align-items: center;
             justify-content: center;
             border-radius: 8px;
-            color: #657168;
+            color: var(--discord-text-muted, #657168);
             font-size: 13px;
             font-weight: 700;
             white-space: nowrap;
         }
 
         .tabs a.active {
-            background: #286d32;
-            color: #ffffff;
+            background: var(--discord-accent, #286d32);
+            color: var(--discord-text, #ffffff);
         }
 
         .menu-heading {
@@ -118,13 +118,13 @@
 
         .menu-heading h2 {
             margin: 0 0 5px;
-            color: #294c2e;
+            color: var(--discord-text, #294c2e);
             font-size: 21px;
         }
 
         .menu-heading p {
             margin: 0;
-            color: #748078;
+            color: var(--discord-text-muted, #748078);
             font-size: 13px;
         }
 
@@ -140,22 +140,22 @@
             min-height: 190px;
             padding: 23px;
             flex-direction: column;
-            border: 1px solid #dfe7e0;
+            border: 1px solid var(--discord-border, #dfe7e0);
             border-top: 4px solid;
             border-radius: 15px;
-            background: #ffffff;
-            box-shadow: 0 5px 18px rgba(38, 77, 42, 0.06);
+            background: var(--discord-surface, #ffffff);
+            box-shadow: 0 5px 18px var(--discord-shadow, rgba(38, 77, 42, 0.06));
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .menu-card:hover {
-            box-shadow: 0 10px 25px rgba(38, 77, 42, 0.12);
+            box-shadow: 0 10px 25px var(--discord-shadow, rgba(38, 77, 42, 0.12));
             transform: translateY(-3px);
         }
 
         .menu-card small {
             margin-bottom: 10px;
-            color: #849087;
+            color: var(--discord-text-muted, #849087);
             font-size: 10px;
             font-weight: 900;
             letter-spacing: 0.1em;
@@ -163,13 +163,13 @@
 
         .menu-card strong {
             margin-bottom: 9px;
-            color: #294c2e;
+            color: var(--discord-text, #294c2e);
             font-size: 21px;
         }
 
         .menu-card p {
             margin: 0;
-            color: #69736b;
+            color: var(--discord-text-muted, #69736b);
             font-size: 12px;
             line-height: 1.7;
         }
@@ -182,18 +182,18 @@
         }
 
         .expenses-card {
-            border-top-color: #d48631;
-            color: #94520e;
+            border-top-color: var(--discord-border, #d48631);
+            color: var(--discord-text-warning, #94520e);
         }
 
         .sales-card {
-            border-top-color: #4f9b5a;
-            color: #2d7337;
+            border-top-color: var(--discord-border, #4f9b5a);
+            color: var(--discord-text-accent, #2d7337);
         }
 
         .profit-card {
-            border-top-color: #3a7dae;
-            color: #286894;
+            border-top-color: var(--discord-border, #3a7dae);
+            color: var(--discord-text-accent, #286894);
         }
 
         .support-grid {
@@ -204,15 +204,15 @@
 
         .panel {
             padding: 24px;
-            border: 1px solid #dfe7e0;
+            border: 1px solid var(--discord-border, #dfe7e0);
             border-radius: 15px;
-            background: #ffffff;
-            box-shadow: 0 5px 18px rgba(38, 77, 42, 0.06);
+            background: var(--discord-surface, #ffffff);
+            box-shadow: 0 5px 18px var(--discord-shadow, rgba(38, 77, 42, 0.06));
         }
 
         .section-label {
             margin: 0 0 5px;
-            color: #7b897e;
+            color: var(--discord-text-muted, #7b897e);
             font-size: 10px;
             font-weight: 900;
             letter-spacing: 0.1em;
@@ -220,7 +220,7 @@
 
         .panel h2 {
             margin: 0;
-            color: #294c2e;
+            color: var(--discord-text, #294c2e);
             font-size: 20px;
         }
 
@@ -235,7 +235,7 @@
         .check-list li {
             position: relative;
             padding-left: 20px;
-            color: #59665c;
+            color: var(--discord-text-muted, #59665c);
             font-size: 12px;
             line-height: 1.6;
         }
@@ -244,7 +244,7 @@
             content: "✓";
             position: absolute;
             left: 0;
-            color: #2e7d32;
+            color: var(--discord-text-accent, #2e7d32);
             font-weight: 900;
         }
 
@@ -253,7 +253,7 @@
             justify-content: space-between;
             gap: 20px;
             padding: 24px 4px 0;
-            color: #748078;
+            color: var(--discord-text-muted, #748078);
             font-size: 12px;
         }
 
@@ -262,7 +262,7 @@
         }
 
         footer a {
-            color: #32683a;
+            color: var(--discord-text-accent, #32683a);
             font-weight: 800;
         }
 
@@ -304,9 +304,11 @@
             }
         }
     </style>
-    <link rel="stylesheet"
-          th:href="@{/css/professional-ui.css(v='20260921-2')}"
-          href="/css/professional-ui.css?v=20260921-2">
+    
+<link rel="stylesheet"
+          th:href="@{/css/professional-ui.css(v='20260922-1')}"
+          href="/css/professional-ui.css?v=20260922-1">
+    <link rel="stylesheet" th:href="@{/css/discord-theme.css(v='20260922-1')}" href="/css/discord-theme.css?v=20260922-1">
 </head>
 
 <body class="management-screen" th:classappend="|theme-${uiTheme} layout-${layoutMode}|">

@@ -1,13 +1,14 @@
-const CACHE_NAME = "farm-system-20260921-1";
+const CACHE_NAME = "farm-system-20260922-1";
 
 const STATIC_ASSETS = [
+    "/css/discord-theme.css?v=20260922-1",
     "/manifest.json",
     "/icons/icon-192.png",
     "/icons/icon-512.png",
-    "/css/style.css?v=20260908-2",
-    "/css/professional-ui.css?v=20260921-2",
-    "/css/calendar-dashboard.css?v=20260908-6",
-    "/css/operations.css?v=20260908-2",
+    "/css/style.css?v=20260922-1",
+    "/css/professional-ui.css?v=20260922-1",
+    "/css/calendar-dashboard.css?v=20260922-1",
+    "/css/operations.css?v=20260922-1",
     "/js/script.js?v=20260908-3"
 ];
 
